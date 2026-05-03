@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Syne", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  
+  --color-bg: #F5F2EB;
+  --color-ink: #0A0A0A;
+  --color-accent: #F5B335;
+  --color-muted: #8E9299;
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-ink font-sans selection:bg-accent selection:text-ink;
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-balance;
+  }
+}
+
+@layer utilities {
+  .text-huge {
+    font-size: clamp(3rem, 15vw, 12rem);
+    line-height: 0.85;
+  }
+  
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .mask-oval {
+    clip-path: ellipse(50% 50% at 50% 50%);
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
