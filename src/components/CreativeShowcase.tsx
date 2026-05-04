@@ -18,7 +18,7 @@ export default function CreativeShowcase() {
            className="relative"
         >
           <div className="absolute -inset-4 bg-accent blur-3xl opacity-20 animate-pulse" />
-          <h2 className="text-6xl md:text-9xl font-black text-bg mb-8 tracking-tighter leading-tight">
+          <h2 className="text-[clamp(20px,7.5vw,120px)] font-black text-bg mb-8 tracking-tighter leading-[0.9]">
             PUSHING<br />THE<br />
             <span className="text-accent underline decoration-white/20 underline-offset-[20px]">LIMITS</span>.
           </h2>

@@ -1,7 +1,8 @@
 import { motion, useScroll, useSpring, useTransform, useVelocity, useAnimationFrame, useMotionValue } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useScrollLightHit } from "../hooks/useScrollLightHit";
 
 export const projects = [
   {
@@ -185,7 +186,7 @@ function Marquee({ baseVelocity = 100 }: MarqueeProps) {
 
   return (
     <div className="overflow-hidden whitespace-nowrap flex flex-nowrap py-10 mt-20 border-y border-ink/5">
-      <motion.div className="flex whitespace-nowrap flex-nowrap text-[clamp(40px,8vw,120px)] font-black uppercase tracking-tighter leading-none" style={{ x }}>
+      <motion.div className="flex whitespace-nowrap flex-nowrap text-[clamp(16px,5vw,120px)] font-black uppercase tracking-tighter leading-none" style={{ x }}>
         <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
         <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
         <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
@@ -195,19 +196,90 @@ function Marquee({ baseVelocity = 100 }: MarqueeProps) {
   );
 }
 
+function ProjectCard({ project, i, navigate, toggleTitle, hiddenTitles }: any) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isHit = useScrollLightHit(cardRef, isMobile ? 200 : 0, false);
+
+  return (
+    <motion.div
+      key={project.id}
+      ref={cardRef}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 1, delay: i % 2 * 0.1 }}
+      className="group relative will-change-transform"
+    >
+      <motion.div 
+        className="relative rounded-[2.5rem] overflow-hidden bg-ink shadow-2xl transition-all duration-700 aspect-square cursor-pointer z-10 will-change-transform"
+        whileHover={{ scale: 1.05, zIndex: 40 }}
+        animate={isHit ? { scale: 1.05, zIndex: 40 } : { scale: 1, zIndex: 10 }}
+        onClick={() => toggleTitle(project.id)}
+        onDoubleClick={() => navigate(`/project/${project.id}`)}
+        transition={{ 
+          type: "spring",
+          stiffness: 100,
+          damping: 20,
+          mass: 1
+        }}
+      >
+        {/* Image Wrap */}
+        <div className="w-full h-full relative">
+          <img
+            src={project.image}
+            alt={project.title}
+            className={`w-full h-full object-cover transition-all duration-1000 ${isHit ? 'grayscale-0 scale-105 opacity-90' : 'grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-60 group-hover:opacity-90'}`}
+            referrerPolicy="no-referrer"
+          />
+          {/* Color Tint Overlay */}
+          <div className={`absolute inset-0 bg-accent/5 mix-blend-overlay transition-opacity duration-1000 ${isHit ? 'opacity-0' : 'group-hover:opacity-0'}`} />
+          
+          {/* Expanded reveal indicator */}
+          <div className={`absolute bottom-6 right-6 transition-opacity duration-500 ${isHit ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+            <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+              <span className="text-[9px] uppercase font-bold tracking-widest text-white">Double Tap</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Info Overlay removed as per user request to avoid overlap */}
+      </motion.div>
+
+      {/* Title Outside */}
+      <div className={`mt-6 flex justify-between items-start transition-all duration-500 ${isHit ? 'opacity-20' : 'group-hover:opacity-20'} ${hiddenTitles.includes(project.id) ? 'opacity-0 h-0 overflow-hidden mt-0' : 'opacity-100'}`}>
+        <div className="flex-1 min-w-0 pr-6">
+           <h3 className="text-xs md:text-base font-display font-black leading-tight uppercase tracking-tight break-words">{project.title}</h3>
+           <p className="text-[8px] font-bold uppercase tracking-widest text-ink/40 mt-2">{project.category}</p>
+        </div>
+        <div className="flex flex-col items-end shrink-0 pt-1">
+           <span className="text-[9px] font-mono opacity-20">0{project.id}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Projects() {
   const navigate = useNavigate();
+  const [hiddenTitles, setHiddenTitles] = useState<number[]>([]);
+
+  const toggleTitle = (id: number) => {
+    setHiddenTitles((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
 
   return (
     <section id="projects" className="pb-40 pt-0 px-6 lg:px-12 bg-bg relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-12">
-          <div className="max-w-2xl">
-            <p className="text-[11px] uppercase tracking-[0.4em] font-bold mb-6 flex items-center">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-12 text-center md:text-left">
+          <div className="max-w-2xl flex flex-col items-center md:items-start">
+            <p className="text-[11px] uppercase tracking-[0.4em] font-bold mb-6 flex items-center justify-center md:justify-start">
               <span className="w-10 h-[1px] bg-ink mr-4"></span> 
               Portfolio
             </p>
-            <h2 className="text-[clamp(60px,12vw,120px)] font-black leading-[0.8] tracking-tighter uppercase group cursor-default">
+            <h2 className="text-[clamp(18px,7vw,80px)] font-black leading-none tracking-tighter uppercase group cursor-default">
               <motion.span 
                 initial={{ opacity: 1 }}
                 whileHover={{ x: 20, color: "var(--color-accent)" }}
@@ -218,7 +290,7 @@ export default function Projects() {
               <motion.span 
                 initial={{ opacity: 1 }}
                 whileHover={{ x: -20 }}
-                className="block text-accent transition-transform duration-500"
+                className="block text-accent transition-transform duration-500 md:ml-20"
               >
                 GRAPHY
               </motion.span>
@@ -235,63 +307,16 @@ export default function Projects() {
           <Marquee baseVelocity={-2} />
         </div>
 
-        <div className="grid grid-cols-12 gap-x-8 gap-y-24">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 md:gap-x-12 gap-y-24 md:gap-y-32">
           {projects.map((project, i) => (
-            <motion.div
+            <ProjectCard 
               key={project.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, delay: i % 2 * 0.1 }}
-              className={`${project.cols} group relative`}
-            >
-              <motion.div 
-                className="relative rounded-[2.5rem] overflow-hidden bg-ink shadow-2xl transition-all duration-700 aspect-[4/5] md:aspect-auto md:h-[650px] cursor-pointer z-10"
-                whileHover={{ scale: 1.05, zIndex: 40 }}
-                onDoubleClick={() => navigate(`/project/${project.id}`)}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {/* Image Wrap */}
-                <div className="w-full h-full relative">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-all duration-1000 grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-60 group-hover:opacity-90"
-                    referrerPolicy="no-referrer"
-                  />
-                  {/* Color Tint Overlay */}
-                  <div className="absolute inset-0 bg-accent/5 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-1000" />
-                  
-                  {/* Expanded reveal indicator */}
-                  <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-                      <span className="text-[9px] uppercase font-bold tracking-widest text-white">Full Frame</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Info Overlay (appears on hover) */}
-                <div className="absolute inset-0 p-12 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-8 group-hover:translate-y-0 pointer-events-none bg-gradient-to-t from-ink/90 via-ink/20 to-transparent">
-                  <div className="max-w-md">
-                    <div className="flex justify-between items-center mb-4">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-accent">{project.category}</p>
-                      <p className="text-white/40 font-mono text-xs">{project.year}</p>
-                    </div>
-                    <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter uppercase mb-4">{project.title}</h3>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Title Outside */}
-              <div className="mt-8 flex justify-between items-center group-hover:opacity-20 transition-opacity duration-500">
-                <div>
-                   <h3 className="text-xl md:text-2xl font-display font-black leading-none uppercase tracking-tighter">{project.title}</h3>
-                   <p className="text-[9px] font-bold uppercase tracking-widest text-ink/40 mt-3">{project.category}</p>
-                </div>
-                <div className="w-10 h-[1px] bg-ink/10" />
-                <span className="text-[10px] font-mono opacity-20">0{project.id}</span>
-              </div>
-            </motion.div>
+              project={project}
+              i={i}
+              navigate={navigate}
+              toggleTitle={toggleTitle}
+              hiddenTitles={hiddenTitles}
+            />
           ))}
         </div>
 

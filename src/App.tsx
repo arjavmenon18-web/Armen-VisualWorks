@@ -24,7 +24,7 @@ function Portfolio() {
   });
 
   return (
-    <div className="relative selection:bg-accent selection:text-ink">
+    <div className="relative overflow-x-hidden bg-bg">
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-accent z-[60] origin-left"

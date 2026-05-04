@@ -11,9 +11,13 @@
   --color-muted: #8E9299;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 @layer base {
   body {
-    @apply bg-bg text-ink font-sans selection:bg-accent selection:text-ink;
+    @apply bg-bg text-ink font-sans;
     overflow-x: hidden;
   }
   
@@ -29,9 +33,7 @@
   }
   
   .editorial-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1.5rem;
+    @apply grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8;
   }
   
   .mask-oval {

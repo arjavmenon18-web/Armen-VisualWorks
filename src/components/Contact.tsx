@@ -9,7 +9,7 @@ export default function Contact() {
           <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 blur-[100px] group-hover:bg-accent/40 transition-all duration-1000" />
           
           <span className="text-xs font-bold uppercase tracking-[0.3em] text-bg/40 mb-8 block font-sans">Have a project in mind?</span>
-          <h2 className="text-[clamp(40px,8vw,80px)] font-black mb-12 leading-none uppercase">LET'S<br /><span className="text-accent italic">START</span><br />SOMETHING.</h2>
+          <h2 className="text-[clamp(18px,6.5vw,80px)] font-black mb-12 leading-none uppercase">LET'S<br /><span className="text-accent italic">START</span><br />SOMETHING.</h2>
           
           <div className="space-y-8 relative z-10">
             <a href="mailto:armenvisualworks@gmail.com" className="group flex flex-wrap items-center gap-6 text-xl md:text-2xl lg:text-4xl font-display font-bold hover:text-accent transition-colors break-all">

@@ -1,11 +1,16 @@
 import { motion } from "motion/react";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { useScrollLightHit } from "../hooks/useScrollLightHit";
 
 export default function AboutMe() {
+  const imageRef = useRef<HTMLDivElement>(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isHit = useScrollLightHit(imageRef, isMobile ? 200 : 0, false);
   return (
-    <div className="min-h-screen bg-bg text-ink selection:bg-accent selection:text-ink">
-      <nav className="fixed top-0 left-0 w-full p-8 z-50 flex justify-between items-center">
+    <div className="min-h-screen bg-bg text-ink">
+      <nav className="fixed top-0 left-0 w-full p-6 md:p-8 z-50 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2 group">
           <div className="w-10 h-10 rounded-full border border-ink/10 flex items-center justify-center group-hover:bg-ink group-hover:text-bg transition-all">
             <ArrowLeft className="w-4 h-4" />
@@ -15,29 +20,38 @@ export default function AboutMe() {
         <div className="text-xs uppercase font-bold tracking-widest">About me :)</div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-6 pt-40 pb-20 grid grid-cols-12 gap-12">
+      <main className="max-w-7xl mx-auto px-6 pt-32 md:pt-40 pb-20 grid grid-cols-12 gap-6 md:gap-12">
         <div className="col-span-12 lg:col-span-12">
            <motion.h1 
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
-             className="text-[clamp(48px,12vw,140px)] font-black leading-[0.8] tracking-tighter uppercase mb-12 md:mb-20"
+             className="text-[clamp(48px,12vw,140px)] font-black leading-[0.85] tracking-tighter uppercase mb-12 md:mb-20"
            >
              About<br />
-             <span className="text-accent underline underline-offset-[16px] decoration-accent/20 italic">me :)</span>
+             <span className="text-accent underline underline-offset-[12px] md:underline-offset-[16px] decoration-accent/20 italic">me :)</span>
            </motion.h1>
         </div>
 
-        <div className="col-span-12 lg:col-span-5 relative">
+        <div className="col-span-12 lg:col-span-5 relative mb-12 lg:mb-0">
           <motion.div
+            ref={imageRef}
             initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="rounded-[3rem] overflow-hidden aspect-[4/5] bg-ink shadow-2xl sticky top-40"
+            animate={{ 
+              opacity: 1, 
+              scale: isHit ? 1.05 : 1,
+            }}
+            transition={{ 
+              type: "spring",
+              stiffness: 70,
+              damping: 25,
+              mass: 1
+            }}
+            className={`w-full max-w-[400px] lg:max-w-none mx-auto lg:w-full rounded-[2rem] md:rounded-[3rem] overflow-hidden aspect-[4/5] bg-ink shadow-2xl lg:sticky lg:top-40 transition-all duration-700 will-change-transform ${isHit ? 'ring-1 ring-accent/30 shadow-accent/10' : ''}`}
           >
             <img 
               src="https://i.postimg.cc/jSRYZTB0/mee.png" 
               alt="Arjav Menon" 
-              className="w-full h-full object-cover grayscale transition-all duration-1000 hover:grayscale-0 hover:scale-105"
+              className={`w-full h-full object-cover transition-all duration-1000 ${isHit ? 'grayscale-0' : 'grayscale'}`}
               referrerPolicy="no-referrer"
             />
           </motion.div>
@@ -48,16 +62,16 @@ export default function AboutMe() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-6 md:space-y-8"
           >
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">The intersection of Art & Logic.</h2>
-            <p className="text-lg md:text-xl text-ink/60 leading-relaxed font-medium">
+            <h2 className="text-xl md:text-3xl font-bold tracking-tight leading-tight">The intersection of Art & Logic.</h2>
+            <p className="text-base md:text-xl text-ink/60 leading-relaxed font-medium">
               I'm Arjav Menon, an independent designer and creative director focused on building high-fidelity digital products. I'm currently a student in Class 11th at Pearl Wisdom School Dubai. My work is defined by a deep curiosity for how aesthetics influence human behavior.
             </p>
-            <p className="text-base md:text-lg text-ink/40 leading-relaxed">
-              With over 4 years of experience in the industry, I've delivered 20 projects that challenge the norms of grid systems and typography. I believe that every pixel should serve a purpose—whether that's to guide a user through a flow or to evoke a specific emotional response.
+            <p className="text-sm md:text-lg text-ink/40 leading-relaxed">
+              With over 4 years of experience in the industry, I founded AVW to reshape visuals and have delivered 20 projects that challenge the norms of grid systems and typography. I believe that every pixel should serve a purpose—whether that's to guide a user through a flow or to evoke a specific emotional response.
             </p>
-            <p className="text-base md:text-lg text-ink/40 leading-relaxed">
+            <p className="text-sm md:text-lg text-ink/40 leading-relaxed">
               I'm currently based in Dubai, UAE, focused on redefining digital presences through strategic design and immersive development.
             </p>
           </motion.div>
@@ -68,7 +82,6 @@ export default function AboutMe() {
               <ul className="space-y-2 font-bold text-sm">
                 <li>Art Direction</li>
                 <li>Interaction Design</li>
-                <li>Full-Stack Engineering</li>
                 <li>Motion Design</li>
                 <li>Brand Strategy</li>
               </ul>

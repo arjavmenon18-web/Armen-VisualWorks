@@ -34,7 +34,7 @@ export default function Navbar() {
           href="#"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-lg md:text-xl font-black tracking-tighter uppercase flex items-center gap-1"
+          className="text-[clamp(14px,4.5vw,20px)] md:text-xl font-black tracking-tighter uppercase flex items-center gap-1 max-w-[60vw]"
         >
           Armen VisualWorks
         </motion.a>

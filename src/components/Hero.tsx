@@ -2,9 +2,13 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowDown } from "lucide-react";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useScrollLightHit } from "../hooks/useScrollLightHit";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const heroImageRef = useRef<HTMLDivElement>(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isHit = useScrollLightHit(heroImageRef, isMobile ? 200 : 0, false);
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
   const y2 = useTransform(scrollY, [0, 500], [0, -100]);
@@ -36,7 +40,7 @@ export default function Hero() {
               <span className="w-10 h-[1px] bg-ink mr-4"></span> 
               Independent Designer & Director
             </p>
-            <h1 className="text-[clamp(64px,18vw,140px)] leading-[0.8] font-black tracking-tighter uppercase mb-8 md:mb-12">
+            <h1 className="text-[clamp(20px,8vw,140px)] leading-[0.8] font-black tracking-tighter uppercase mb-8 md:mb-12">
               Arjav<br />
               <span className="text-accent">Menon</span>
             </h1>
@@ -51,47 +55,43 @@ export default function Hero() {
             >
               Crafting high-end digital experiences for brands that value aesthetic precision and strategic storytelling.
             </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.8 }}
-              className="flex items-center gap-6"
-            >
-              <div className="w-14 h-14 rounded-full border border-ink flex items-center justify-center cursor-pointer hover:bg-ink hover:text-bg transition-all">
-                <ArrowDown className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-ink">Scroll to Explore</span>
-            </motion.div>
           </div>
         </div>
 
         <div className="col-span-12 lg:col-span-4 relative mt-12 lg:mt-0 lg:ml-auto">
           <motion.div
             id="hero-image-container"
+            ref={heroImageRef}
             style={{ y: y2 }}
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 1.2, ease: "circOut" }}
-            className="relative z-10 w-full max-w-[480px]"
+            animate={isHit ? { opacity: 1, scale: 1.05 } : { opacity: 1, scale: 1 }}
+            transition={{ 
+              type: "spring",
+              stiffness: 100,
+              damping: 30,
+              mass: 1,
+              opacity: { duration: 1.2, ease: "circOut" }
+            }}
+            className="relative z-10 w-full max-w-[480px] will-change-transform"
           >
             {/* Main Card - Update to Link and remove text */}
             <Link to="/about-me" className="block w-full aspect-[4/5] bg-ink rounded-[48px] shadow-2xl overflow-hidden relative group">
               {/* Clean Picture Background */}
               <img 
                 src="https://i.postimg.cc/jSRYZTB0/mee.png" 
-                className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-110" 
+                className={`w-full h-full object-cover transition-all duration-1000 ${isHit ? 'grayscale-0 scale-110' : 'grayscale group-hover:grayscale-0 group-hover:scale-110'}`} 
                 alt="About me"
                 referrerPolicy="no-referrer"
               />
               
               {/* Image Overlay */}
-              <div className="absolute inset-0 bg-accent/5 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-1000" />
+              <div className={`absolute inset-0 bg-accent/5 mix-blend-overlay transition-opacity duration-1000 ${isHit ? 'opacity-0' : 'group-hover:opacity-0'}`} />
 
               {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-ink/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-md">
+              <div className={`absolute inset-0 bg-ink/40 transition-opacity flex items-center justify-center backdrop-blur-md ${isHit ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                  <motion.span 
                    initial={{ y: 10, opacity: 0 }}
+                   animate={isHit ? { y: 0, opacity: 1 } : {}}
                    whileHover={{ y: 0, opacity: 1 }}
                    className="text-white text-[10px] uppercase font-bold tracking-[0.5em] border border-white/20 px-8 py-4 rounded-full"
                  >
@@ -100,28 +100,25 @@ export default function Hero() {
               </div>
             </Link>
 
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="mt-8 flex items-center gap-4 justify-center md:justify-start"
+            >
+              <div className="w-8 h-8 rounded-full border border-ink/20 flex items-center justify-center">
+                <ArrowDown className="w-3 h-3 text-accent" />
+              </div>
+              <span className="text-[10px] uppercase font-bold tracking-[0.3em] text-ink/60">Scroll to Explore</span>
+            </motion.div>
+
             {/* Floating Accent Shape */}
             <div className="absolute -top-10 -left-10 w-32 h-32 bg-accent rounded-full blur-[60px] opacity-20" />
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll Down Indicator */}
-      <motion.div
-        style={{ opacity }}
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
-      >
-        <span className="uppercase text-[10px] font-bold tracking-[0.5em] text-ink/40">Scroll</span>
-        <div className="w-px h-12 bg-ink/10 relative overflow-hidden">
-          <motion.div
-            animate={{ top: ["-100%", "100%"] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-            className="absolute w-full h-1/2 bg-accent"
-          />
-        </div>
-      </motion.div>
+      {/* Removed bottom scroll indicator for cleaner UI */}
     </section>
   );
 }
