@@ -13,7 +13,7 @@ export default function Magnifier({
   magnifierSize = 250 
 }: MagnifierProps) {
   const [showMagnifier, setShowMagnifier] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0, offsetY: 0 });
   const [imgBounds, setImgBounds] = useState<DOMRect | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -21,7 +21,7 @@ export default function Magnifier({
     if (!imgRef.current) return;
     
     const elem = imgRef.current;
-    const { top, left, width, height } = elem.getBoundingClientRect();
+    const bounds = elem.getBoundingClientRect();
     
     let clientX, clientY;
     if ('touches' in e) {
@@ -33,27 +33,36 @@ export default function Magnifier({
     }
 
     // Relative to the image element
-    const relX = clientX - left;
-    const relY = clientY - top;
+    const relX = clientX - bounds.left;
+    const relY = clientY - bounds.top;
+
+    // Detect if this is a touch event or mouse event
+    // The user requested to swap the behavior
+    const isTouch = 'touches' in e;
+    const verticalOffset = isTouch ? 0 : -140; 
 
     // Constrain within image bounds
-    if (relX < 0 || relY < 0 || relX > width || relY > height) {
+    if (relX < 0 || relY < 0 || relX > bounds.width || relY > bounds.height) {
       setShowMagnifier(false);
       return;
     }
 
-    setMousePos({ x: relX, y: relY });
-    setImgBounds(elem.getBoundingClientRect());
-    if (!showMagnifier) setShowMagnifier(true);
+    setMousePos({ 
+      x: relX, 
+      y: relY,
+      offsetY: verticalOffset 
+    });
+    setImgBounds(bounds);
+    setShowMagnifier(true);
   };
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center cursor-crosshair overflow-hidden rounded-xl md:rounded-[2rem]">
+    <div className="relative inline-block cursor-crosshair touch-none">
       <img
         ref={imgRef}
         src={src}
         alt="Magnifiable"
-        className="max-w-full max-h-[40vh] md:max-h-[60vh] lg:max-h-[75vh] w-auto h-auto object-contain block mx-auto shadow-2xl touch-none"
+        className="max-w-full max-h-[40vh] md:max-h-[60vh] lg:max-h-[75vh] w-auto h-auto object-contain block mx-auto shadow-2xl rounded-xl md:rounded-[2rem]"
         onMouseEnter={() => setShowMagnifier(true)}
         onMouseLeave={() => setShowMagnifier(false)}
         onMouseMove={handleMove}
@@ -65,7 +74,7 @@ export default function Magnifier({
 
       <AnimatePresence>
         {showMagnifier && imgBounds && (
-            <motion.div
+          <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
@@ -75,7 +84,7 @@ export default function Magnifier({
               width: magnifierSize,
               height: magnifierSize,
               left: mousePos.x - magnifierSize / 2,
-              top: mousePos.y - magnifierSize / 2,
+              top: mousePos.y - magnifierSize / 2 + mousePos.offsetY,
             }}
           >
             {/* Lens Reflection Overlay */}
