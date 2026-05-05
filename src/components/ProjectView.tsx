@@ -176,10 +176,10 @@ export default function ProjectView() {
             </div>
 
             {/* Technical Detail Section (Just aesthetic) */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
                {[
                  { label: "ISO", value: "100" },
-                 { label: "Lens", value: "35mm Prime" },
+                 { label: "Device", value: (project as any).device || "35mm Prime" },
                  { label: "Aperture", value: "f/1.8" },
                  { label: "Exposure", value: "1/250s" }
                ].map((spec, i) => (
@@ -189,10 +189,10 @@ export default function ProjectView() {
                    whileInView={{ opacity: 1, y: 0 }}
                    viewport={{ once: true }}
                    transition={{ delay: 0.4 + (i * 0.1) }}
-                   className="p-5 md:p-8 border border-bg/5 rounded-2xl bg-white/[0.03] backdrop-blur-sm"
+                   className="p-4 md:p-8 border border-bg/5 rounded-2xl bg-white/[0.03] backdrop-blur-sm"
                  >
                     <p className="text-[8px] md:text-[10px] uppercase font-bold tracking-widest text-bg/30 mb-2">{spec.label}</p>
-                    <p className="text-base md:text-2xl font-black text-bg/80 leading-none">{spec.value}</p>
+                    <p className="text-sm md:text-2xl font-black text-bg/80 leading-none">{spec.value}</p>
                  </motion.div>
                ))}
             </div>

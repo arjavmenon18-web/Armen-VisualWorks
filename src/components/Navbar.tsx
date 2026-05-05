@@ -67,32 +67,31 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      <motion.div
-        id="mobile-menu"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ 
-          opacity: isMobileMenuOpen ? 1 : 0, 
-          y: isMobileMenuOpen ? 0 : -20
-        }}
-        className={`md:hidden absolute top-full left-0 w-full bg-bg border-b border-ink/10 px-6 py-12 pointer-events-none ${isMobileMenuOpen ? "pointer-events-auto block" : "hidden"}`}
-      >
-        <div className="flex flex-col gap-10 items-center">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-4xl font-black uppercase tracking-tighter text-ink"
-            >
-              {link.name}
-            </a>
-          ))}
-          <button className="w-full max-w-xs py-5 bg-accent text-ink rounded-full text-sm font-black uppercase tracking-[0.3em]">
-            Start a project
-          </button>
-        </div>
-      </motion.div>
+        <motion.div
+          id="mobile-menu"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ 
+            opacity: isMobileMenuOpen ? 1 : 0, 
+            y: isMobileMenuOpen ? 0 : -20
+          }}
+          className={`md:hidden absolute top-full left-0 w-full bg-bg border-b border-ink/10 px-6 py-12 transition-all duration-300 pointer-events-none z-50 shadow-2xl ${isMobileMenuOpen ? "pointer-events-auto block" : "hidden"}`}
+        >
+          <div className="flex flex-col gap-8 items-center max-w-[90vw] mx-auto text-center">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-4xl font-black uppercase tracking-tighter text-ink active:scale-95 transition-transform py-2 w-full"
+              >
+                {link.name}
+              </a>
+            ))}
+            <button className="w-full max-w-xs mt-4 py-5 bg-accent text-ink rounded-full text-sm font-black uppercase tracking-[0.3em] active:scale-95 transition-transform">
+              Start a project
+            </button>
+          </div>
+        </motion.div>
     </nav>
   );
 }

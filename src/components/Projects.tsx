@@ -149,6 +149,25 @@ export const projects = [
     year: "2024",
     cols: "col-span-12 md:col-span-12",
   },
+  {
+    id: 17,
+    title: "BALI SERENITY",
+    category: "Landscape",
+    image: "https://i.postimg.cc/rs6mVbdr/Whats-App-Image-2026-05-05-at-6-53-00-PM.jpg",
+    description: "A breathtaking view of the serene Balinese landscape, where nature flows in perfect harmony.",
+    year: "2024",
+    cols: "col-span-12 md:col-span-6",
+  },
+  {
+    id: 18,
+    title: "OSLO EXPEDITION",
+    category: "Road",
+    image: "https://i.postimg.cc/zGLTfmvF/hghquality.png",
+    description: "A cinematic perspective of the roadside narratives in Oslo, Norway. Captured during the high-speed transit of 2023.",
+    year: "2023",
+    cols: "col-span-12 md:col-span-12",
+    device: "Realme 7i"
+  },
 ];
 
 interface MarqueeProps {
@@ -185,7 +204,7 @@ function Marquee({ baseVelocity = 100 }: MarqueeProps) {
   });
 
   return (
-    <div className="overflow-hidden whitespace-nowrap flex flex-nowrap py-10 mt-20 border-y border-ink/5">
+    <div className="overflow-hidden whitespace-nowrap flex flex-nowrap py-10 mt-8 md:mt-20 border-y border-ink/5">
       <motion.div className="flex whitespace-nowrap flex-nowrap text-[clamp(16px,5vw,120px)] font-black uppercase tracking-tighter leading-none" style={{ x }}>
         <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
         <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
@@ -229,6 +248,7 @@ function ProjectCard({ project, i, navigate, toggleTitle, hiddenTitles }: any) {
           <img
             src={project.image}
             alt={project.title}
+            loading="lazy"
             className={`w-full h-full object-cover transition-[filter,transform,opacity] duration-1000 ${isHit ? 'grayscale-0 scale-105 opacity-90' : 'grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-60 group-hover:opacity-90'}`}
             referrerPolicy="no-referrer"
           />
@@ -302,12 +322,54 @@ export default function Projects() {
           </div>
         </div>
 
+        {/* Portfolio Hero Featured Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2 }}
+          className="mb-12 md:mb-32 relative group cursor-pointer"
+          onClick={() => navigate('/project/18')}
+        >
+          <div className="relative">
+            <div className="aspect-square md:aspect-[21/9] w-full rounded-[4rem] md:rounded-[3rem] overflow-hidden bg-ink relative [clip-path:url(#triangle-bubble)] md:[clip-path:none]">
+              {/* SVG Clip Path Definition */}
+              <svg width="0" height="0" className="absolute">
+                <defs>
+                  <clipPath id="triangle-bubble" clipPathUnits="objectBoundingBox">
+                    <path d="M0.5,0.05 C0.6,0.05 0.9,0.7 0.95,0.85 C1,1 0.8,0.95 0.5,0.95 C0.2,0.95 0,1 0.05,0.85 C0.1,0.7 0.4,0.05 0.5,0.05 Z" />
+                  </clipPath>
+                </defs>
+              </svg>
+
+              <img 
+                src="https://i.postimg.cc/zGLTfmvF/hghquality.png" 
+                loading="lazy"
+                className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
+                alt="Oslo Expedition"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent opacity-80 md:opacity-60" />
+            </div>
+            
+            <div className="md:absolute md:bottom-12 md:left-12 md:right-12 mt-4 md:mt-0 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-6 text-center md:text-left">
+              <div>
+                <p className="text-[8px] md:text-[10px] uppercase font-bold tracking-[0.4em] text-ink/40 md:text-white/40 mb-2">Highlight Project</p>
+                <h3 className="text-3xl md:text-6xl font-black text-ink md:text-white uppercase tracking-tighter">Oslo Expedition</h3>
+              </div>
+              <div className="bg-ink/5 md:bg-white/10 backdrop-blur-md px-6 py-3 md:px-8 md:py-4 rounded-full border border-ink/10 md:border-white/20 group-hover:bg-accent group-hover:border-accent group-hover:text-ink transition-all">
+                <span className="text-[9px] md:text-[10px] uppercase font-bold tracking-[0.3em] text-ink md:text-white group-hover:text-ink">Explore Detail</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Marquee Section */}
-        <div className="mb-40">
+        <div className="mb-12 md:mb-40">
           <Marquee baseVelocity={-2} />
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 md:gap-x-12 gap-y-24 md:gap-y-32">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 md:gap-x-12 gap-y-12 md:gap-y-32">
           {projects.map((project, i) => (
             <ProjectCard 
               key={project.id}
@@ -320,8 +382,8 @@ export default function Projects() {
           ))}
         </div>
 
-        <div className="mt-40 flex flex-col items-center">
-           <div className="w-px h-24 bg-ink/10 mb-12" />
+        <div className="mt-12 md:mt-40 flex flex-col items-center">
+           <div className="w-px h-12 md:h-24 bg-ink/10 mb-8 md:mb-12" />
            <button className="group flex flex-col items-center gap-6">
              <span className="text-xs font-bold uppercase tracking-[0.5em] text-ink/40 group-hover:text-accent transition-colors">View All Works</span>
              <div className="w-20 h-20 border border-ink/10 rounded-full flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all transform group-hover:scale-110">

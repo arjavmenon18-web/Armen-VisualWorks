@@ -18,7 +18,7 @@ export default function Hero() {
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-screen flex flex-col justify-center px-6 overflow-hidden pt-20"
+      className="relative min-h-screen min-h-[100dvh] flex flex-col justify-center px-6 overflow-hidden pt-20"
     >
       {/* Background Decorative Element */}
       <motion.div
