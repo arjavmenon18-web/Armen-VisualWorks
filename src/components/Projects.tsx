@@ -212,7 +212,7 @@ function ProjectCard({ project, i, navigate, toggleTitle, hiddenTitles }: any) {
       className="group relative will-change-transform"
     >
       <motion.div 
-        className="relative rounded-[2.5rem] overflow-hidden bg-ink shadow-2xl transition-all duration-700 aspect-square cursor-pointer z-10 will-change-transform"
+        className="relative rounded-[2.5rem] overflow-hidden bg-ink shadow-2xl transition-[transform,opacity] duration-700 aspect-square cursor-pointer z-10 force-gpu"
         whileHover={{ scale: 1.05, zIndex: 40 }}
         animate={isHit ? { scale: 1.05, zIndex: 40 } : { scale: 1, zIndex: 10 }}
         onClick={() => toggleTitle(project.id)}
@@ -229,7 +229,7 @@ function ProjectCard({ project, i, navigate, toggleTitle, hiddenTitles }: any) {
           <img
             src={project.image}
             alt={project.title}
-            className={`w-full h-full object-cover transition-all duration-1000 ${isHit ? 'grayscale-0 scale-105 opacity-90' : 'grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-60 group-hover:opacity-90'}`}
+            className={`w-full h-full object-cover transition-[filter,transform,opacity] duration-1000 ${isHit ? 'grayscale-0 scale-105 opacity-90' : 'grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-60 group-hover:opacity-90'}`}
             referrerPolicy="no-referrer"
           />
           {/* Color Tint Overlay */}

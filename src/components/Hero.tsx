@@ -24,7 +24,7 @@ export default function Hero() {
       <motion.div
         id="hero-bg-text"
         style={{ y: y1 }}
-        className="absolute top-1/4 -left-20 text-[20vw] font-black text-ink/[0.03] whitespace-nowrap pointer-events-none select-none"
+        className="absolute top-1/4 -left-20 text-[20vw] font-black text-ink/[0.03] whitespace-nowrap pointer-events-none select-none force-gpu"
       >
         ARMEN VISUALWORKS
       </motion.div>
@@ -79,9 +79,11 @@ export default function Hero() {
               {/* Clean Picture Background */}
               <img 
                 src="https://i.postimg.cc/jSRYZTB0/mee.png" 
-                className={`w-full h-full object-cover transition-all duration-1000 ${isHit ? 'grayscale-0 scale-110' : 'grayscale group-hover:grayscale-0 group-hover:scale-110'}`} 
+                className={`w-full h-full object-cover transition-[filter,transform,opacity] duration-1000 ${isHit ? 'grayscale-0 scale-110' : 'grayscale group-hover:grayscale-0 group-hover:scale-110'}`} 
                 alt="About me"
                 referrerPolicy="no-referrer"
+                loading="eager"
+                fetchpriority="high"
               />
               
               {/* Image Overlay */}
@@ -104,7 +106,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
-              className="mt-8 flex items-center gap-4 justify-center md:justify-start"
+              className="mt-8 flex items-center gap-4 justify-center md:justify-start force-gpu"
             >
               <div className="w-8 h-8 rounded-full border border-ink/20 flex items-center justify-center">
                 <ArrowDown className="w-3 h-3 text-accent" />

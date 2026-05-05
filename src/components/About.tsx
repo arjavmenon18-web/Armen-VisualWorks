@@ -90,7 +90,7 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="space-y-6 pt-12 will-change-transform"
           >
-            <div className={`rounded-[2.5rem] overflow-hidden aspect-[3/4] transition-all duration-1000 will-change-transform ${isHit1 ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0 hover:scale-[1.02]'}`}>
+            <div className={`rounded-[2.5rem] overflow-hidden aspect-[3/4] transition-[filter,transform] duration-700 force-gpu ${isHit1 ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0 hover:scale-[1.02]'}`}>
                <img
                 src="https://i.postimg.cc/TYykr4tV/Archive-01.png"
                 alt="Design work"
@@ -116,7 +116,7 @@ export default function About() {
               <h4 className="text-lg font-bold text-ink mb-2">Archive - 02</h4>
               <p className="text-sm text-ink/70">A study of the Landsoldaten in Copenhagen, capturing the raw, oxidized textures of history against a backdrop of urban industrial growth.</p>
             </div>
-            <div className={`rounded-[2.5rem] overflow-hidden aspect-[3/4] transition-all duration-1000 will-change-transform ${isHit2 ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0 hover:scale-[1.02]'}`}>
+            <div className={`rounded-[2.5rem] overflow-hidden aspect-[3/4] transition-[filter,transform] duration-700 force-gpu ${isHit2 ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0 hover:scale-[1.02]'}`}>
                <img
                 src="https://i.postimg.cc/wT6NzymX/Archive-02.png"
                 alt="Process"

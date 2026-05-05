@@ -7,25 +7,23 @@ export function useScrollLightHit(ref: RefObject<HTMLElement>, tolerance = 0, mo
     if (!ref.current) return;
 
     const checkHit = () => {
-      if (!ref.current) return;
+      requestAnimationFrame(() => {
+        if (!ref.current) return;
 
-      // Basic screen-size check if requested
-      if (mobileOnly && window.innerWidth >= 768) {
-        setIsHit(false);
-        return;
-      }
-      
-      const rect = ref.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      
-      // We'll consider it a "hit" if the element is roughly in the path of the light
-      // which moves from roughly 10% to 90% of the viewport height during scroll.
-      // We check if the element's center is within this active "light zone".
-      
-      const elementCenter = rect.top + rect.height / 2;
-      const hit = elementCenter > viewportHeight * 0.1 - tolerance && elementCenter < viewportHeight * 0.9 + tolerance;
-      
-      setIsHit(hit);
+        // Basic screen-size check if requested
+        if (mobileOnly && window.innerWidth >= 768) {
+          setIsHit(false);
+          return;
+        }
+        
+        const rect = ref.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        const elementCenter = rect.top + rect.height / 2;
+        const hit = elementCenter > viewportHeight * 0.1 - tolerance && elementCenter < viewportHeight * 0.9 + tolerance;
+        
+        setIsHit(hit);
+      });
     };
 
     const observer = new IntersectionObserver((entries) => {

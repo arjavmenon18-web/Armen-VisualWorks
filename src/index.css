@@ -19,6 +19,16 @@
   body {
     @apply bg-bg text-ink font-sans;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Force hardware acceleration for common animated elements */
+  .force-gpu {
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: translateZ(0);
+    will-change: transform, opacity;
   }
   
   h1, h2, h3, h4, h5, h6 {

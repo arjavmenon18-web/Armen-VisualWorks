@@ -24,7 +24,7 @@ function GalleryItem({ p, i, navigate }: any) {
       className="group relative cursor-pointer will-change-transform"
     >
       <motion.div 
-        className="w-24 h-24 md:w-32 md:h-32 rounded-2xl md:rounded-3xl overflow-hidden border border-bg/10 transition-all duration-500 z-10 relative will-change-transform"
+        className="w-24 h-24 md:w-32 md:h-32 rounded-2xl md:rounded-3xl overflow-hidden border border-bg/10 transition-[transform,border-color,z-index] duration-500 z-10 relative will-change-transform force-gpu"
         animate={isHit ? { scale: 1.1, rotate: -3, borderColor: "var(--color-accent)", zIndex: 30 } : { scale: 1, rotate: 0, borderColor: "rgba(235, 240, 245, 0.1)", zIndex: 10 }}
         whileHover={{ scale: 1.1, rotate: -3, borderColor: "var(--color-accent)", zIndex: 30 }}
         transition={{ 
@@ -36,7 +36,7 @@ function GalleryItem({ p, i, navigate }: any) {
         <img 
           src={p.image} 
           alt={p.title} 
-          className={`w-full h-full object-cover transition-all duration-700 ${isHit ? 'grayscale-0 opacity-100 scale-105' : 'grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105'}`}
+          className={`w-full h-full object-cover transition-[filter,opacity,transform] duration-700 ${isHit ? 'grayscale-0 opacity-100 scale-105' : 'grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105'}`}
           referrerPolicy="no-referrer"
         />
       </motion.div>
@@ -170,7 +170,7 @@ export default function ProjectView() {
 
         {/* Quick Access Gallery */}
         <div className="mt-40 border-t border-bg/10 pt-20">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6 text-center md:text-left">
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent mb-4">Quick Access</p>
               <h2 className="text-4xl font-black uppercase tracking-tighter">Explore More</h2>
@@ -183,7 +183,7 @@ export default function ProjectView() {
             </button>
           </div>
 
-          <div className="flex flex-wrap gap-4 md:gap-6">
+          <div className="flex flex-wrap gap-4 md:gap-6 justify-center md:justify-start">
             {projects
               .filter(p => p.id !== project.id)
               .map((p, i) => (

@@ -6,6 +6,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import ImageGuard from "./components/ImageGuard";
 import About from "./components/About";
 import Projects from "./components/Projects";
 import CreativeShowcase from "./components/CreativeShowcase";
@@ -76,6 +77,7 @@ function Portfolio() {
 export default function App() {
   return (
     <Router>
+      <ImageGuard />
       <Routes>
         <Route path="/" element={<Portfolio />} />
         <Route path="/about-me" element={<AboutMe />} />

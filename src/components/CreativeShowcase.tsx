@@ -28,7 +28,7 @@ export default function CreativeShowcase() {
            <motion.div 
              animate={{ x: ["0%", "-50%"] }}
              transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-             className="flex gap-8 whitespace-nowrap"
+             className="flex gap-8 whitespace-nowrap force-gpu"
            >
              {[1,2,3,4,5,6,7,8].map(i => (
                <div key={i} className="flex items-center gap-8">
