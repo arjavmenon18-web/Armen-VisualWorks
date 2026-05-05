@@ -1,9 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowLeft, X, Maximize2 } from "lucide-react";
+import { ArrowLeft, X, Maximize2, Search } from "lucide-react";
 import { projects } from "./Projects";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useScrollLightHit } from "../hooks/useScrollLightHit";
+import Magnifier from "./Magnifier";
 
 function GalleryItem({ p, i, navigate }: any) {
   const itemRef = useRef<HTMLDivElement>(null);
@@ -48,6 +49,8 @@ export default function ProjectView() {
   const { id } = useParams();
   const navigate = useNavigate();
   const project = projects.find(p => p.id === Number(id));
+  const [showMagnifyTool, setShowMagnifyTool] = useState(false);
+  const [isMagnifying, setIsMagnifying] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -130,19 +133,62 @@ export default function ProjectView() {
 
           {/* Full Image and Specs */}
           <div className="space-y-12">
-            <motion.div
-              initial={{ scale: 0.98, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-white/5 rounded-[2rem] md:rounded-[3rem] p-4 md:p-12 lg:p-16 flex items-center justify-center w-full overflow-hidden"
-            >
-              <img 
-                src={project.image} 
-                alt={project.title} 
-                className="max-w-full max-h-[40vh] md:max-h-[60vh] lg:max-h-[75vh] w-auto h-auto object-contain block mx-auto rounded-xl md:rounded-[2rem] shadow-2xl transition-all duration-700"
-                referrerPolicy="no-referrer"
-              />
-            </motion.div>
+            <div className="relative">
+              <motion.div
+                initial={{ scale: 0.98, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                onDoubleClick={() => setShowMagnifyTool(!showMagnifyTool)}
+                className="bg-white/5 rounded-[2rem] md:rounded-[3rem] p-4 md:p-12 lg:p-16 flex items-center justify-center w-full overflow-hidden relative group/img"
+              >
+                {isMagnifying ? (
+                  <Magnifier src={project.image} />
+                ) : (
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="max-w-full max-h-[40vh] md:max-h-[60vh] lg:max-h-[75vh] w-auto h-auto object-contain block mx-auto rounded-xl md:rounded-[2rem] shadow-2xl transition-all duration-700"
+                    referrerPolicy="no-referrer"
+                  />
+                )}
+
+                {/* Hint Overlay - Only show on desktop (md and up) */}
+                {!showMagnifyTool && (
+                  <div className="absolute inset-0 hidden md:flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none">
+                    <div className="bg-ink/30 backdrop-blur-md px-6 py-3 rounded-full border border-bg/10 scale-90 group-hover/img:scale-100 transition-all duration-500">
+                      <span className="text-[9px] uppercase font-black tracking-[0.3em] text-bg">Double-Click for Deep Pic</span>
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+
+              <AnimatePresence>
+                {/* On mobile (hidden on md), show by default. on desktop, wait for showMagnifyTool */}
+                {(showMagnifyTool || window.innerWidth < 768) && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="mt-6 md:mt-0 md:absolute md:bottom-8 md:right-8 z-30 flex flex-col md:flex-row items-center gap-3 justify-center w-full md:w-auto"
+                  >
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsMagnifying(!isMagnifying);
+                      }}
+                      className={`flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border backdrop-blur-md transition-all font-bold text-[9px] md:text-[10px] uppercase tracking-widest ${
+                        isMagnifying 
+                          ? 'bg-accent text-ink border-accent shadow-[0_0_30px_rgba(var(--color-accent),0.4)]' 
+                          : 'bg-ink text-bg border-bg/20 hover:border-accent hover:text-accent'
+                      }`}
+                    >
+                      <Search className="w-3 h-3" />
+                      {isMagnifying ? 'Lens Active' : 'Enable Lens'}
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Technical Detail Section (Just aesthetic) */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
