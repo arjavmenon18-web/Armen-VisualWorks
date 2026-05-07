@@ -22,10 +22,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overscroll-behavior-y: auto;
+    padding-bottom: env(safe-area-inset-bottom);
+    min-height: -webkit-fill-available;
   }
 
   html {
     scroll-behavior: smooth;
+    height: -webkit-fill-available;
   }
   
   /* Force hardware acceleration for common animated elements */

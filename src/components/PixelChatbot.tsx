@@ -192,7 +192,7 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
           initial={{ opacity: 0, y: 100, scale: 0.9, x: 0 }}
           animate={{ opacity: 1, y: 0, scale: 1, x: 0 }}
           exit={{ opacity: 0, y: 100, scale: 0.9, x: 0 }}
-          className="fixed bottom-32 right-6 md:right-12 w-[calc(100vw-3rem)] md:w-[400px] h-[600px] max-h-[70vh] bg-bg border border-ink/10 rounded-[32px] shadow-2xl z-[200] flex flex-col overflow-hidden"
+          className="fixed bottom-32 right-6 md:right-12 w-[calc(100vw-3rem)] md:w-[400px] h-[600px] max-h-[calc(100vh-200px)] bg-bg border border-ink/10 rounded-[32px] shadow-2xl z-[200] flex flex-col overflow-hidden"
         >
           {/* Header */}
           <div className="p-6 border-b border-ink/5 flex items-center justify-between bg-ink/5">
@@ -270,7 +270,8 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about AVW projects..."
-              className="flex-1 bg-bg border border-ink/10 rounded-full px-5 py-3 text-sm focus:outline-none focus:border-accent transition-colors"
+              autoComplete="off"
+              className="flex-1 bg-bg border border-ink/10 rounded-full px-5 py-3 text-base md:text-sm focus:outline-none focus:border-accent transition-colors"
             />
             <button
               type="submit"

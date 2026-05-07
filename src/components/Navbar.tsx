@@ -25,8 +25,9 @@ export default function Navbar() {
     <nav
       id="navbar"
       className={`fixed top-0 left-0 w-full z-50 transition-[background-color,padding,border-color] duration-500 force-gpu ${
-        isScrolled ? "bg-bg/80 backdrop-blur-xl border-b border-ink/5 py-4" : "bg-transparent py-8"
+        isScrolled ? "bg-bg/80 backdrop-blur-xl border-b border-ink/5 py-3 md:py-4" : "bg-transparent py-6 md:py-8"
       }`}
+      style={{ paddingTop: `calc(${isScrolled ? '0.75rem' : '1.5rem'} + env(safe-area-inset-top))` }}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
         <motion.a

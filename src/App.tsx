@@ -14,6 +14,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import AboutMe from "./components/AboutMe";
 import ProjectView from "./components/ProjectView";
+import ScrollToTop from "./components/ScrollToTop";
 import { motion, useScroll, useSpring } from "motion/react";
 import { Sparkles } from "lucide-react";
 
@@ -64,6 +65,7 @@ export default function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <ImageGuard />
       <Routes>
         <Route path="/" element={<Portfolio />} />

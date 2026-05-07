@@ -336,16 +336,7 @@ export default function Projects() {
           onClick={() => navigate('/project/18')}
         >
           <div className="relative">
-            <div className="aspect-square md:aspect-[21/9] w-full rounded-[4rem] md:rounded-[3rem] overflow-hidden bg-ink relative [clip-path:url(#triangle-bubble)] md:[clip-path:none]">
-              {/* SVG Clip Path Definition */}
-              <svg width="0" height="0" className="absolute">
-                <defs>
-                  <clipPath id="triangle-bubble" clipPathUnits="objectBoundingBox">
-                    <path d="M0.5,0.05 C0.6,0.05 0.9,0.7 0.95,0.85 C1,1 0.8,0.95 0.5,0.95 C0.2,0.95 0,1 0.05,0.85 C0.1,0.7 0.4,0.05 0.5,0.05 Z" />
-                  </clipPath>
-                </defs>
-              </svg>
-
+            <div className="aspect-[4/5] md:aspect-[21/9] w-full rounded-[2.5rem] md:rounded-[3rem] overflow-hidden bg-ink relative">
               <img 
                 src="https://i.postimg.cc/zGLTfmvF/hghquality.png" 
                 loading="lazy"

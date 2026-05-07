@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 
 export default function Footer() {
   return (
-    <footer className="relative py-12 px-6 lg:px-12 bg-bg border-t border-ink/5">
+    <footer className="relative py-12 px-6 lg:px-12 bg-bg border-t border-ink/5" style={{ paddingBottom: 'calc(3rem + env(safe-area-inset-bottom))' }}>
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
         <div className="flex flex-col sm:flex-row gap-12 md:gap-16">
           <div>

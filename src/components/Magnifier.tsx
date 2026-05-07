@@ -10,9 +10,24 @@ interface MagnifierProps {
 export default function Magnifier({ 
   src, 
   zoomLevel = 2.5, 
-  magnifierSize = 250 
+  magnifierSize: initialMagnifierSize = 250 
 }: MagnifierProps) {
   const [showMagnifier, setShowMagnifier] = useState(false);
+  const [magnifierSize, setMagnifierSize] = useState(initialMagnifierSize);
+  
+  useEffect(() => {
+    const updateSize = () => {
+      if (window.innerWidth < 768) {
+        setMagnifierSize(Math.min(window.innerWidth - 100, 180));
+      } else {
+        setMagnifierSize(initialMagnifierSize);
+      }
+    };
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, [initialMagnifierSize]);
+
   const [mousePos, setMousePos] = useState({ x: 0, y: 0, offsetY: 0 });
   const [imgBounds, setImgBounds] = useState<DOMRect | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -37,9 +52,9 @@ export default function Magnifier({
     const relY = clientY - bounds.top;
 
     // Detect if this is a touch event or mouse event
-    // The user requested to swap the behavior
     const isTouch = 'touches' in e;
-    const verticalOffset = isTouch ? 0 : -140; 
+    // On touch, we need significant offset so the lens is visible ABOVE the finger
+    const verticalOffset = isTouch ? -120 : -140; 
 
     // Constrain within image bounds
     if (relX < 0 || relY < 0 || relX > bounds.width || relY > bounds.height) {

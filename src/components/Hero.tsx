@@ -40,7 +40,7 @@ export default function Hero() {
               <span className="w-10 h-[1px] bg-ink mr-4"></span> 
               Independent Designer & Director
             </p>
-            <h1 className="text-[clamp(20px,8vw,140px)] leading-[0.8] font-black tracking-tighter uppercase mb-8 md:mb-12">
+            <h1 className="text-[clamp(44px,11vw,140px)] leading-[0.8] font-black tracking-[-0.05em] uppercase mb-8 md:mb-12">
               Arjav<br />
               <span className="text-accent">Menon</span>
             </h1>
