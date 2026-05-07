@@ -7,8 +7,8 @@ export default function About() {
   const archive2Ref = useRef<HTMLDivElement>(null);
   
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const isHit1 = useScrollLightHit(archive1Ref, isMobile ? 200 : 0, false);
-  const isHit2 = useScrollLightHit(archive2Ref, isMobile ? 200 : 0, false);
+  const isHit1 = useScrollLightHit(archive1Ref, isMobile ? 200 : 0, false, "Archive 01 (Munich Study)");
+  const isHit2 = useScrollLightHit(archive2Ref, isMobile ? 200 : 0, false, "Archive 02 (Copenhagen Study)");
 
   return (
     <section id="about" className="pt-32 pb-40 px-6 bg-ink text-bg relative overflow-hidden group">
@@ -57,17 +57,21 @@ export default function About() {
         </div>
 
         {/* PHOTOGRAPHY (was THE ARCHIVE SERIES) */}
-        <div className="pt-24 border-t border-bg/5">
+        <div id="archive-series" className="pt-24 border-t border-bg/5">
           <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-12 text-center md:text-left">
             <div className="max-w-2xl">
               <p className="text-[11px] uppercase tracking-[0.4em] font-bold mb-6 flex items-center justify-center md:justify-start text-bg/40">
                 <span className="w-10 h-[1px] bg-bg/20 mr-4"></span> 
                 Selected Works
               </p>
-            <h2 className="text-[clamp(14px,6.2vw,120px)] font-black leading-[0.8] tracking-tighter uppercase text-white">
-              THE ARCHIVE<br />
-              <span className="text-accent underline underline-offset-[12px] decoration-white/10">SERIES</span>
+            <h2 className="text-[clamp(40px,10vw,200px)] font-black leading-[0.7] tracking-[-0.07em] uppercase text-white flex flex-col items-center md:items-start">
+              <span className="block opacity-90">ARCHIVE</span>
+              <span className="text-accent relative">
+                SERIES
+                <span className="absolute -bottom-2 right-0 text-[10px] tracking-[0.5em] text-white/20 font-bold hidden md:block">TYPE-DOC.01</span>
+              </span>
             </h2>
+            <div className="w-full h-[1px] bg-white/10 mt-8 hidden md:block" />
             </div>
             <div className="max-w-xs space-y-6 mb-4">
               <p className="text-sm font-medium text-bg/40 leading-relaxed italic">

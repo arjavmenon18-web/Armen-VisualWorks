@@ -83,7 +83,7 @@ export default function Hero() {
                 alt="About me"
                 referrerPolicy="no-referrer"
                 loading="eager"
-                fetchpriority="high"
+                fetchPriority="high"
               />
               
               {/* Image Overlay */}

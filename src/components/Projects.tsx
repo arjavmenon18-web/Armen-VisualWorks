@@ -218,7 +218,7 @@ function Marquee({ baseVelocity = 100 }: MarqueeProps) {
 function ProjectCard({ project, i, navigate, toggleTitle, hiddenTitles }: any) {
   const cardRef = useRef<HTMLDivElement>(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const isHit = useScrollLightHit(cardRef, isMobile ? 200 : 0, false);
+  const isHit = useScrollLightHit(cardRef, isMobile ? 200 : 0, false, `Project: ${project.title}`);
 
   return (
     <motion.div
@@ -283,6 +283,9 @@ function ProjectCard({ project, i, navigate, toggleTitle, hiddenTitles }: any) {
 export default function Projects() {
   const navigate = useNavigate();
   const [hiddenTitles, setHiddenTitles] = useState<number[]>([]);
+  const featuredRef = useRef<HTMLDivElement>(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  useScrollLightHit(featuredRef, isMobile ? 300 : 0, false, "Oslo Expedition (Featured Highlight)");
 
   const toggleTitle = (id: number) => {
     setHiddenTitles((prev) =>
@@ -317,13 +320,14 @@ export default function Projects() {
             </h2>
           </div>
           <div className="pb-6">
-            <p className="text-[12px] font-bold uppercase tracking-[0.6em] text-ink/30 mb-2">The Archive Series</p>
+            <p className="text-[12px] font-bold uppercase tracking-[0.6em] text-ink/30 mb-2">Original photograph from around the world</p>
             <div className="w-24 h-[2px] bg-accent" />
           </div>
         </div>
 
         {/* Portfolio Hero Featured Section */}
         <motion.div 
+          ref={featuredRef}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
