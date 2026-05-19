@@ -8,11 +8,11 @@ export default function Contact() {
         <div className="col-span-12 lg:col-span-6 bg-ink text-bg p-12 md:p-24 rounded-[4rem] relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 blur-[100px] group-hover:bg-accent/40 transition-all duration-1000" />
           
-          <span className="text-xs font-bold uppercase tracking-[0.3em] text-bg/40 mb-8 block font-sans">Have a project in mind?</span>
-          <h2 className="text-[clamp(18px,6.5vw,80px)] font-black mb-12 leading-none uppercase">LET'S<br /><span className="text-accent italic">START</span><br />SOMETHING.</h2>
+          <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-bg/40 mb-8 block font-sans">Have a project in mind?</span>
+          <h2 className="text-[clamp(18px,5vw,60px)] font-black mb-12 leading-none uppercase">LET'S<br /><span className="text-accent italic">START</span><br />SOMETHING.</h2>
           
           <div className="space-y-8 relative z-10">
-            <a href="mailto:armenvisualworks@gmail.com" className="group flex flex-wrap items-center gap-6 text-xl md:text-2xl lg:text-4xl font-display font-bold hover:text-accent transition-colors break-all">
+            <a href="mailto:armenvisualworks@gmail.com" className="group flex flex-wrap items-center gap-6 text-xl md:text-2xl lg:text-3xl font-display font-bold hover:text-accent transition-colors break-all">
               armenvisualworks@gmail.com
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-bg/20 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all shrink-0">
                 <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 group-hover:text-ink" />
@@ -66,7 +66,7 @@ export default function Contact() {
                 className="w-full bg-white border border-ink/5 rounded-[2.5rem] p-8 focus:outline-none focus:border-accent transition-colors resize-none"
               />
             </div>
-            <button className="w-full py-6 bg-accent text-ink rounded-3xl font-bold uppercase tracking-[0.2em] hover:bg-ink hover:text-bg transition-all transform hover:scale-[1.02]">
+            <button className="w-full glass-button text-ink">
               Send Message
             </button>
           </form>

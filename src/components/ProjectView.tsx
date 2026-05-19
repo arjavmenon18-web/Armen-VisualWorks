@@ -115,16 +115,16 @@ export default function ProjectView() {
           >
             <div className="flex items-center gap-4 mb-6">
               <span className="text-accent font-mono text-sm leading-none">{project.year}</span>
-              <div className="w-8 h-[1px] bg-bg/20" />
-              <span className="text-bg/40 uppercase text-[10px] font-bold tracking-[0.4em] leading-none">{project.category}</span>
+              <div className="w-8 h-[1px] bg-white/20" />
+              <span className="text-white/40 uppercase text-[10px] font-bold tracking-[0.4em] leading-none">{project.category}</span>
             </div>
             
-            <h1 className="text-[clamp(32px,8vw,100px)] font-black tracking-tighter uppercase mb-8 leading-[0.85] break-words">
+            <h1 className="text-[clamp(32px,7vw,80px)] font-black tracking-tighter uppercase mb-8 leading-[0.85] break-words text-white">
               {project.title}
             </h1>
 
             <div className="max-w-2xl">
-              <p className="text-bg/70 text-base md:text-xl leading-relaxed font-medium">
+              <p className="text-bg/70 text-sm md:text-lg leading-relaxed font-medium">
                 {project.description}
               </p>
             </div>
@@ -204,7 +204,7 @@ export default function ProjectView() {
           <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6 text-center md:text-left">
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent mb-4">Quick Access</p>
-              <h2 className="text-4xl font-black uppercase tracking-tighter">Explore More</h2>
+              <h2 className="text-3xl font-black uppercase tracking-tighter text-white">Explore More</h2>
             </div>
             <button 
               onClick={() => navigate("/")}

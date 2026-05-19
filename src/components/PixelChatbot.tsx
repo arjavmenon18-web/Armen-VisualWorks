@@ -173,7 +173,7 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleAction(action.path)}
-                className="flex items-center justify-between w-full px-4 py-3 bg-accent text-ink rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-accent/10 border border-white/20 transition-colors"
+                className="flex items-center justify-between w-full px-4 py-3 bg-white/40 text-ink rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg border border-white/40 transition-colors"
               >
                 <span>{action.label}</span>
                 <ExternalLink className="w-3 h-3 opacity-50" />
@@ -189,27 +189,27 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: 100, scale: 0.9, x: 0 }}
-          animate={{ opacity: 1, y: 0, scale: 1, x: 0 }}
-          exit={{ opacity: 0, y: 100, scale: 0.9, x: 0 }}
-          className="fixed bottom-32 right-6 md:right-12 w-[calc(100vw-3rem)] md:w-[400px] h-[600px] max-h-[calc(100vh-200px)] bg-bg border border-ink/10 rounded-[32px] shadow-2xl z-[200] flex flex-col overflow-hidden"
+          initial={{ opacity: 0, y: 100, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 100, scale: 0.95 }}
+          className="fixed bottom-32 right-6 md:right-12 w-[calc(100vw-3rem)] md:w-[450px] h-[700px] max-h-[calc(100vh-200px)] bg-white/95 backdrop-blur-xl rounded-[40px] z-[200] flex flex-col overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.3)] border border-white"
         >
           {/* Header */}
-          <div className="p-6 border-b border-ink/5 flex items-center justify-between bg-ink/5">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-ink" />
+          <div className="p-6 border-b border-ink/5 flex items-center justify-between bg-white relative overflow-hidden">
+            <div className="flex items-center gap-3 text-ink">
+              <div className="w-12 h-12 bg-accent rounded-2xl flex items-center justify-center shadow-xl">
+                <Sparkles className="w-6 h-6 text-white" />
               </div>
-              <div>
-                <h3 className="text-sm font-black uppercase tracking-widest text-ink">Pixel</h3>
-                <p className="text-[10px] text-ink/40 font-bold uppercase tracking-tight">Studio Assistant</p>
+              <div className="flex flex-col">
+                <h3 className="text-sm font-black uppercase tracking-widest leading-tight">Pixel</h3>
+                <p className="text-[10px] opacity-40 font-bold uppercase tracking-tight">Studio Assistant</p>
               </div>
             </div>
             <button 
               onClick={onClose}
-              className="w-10 h-10 rounded-full hover:bg-ink/5 flex items-center justify-center transition-colors"
+              className="w-10 h-10 rounded-full hover:bg-ink hover:text-white transition-colors flex items-center justify-center text-ink/40"
             >
-              <X className="w-5 h-5 text-ink" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
@@ -222,13 +222,13 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
                 animate={{ opacity: 1, y: 0 }}
                 className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
               >
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.role === 'user' ? 'bg-ink/10' : 'bg-accent/20'}`}>
-                  {msg.role === 'user' ? <User className="w-4 h-4 text-ink" /> : <Bot className="w-4 h-4 text-ink" />}
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm ${msg.role === 'user' ? 'bg-ink' : 'bg-white shadow-[inset_0_1px_0_rgba(255,255,255,1),0_2px_4px_rgba(0,0,0,0.05)]'}`}>
+                  {msg.role === 'user' ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-ink" />}
                 </div>
-                <div className={`max-w-[85%] rounded-2xl p-4 text-sm leading-relaxed ${
+                <div className={`max-w-[85%] rounded-2xl p-4 text-sm leading-relaxed shadow-md ${
                   msg.role === 'user' 
-                    ? 'bg-ink text-white rounded-tr-none shadow-xl' 
-                    : 'bg-ink/5 text-ink rounded-tl-none border border-ink/5'
+                    ? 'bg-ink text-white rounded-tr-none shadow-black/10' 
+                    : 'bg-white/60 backdrop-blur-sm text-ink rounded-tl-none border border-white/60 shadow-black/5'
                 }`}>
                   {renderMessageContent(msg.content)}
                 </div>
@@ -236,10 +236,10 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
             ))}
             {isLoading && (
               <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center shadow-sm">
                   <Bot className="w-4 h-4 text-ink" />
                 </div>
-                <div className="bg-ink/5 rounded-2xl rounded-tl-none p-4">
+                <div className="bg-white/40 backdrop-blur-md rounded-2xl rounded-tl-none p-4 border border-white/60 shadow-lg shadow-black/5">
                   <div className="flex gap-1">
                     <motion.div
                       animate={{ scale: [1, 1.2, 1] }}
@@ -263,27 +263,29 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
-          <form onSubmit={handleSubmit} className="p-4 border-t border-ink/5 flex gap-2 bg-ink/5">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about AVW projects..."
-              autoComplete="off"
-              className="flex-1 bg-bg border border-ink/10 rounded-full px-5 py-3 text-base md:text-sm focus:outline-none focus:border-accent transition-colors"
-            />
-            <button
-              type="submit"
-              disabled={!input.trim() || isLoading}
-              className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center hover:bg-accent hover:text-ink transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
-            >
-              <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </button>
-          </form>
+          {/* Input Area */}
+          <div className="p-4 bg-white border-t border-ink/5 relative">
+            <form onSubmit={handleSubmit} className="flex gap-2 p-1 bg-ink/5 rounded-full border border-ink/10">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask about AVW projects..."
+                autoComplete="off"
+                className="flex-1 bg-transparent px-5 py-3 text-base md:text-sm focus:outline-none transition-colors placeholder:text-ink/30"
+              />
+              <button
+                type="submit"
+                disabled={!input.trim() || isLoading}
+                className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center hover:bg-accent transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+              >
+                <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </button>
+            </form>
+          </div>
           
           {/* Footer branding */}
-          <div className="px-6 py-2 text-center border-t border-ink/5">
+          <div className="px-6 py-3 text-center border-t border-white/10 bg-white/5">
             <p className="text-[8px] text-ink/30 uppercase font-black tracking-widest leading-none">
               Built by Arjav Menon & Team AVW
             </p>

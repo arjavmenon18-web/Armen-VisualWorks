@@ -24,8 +24,10 @@ export default function Navbar() {
   return (
     <nav
       id="navbar"
-      className={`fixed top-0 left-0 w-full z-50 transition-[background-color,padding,border-color] duration-500 force-gpu ${
-        isScrolled ? "bg-bg/80 backdrop-blur-xl border-b border-ink/5 py-3 md:py-4" : "bg-transparent py-6 md:py-8"
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 force-gpu ${
+        isScrolled 
+          ? "bg-bg/80 backdrop-blur-3xl border-b border-ink/5 py-3 md:py-4" 
+          : "bg-transparent py-6 md:py-8"
       }`}
       style={{ paddingTop: `calc(${isScrolled ? '0.75rem' : '1.5rem'} + env(safe-area-inset-top))` }}
     >
@@ -35,7 +37,7 @@ export default function Navbar() {
           href="#"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-[clamp(14px,4.5vw,20px)] md:text-xl font-black tracking-tighter uppercase flex items-center gap-1 max-w-[60vw]"
+          className="text-[clamp(14px,4.5vw,18px)] md:text-lg font-black tracking-tighter uppercase flex items-center gap-1 max-w-[60vw]"
         >
           Armen VisualWorks
         </motion.a>
@@ -88,7 +90,7 @@ export default function Navbar() {
                 {link.name}
               </a>
             ))}
-            <button className="w-full max-w-xs mt-4 py-5 bg-accent text-ink rounded-full text-sm font-black uppercase tracking-[0.3em] active:scale-95 transition-transform">
+            <button className="w-full max-w-xs mt-4 px-8 py-4 bg-ink text-white rounded-full font-bold uppercase tracking-widest text-[10px]">
               Start a project
             </button>
           </div>

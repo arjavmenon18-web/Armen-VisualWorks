@@ -205,7 +205,7 @@ function Marquee({ baseVelocity = 100 }: MarqueeProps) {
 
   return (
     <div className="overflow-hidden whitespace-nowrap flex flex-nowrap py-10 mt-8 md:mt-20 border-y border-ink/5">
-      <motion.div className="flex whitespace-nowrap flex-nowrap text-[clamp(16px,5vw,120px)] font-black uppercase tracking-tighter leading-none" style={{ x }}>
+      <motion.div className="flex whitespace-nowrap flex-nowrap text-[clamp(16px,4vw,80px)] font-black uppercase tracking-tighter leading-none text-accent" style={{ x }}>
         <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
         <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
         <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
@@ -231,7 +231,7 @@ function ProjectCard({ project, i, navigate, toggleTitle, hiddenTitles }: any) {
       className="group relative will-change-transform"
     >
       <motion.div 
-        className="relative rounded-[2.5rem] overflow-hidden bg-ink shadow-2xl transition-[transform,opacity] duration-700 aspect-square cursor-pointer z-10 force-gpu"
+        className="relative rounded-[2.5rem] overflow-hidden bg-ink transition-[transform,opacity] duration-700 aspect-square cursor-pointer z-10 force-gpu shadow-2xl"
         whileHover={{ scale: 1.05, zIndex: 40 }}
         animate={isHit ? { scale: 1.05, zIndex: 40 } : { scale: 1, zIndex: 10 }}
         onClick={() => toggleTitle(project.id)}
@@ -254,20 +254,13 @@ function ProjectCard({ project, i, navigate, toggleTitle, hiddenTitles }: any) {
           />
           {/* Color Tint Overlay */}
           <div className={`absolute inset-0 bg-accent/5 mix-blend-overlay transition-opacity duration-1000 ${isHit ? 'opacity-0' : 'group-hover:opacity-0'}`} />
-          
-          {/* Expanded reveal indicator */}
-          <div className={`absolute bottom-6 right-6 transition-opacity duration-500 ${isHit ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-            <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-              <span className="text-[9px] uppercase font-bold tracking-widest text-white">Double Tap</span>
-            </div>
-          </div>
         </div>
 
         {/* Info Overlay removed as per user request to avoid overlap */}
       </motion.div>
 
       {/* Title Outside */}
-      <div className={`mt-6 flex justify-between items-start transition-all duration-500 ${isHit ? 'opacity-20' : 'group-hover:opacity-20'} ${hiddenTitles.includes(project.id) ? 'opacity-0 h-0 overflow-hidden mt-0' : 'opacity-100'}`}>
+      <div className={`mt-6 flex justify-between items-start transition-all duration-500 ${hiddenTitles.includes(project.id) ? 'opacity-0 h-0 overflow-hidden mt-0' : 'opacity-100'}`}>
         <div className="flex-1 min-w-0 pr-6">
            <h3 className="text-xs md:text-base font-display font-black leading-tight uppercase tracking-tight break-words">{project.title}</h3>
            <p className="text-[8px] font-bold uppercase tracking-widest text-ink/40 mt-2">{project.category}</p>
@@ -298,11 +291,11 @@ export default function Projects() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-12 text-center md:text-left">
           <div className="max-w-2xl flex flex-col items-center md:items-start">
-            <p className="text-[11px] uppercase tracking-[0.4em] font-bold mb-6 flex items-center justify-center md:justify-start">
+            <p className="text-[10px] uppercase tracking-[0.5em] font-bold mb-6 flex items-center justify-center md:justify-start">
               <span className="w-10 h-[1px] bg-ink mr-4"></span> 
               Portfolio
             </p>
-            <h2 className="text-[clamp(18px,7vw,80px)] font-black leading-none tracking-tighter uppercase group cursor-default">
+            <h2 className="text-[clamp(18px,6vw,70px)] font-black leading-none tracking-tighter uppercase group cursor-default">
               <motion.span 
                 initial={{ opacity: 1 }}
                 whileHover={{ x: 20, color: "var(--color-accent)" }}
@@ -349,10 +342,10 @@ export default function Projects() {
             
             <div className="md:absolute md:bottom-12 md:left-12 md:right-12 mt-4 md:mt-0 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-6 text-center md:text-left">
               <div>
-                <p className="text-[8px] md:text-[10px] uppercase font-bold tracking-[0.4em] text-ink/40 md:text-white/40 mb-2">Highlight Project</p>
-                <h3 className="text-3xl md:text-6xl font-black text-ink md:text-white uppercase tracking-tighter">Oslo Expedition</h3>
+                <p className="text-[8px] md:text-[9px] uppercase font-bold tracking-[0.4em] text-ink/40 md:text-white/40 mb-2">Highlight Project</p>
+                <h3 className="text-2xl md:text-5xl font-black text-ink md:text-white uppercase tracking-tighter">Oslo Expedition</h3>
               </div>
-              <div className="bg-ink/5 md:bg-white/10 backdrop-blur-md px-6 py-3 md:px-8 md:py-4 rounded-full border border-ink/10 md:border-white/20 group-hover:bg-accent group-hover:border-accent group-hover:text-ink transition-all">
+              <div className="bg-ink/5 md:bg-white/5 backdrop-blur-md px-6 py-3 md:px-8 md:py-4 rounded-full border border-ink/10 md:border-white/10 shadow-lg group-hover:bg-accent group-hover:border-accent transition-all group">
                 <span className="text-[9px] md:text-[10px] uppercase font-bold tracking-[0.3em] text-ink md:text-white group-hover:text-ink">Explore Detail</span>
               </div>
             </div>
@@ -377,15 +370,15 @@ export default function Projects() {
           ))}
         </div>
 
-        <div className="mt-12 md:mt-40 flex flex-col items-center">
-           <div className="w-px h-12 md:h-24 bg-ink/10 mb-8 md:mb-12" />
-           <button className="group flex flex-col items-center gap-6">
-             <span className="text-xs font-bold uppercase tracking-[0.5em] text-ink/40 group-hover:text-accent transition-colors">View All Works</span>
-             <div className="w-20 h-20 border border-ink/10 rounded-full flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all transform group-hover:scale-110">
-                <ArrowUpRight className="w-8 h-8 group-rotate-0 group-hover:-rotate-45 transition-transform" />
-             </div>
-           </button>
-        </div>
+         <div className="mt-12 md:mt-40 flex flex-col items-center">
+            <div className="w-px h-12 md:h-24 bg-ink/10 mb-8 md:mb-12" />
+            <button className="group flex flex-col items-center gap-6">
+              <span className="text-xs font-bold uppercase tracking-[0.5em] text-ink/40 group-hover:text-accent transition-colors">View All Works</span>
+              <div className="w-20 h-20 border border-ink/10 rounded-full flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all transform group-hover:scale-110 shadow-[0_10px_20px_rgba(0,0,0,0.05),inset_0_1px_1px_rgba(255,255,255,0.8)]">
+                 <ArrowUpRight className="w-8 h-8 group-rotate-0 group-hover:-rotate-45 transition-transform" />
+              </div>
+            </button>
+         </div>
       </div>
     </section>
   );

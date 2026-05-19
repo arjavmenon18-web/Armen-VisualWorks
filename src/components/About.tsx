@@ -40,18 +40,18 @@ export default function About() {
               </p>
 
               <div className="grid grid-cols-2 gap-8 pt-8 border-t border-bg/10">
-                <div>
+                <div className="bg-white/5 border border-white/10 p-6 rounded-3xl">
                   <p className="text-4xl font-display font-bold text-accent mb-2">04+</p>
                   <p className="text-xs uppercase tracking-widest font-bold text-bg/40">Years Experience</p>
                 </div>
-                <div>
+                <div className="bg-white/5 border border-white/10 p-6 rounded-3xl">
                   <p className="text-4xl font-display font-bold text-accent mb-2">20</p>
                   <p className="text-xs uppercase tracking-widest font-bold text-bg/40">Projects Delivered</p>
                 </div>
               </div>
             </motion.div>
           </div>
-          <div className="hidden lg:block w-1/2 italic text-bg/10 text-right font-black text-9xl select-none pointer-events-none">
+          <div className="hidden lg:block w-1/2 italic text-bg/10 text-right font-black text-7xl select-none pointer-events-none">
             AESTHETIC<br />PRECISION
           </div>
         </div>
@@ -60,11 +60,11 @@ export default function About() {
         <div id="archive-series" className="pt-24 border-t border-bg/5">
           <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-12 text-center md:text-left">
             <div className="max-w-2xl">
-              <p className="text-[11px] uppercase tracking-[0.4em] font-bold mb-6 flex items-center justify-center md:justify-start text-bg/40">
+              <p className="text-[10px] uppercase tracking-[0.5em] font-bold mb-6 flex items-center justify-center md:justify-start text-bg/40">
                 <span className="w-10 h-[1px] bg-bg/20 mr-4"></span> 
                 Selected Works
               </p>
-            <h2 className="text-[clamp(40px,10vw,200px)] font-black leading-[0.7] tracking-[-0.07em] uppercase text-white flex flex-col items-center md:items-start">
+            <h2 className="text-[clamp(32px,8vw,120px)] font-black leading-[0.8] tracking-[-0.07em] uppercase text-white flex flex-col items-center md:items-start">
               <span className="block opacity-90">ARCHIVE</span>
               <span className="text-accent relative">
                 SERIES
@@ -94,7 +94,7 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="space-y-6 pt-12 will-change-transform"
           >
-            <div className={`rounded-[2.5rem] overflow-hidden aspect-[3/4] transition-[filter,transform] duration-700 force-gpu ${isHit1 ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0 hover:scale-[1.02]'}`}>
+            <div className={`rounded-[2.5rem] overflow-hidden aspect-[3/4] transition-[filter,transform] duration-700 force-gpu shadow-[0_30px_60px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] ${isHit1 ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0 hover:scale-[1.02]'}`}>
                <img
                 src="https://i.postimg.cc/TYykr4tV/Archive-01.png"
                 alt="Design work"
@@ -102,7 +102,7 @@ export default function About() {
                 referrerPolicy="no-referrer"
               />
             </div>
-            <div className="bg-bg/5 p-8 rounded-[2rem] border border-bg/5">
+            <div className="bg-white/5 border border-white/10 p-8 rounded-[2rem]">
               <h4 className="text-lg font-bold mb-2 text-white">Archive - 01</h4>
               <p className="text-sm text-bg/40">A high-contrast architectural study of Munich’s Marienplatz, capturing the sharp intersection of Gothic detail and cinematic atmosphere.</p>
             </div>
@@ -116,11 +116,11 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="space-y-6 will-change-transform"
           >
-            <div className="bg-accent p-8 rounded-[2rem]">
-              <h4 className="text-lg font-bold text-ink mb-2">Archive - 02</h4>
-              <p className="text-sm text-ink/70">A study of the Landsoldaten in Copenhagen, capturing the raw, oxidized textures of history against a backdrop of urban industrial growth.</p>
+            <div className="bg-white/5 p-8 rounded-[2rem] border border-accent/20">
+              <h4 className="text-lg font-bold text-white mb-2">Archive - 02</h4>
+              <p className="text-sm text-bg/60">A study of the Landsoldaten in Copenhagen, capturing the raw, oxidized textures of history against a backdrop of urban industrial growth.</p>
             </div>
-            <div className={`rounded-[2.5rem] overflow-hidden aspect-[3/4] transition-[filter,transform] duration-700 force-gpu ${isHit2 ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0 hover:scale-[1.02]'}`}>
+            <div className={`rounded-[2.5rem] overflow-hidden aspect-[3/4] transition-[filter,transform] duration-700 force-gpu shadow-[0_30px_60px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] ${isHit2 ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0 hover:scale-[1.02]'}`}>
                <img
                 src="https://i.postimg.cc/wT6NzymX/Archive-02.png"
                 alt="Process"

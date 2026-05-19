@@ -36,13 +36,13 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <p className="text-[11px] uppercase tracking-[0.4em] font-bold mb-6 flex items-center">
+            <p className="text-[10px] uppercase tracking-[0.5em] font-bold mb-6 flex items-center">
               <span className="w-10 h-[1px] bg-ink mr-4"></span> 
               Independent Designer & Director
             </p>
-            <h1 className="text-[clamp(44px,11vw,140px)] leading-[0.8] font-black tracking-[-0.05em] uppercase mb-8 md:mb-12">
+            <h1 className="text-[clamp(36px,9vw,110px)] leading-[0.85] font-black tracking-[-0.05em] uppercase mb-8 md:mb-12">
               Arjav<br />
-              <span className="text-accent">Menon</span>
+              <span className="text-accent drop-shadow-2xl">Menon</span>
             </h1>
           </motion.div>
 
@@ -51,7 +51,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
-              className="text-base md:text-lg leading-[1.4] font-medium text-ink/80 mb-8 md:mb-10"
+              className="text-sm md:text-base leading-[1.6] font-medium text-ink/70 mb-8 md:mb-10"
             >
               Crafting high-end digital experiences for brands that value aesthetic precision and strategic storytelling.
             </motion.p>
@@ -94,8 +94,8 @@ export default function Hero() {
                  <motion.span 
                    initial={{ y: 10, opacity: 0 }}
                    animate={isHit ? { y: 0, opacity: 1 } : {}}
-                   whileHover={{ y: 0, opacity: 1 }}
-                   className="text-white text-[10px] uppercase font-bold tracking-[0.5em] border border-white/20 px-8 py-4 rounded-full"
+                   whileHover={{ scale: 1.05 }}
+                   className="glass-button text-white"
                  >
                    View Profile :)
                  </motion.span>
@@ -115,7 +115,7 @@ export default function Hero() {
             </motion.div>
 
             {/* Floating Accent Shape */}
-            <div className="absolute -top-10 -left-10 w-32 h-32 bg-accent rounded-full blur-[60px] opacity-20" />
+            <div className="absolute -top-10 -left-10 w-48 h-48 bg-accent/10 blur-3xl rounded-full" />
           </motion.div>
         </div>
       </div>

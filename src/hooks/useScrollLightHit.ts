@@ -7,7 +7,12 @@ export function useScrollLightHit(ref: RefObject<HTMLElement>, tolerance = 0, mo
     if (!ref.current) return;
     const el = ref.current;
 
+    let lastRun = 0;
     const checkHit = () => {
+      const now = Date.now();
+      if (now - lastRun < 100) return; // Wait 100ms between runs
+      lastRun = now;
+
       requestAnimationFrame(() => {
         if (!el) return;
 

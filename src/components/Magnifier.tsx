@@ -89,35 +89,40 @@ export default function Magnifier({
 
       <AnimatePresence>
         {showMagnifier && imgBounds && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="pointer-events-none absolute z-50 border-[0.5px] border-bg/30 rounded-full shadow-[0_0_80px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(255,255,255,0.1)] overflow-hidden bg-ink ring-8 ring-accent/10"
-            style={{
-              width: magnifierSize,
-              height: magnifierSize,
-              left: mousePos.x - magnifierSize / 2,
-              top: mousePos.y - magnifierSize / 2 + mousePos.offsetY,
-            }}
-          >
-            {/* Lens Reflection Overlay */}
-            <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/10 opacity-50" />
-            
-            <div
-              className="absolute"
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              className="pointer-events-none absolute z-50 rounded-full overflow-hidden bg-white/20 backdrop-blur-md border-[3px] border-white/60 shadow-2xl"
               style={{
-                width: imgBounds.width * zoomLevel,
-                height: imgBounds.height * zoomLevel,
-                left: -mousePos.x * zoomLevel + magnifierSize / 2,
-                top: -mousePos.y * zoomLevel + magnifierSize / 2,
-                backgroundImage: `url(${src})`,
-                backgroundSize: '100% 100%',
-                backgroundRepeat: 'no-repeat',
+                width: magnifierSize,
+                height: magnifierSize,
+                left: mousePos.x - magnifierSize / 2,
+                top: mousePos.y - magnifierSize / 2 + mousePos.offsetY,
               }}
-            />
-          </motion.div>
+            >
+              {/* Lens Optical Reflection */}
+              <div className="absolute inset-0 z-30 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/20 opacity-40 mix-blend-overlay" />
+              <div className="absolute top-2 left-4 w-1/3 h-1/4 bg-white/10 rounded-full blur-xl z-30 opacity-40" />
+              
+              {/* The Magnified Image */}
+              <div
+                className="absolute z-10"
+                style={{
+                  width: imgBounds.width * zoomLevel,
+                  height: imgBounds.height * zoomLevel,
+                  left: -mousePos.x * zoomLevel + magnifierSize / 2,
+                  top: -mousePos.y * zoomLevel + magnifierSize / 2,
+                  backgroundImage: `url(${src})`,
+                  backgroundSize: '100% 100%',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              />
+              
+              {/* Inner Lens Shadow for Depth */}
+              <div className="absolute inset-0 z-20 shadow-[inset_0_0_40px_rgba(0,0,0,0.3)] pointer-events-none" />
+            </motion.div>
         )}
       </AnimatePresence>
     </div>
