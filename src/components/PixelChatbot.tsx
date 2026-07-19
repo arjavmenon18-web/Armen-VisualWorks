@@ -19,7 +19,7 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', content: "Welcome to the digital atelier of **Armen VisualWorks**. I'm **Pixel Blazer**, studio host and member of the legendary Blazer AI family. How can I guide your exploration today?" }
+    { role: 'model', content: "Welcome to the digital atelier of **Armen GlobalWorks**. I'm **Pixel Blazer**, studio host and member of the legendary Blazer AI family. How can I guide your exploration today?" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -270,7 +270,7 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about AVW projects..."
+                placeholder="Ask about AGW projects..."
                 autoComplete="off"
                 className="flex-1 bg-transparent px-5 py-3 text-base md:text-sm focus:outline-none transition-colors placeholder:text-ink/30"
               />
@@ -287,7 +287,7 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
           {/* Footer branding */}
           <div className="px-6 py-3 text-center border-t border-white/10 bg-white/5">
             <p className="text-[8px] text-ink/30 uppercase font-black tracking-widest leading-none">
-              Built by Arjav Menon & Team AVW
+              Built by Arjav Menon & Team AGW
             </p>
           </div>
         </motion.div>

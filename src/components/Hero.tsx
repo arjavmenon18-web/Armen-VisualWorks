@@ -1,126 +1,168 @@
-import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowDown } from "lucide-react";
-import { useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router-dom";
-import { useScrollLightHit } from "../hooks/useScrollLightHit";
+import { ArrowDown, Radio, Camera, Compass } from "lucide-react";
 
-export default function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const heroImageRef = useRef<HTMLDivElement>(null);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const isHit = useScrollLightHit(heroImageRef, isMobile ? 200 : 0, false);
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
-  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+interface HeroProps {
+  isExpanded: boolean;
+  onExpand: () => void;
+}
 
+export default function Hero({ isExpanded, onExpand }: HeroProps) {
   return (
     <section
       id="hero"
-      ref={containerRef}
-      className="relative min-h-screen min-h-[100dvh] flex flex-col justify-center px-6 overflow-hidden pt-20"
+      className="relative w-full h-[100vh] select-none bg-[#F5F2EB] overflow-hidden"
     >
-      {/* Background Decorative Element */}
+      {/* 1. THE INVERTED HEMISPHERE (THE VAULT) SPLIT MECHANICAL GATES */}
+      {/* LEFT GATE */}
       <motion.div
-        id="hero-bg-text"
-        style={{ y: isMobile ? 0 : y1 }}
-        className="absolute top-1/4 -left-20 text-[20vw] font-black text-ink/[0.03] whitespace-nowrap pointer-events-none select-none force-gpu"
+        id="hero-vault-left"
+        initial={{ x: "0%" }}
+        animate={{ x: isExpanded ? "-100%" : "0%" }}
+        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-0 left-0 w-1/2 h-[90vh] bg-gradient-to-b from-[#f9b934] via-[#f5b127] to-[#e09b12] z-20 overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.15)] force-gpu"
+        style={{
+          clipPath: "ellipse(180% 100% at 100% 0%)"
+        }}
       >
-        ARMEN VISUALWORKS
+        {/* Subtle geometric grid lines inside the left vault */}
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
+          <div className="absolute inset-y-0 left-1/4 border-l border-black h-full" />
+          <div className="absolute inset-y-0 left-1/2 border-l border-black h-full" />
+          <div className="absolute inset-y-0 left-3/4 border-l border-black h-full" />
+        </div>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto w-full editorial-grid relative z-10">
-        <div className="col-span-12 lg:col-span-8 flex flex-col justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <p className="text-[10px] uppercase tracking-[0.5em] font-bold mb-6 flex items-center">
-              <span className="w-10 h-[1px] bg-ink mr-4"></span> 
-              Independent Designer & Director
-            </p>
-            <h1 className="text-[clamp(36px,9vw,110px)] leading-[0.85] font-black tracking-[-0.05em] uppercase mb-8 md:mb-12">
-              Arjav<br />
-              <span className="text-accent drop-shadow-2xl">Menon</span>
-            </h1>
-          </motion.div>
-
-          <div className="w-full max-w-sm md:max-w-md">
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 1 }}
-              className="text-sm md:text-base leading-[1.6] font-medium text-ink/70 mb-8 md:mb-10"
-            >
-              Crafting high-end digital experiences for brands that value aesthetic precision and strategic storytelling.
-            </motion.p>
-          </div>
+      {/* RIGHT GATE */}
+      <motion.div
+        id="hero-vault-right"
+        initial={{ x: "0%" }}
+        animate={{ x: isExpanded ? "100%" : "0%" }}
+        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-0 right-0 w-1/2 h-[90vh] bg-gradient-to-b from-[#f9b934] via-[#f5b127] to-[#e09b12] z-20 overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.15)] force-gpu"
+        style={{
+          clipPath: "ellipse(180% 100% at 0% 0%)"
+        }}
+      >
+        {/* Subtle geometric grid lines inside the right vault */}
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
+          <div className="absolute inset-y-0 left-1/4 border-l border-black h-full" />
+          <div className="absolute inset-y-0 left-1/2 border-l border-black h-full" />
+          <div className="absolute inset-y-0 left-3/4 border-l border-black h-full" />
         </div>
+      </motion.div>
 
-        <div className="col-span-12 lg:col-span-4 relative mt-12 lg:mt-0 lg:ml-auto">
-          <motion.div
-            id="hero-image-container"
-            ref={heroImageRef}
-            style={{ y: isMobile ? 0 : y2 }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isHit ? { opacity: 1, scale: 1.05 } : { opacity: 1, scale: 1 }}
-            transition={{ 
-              type: "spring",
-              stiffness: 100,
-              damping: 30,
-              mass: 1,
-              opacity: { duration: 1.2, ease: "circOut" }
-            }}
-            className="relative z-10 w-full max-w-[480px] will-change-transform"
-          >
-            {/* Main Card - Update to Link and remove text */}
-            <Link to="/about-me" className="block w-full aspect-[4/5] bg-ink rounded-[48px] shadow-2xl overflow-hidden relative group">
-              {/* Clean Picture Background */}
-              <img 
-                src="https://i.postimg.cc/jSRYZTB0/mee.png" 
-                className={`w-full h-full object-cover transition-[filter,transform,opacity] duration-1000 ${isHit ? 'grayscale-0 scale-110' : 'grayscale group-hover:grayscale-0 group-hover:scale-110'}`} 
-                alt="About me"
-                referrerPolicy="no-referrer"
-                loading="eager"
-                fetchPriority="high"
-              />
-              
-              {/* Image Overlay */}
-              <div className={`absolute inset-0 bg-accent/5 mix-blend-overlay transition-opacity duration-1000 ${isHit ? 'opacity-0' : 'group-hover:opacity-0'}`} />
-
-              {/* Hover Overlay */}
-              <div className={`absolute inset-0 bg-ink/40 transition-opacity flex items-center justify-center backdrop-blur-md ${isHit ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-                 <motion.span 
-                   initial={{ y: 10, opacity: 0 }}
-                   animate={isHit ? { y: 0, opacity: 1 } : {}}
-                   whileHover={{ scale: 1.05 }}
-                   className="px-6 py-3 bg-white text-ink rounded-full text-[10px] font-black uppercase tracking-widest transition-all hover:bg-accent hover:text-white"
-                 >
-                   View Profile :)
-                 </motion.span>
-              </div>
-            </Link>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-              className="mt-8 flex items-center gap-4 justify-center md:justify-start force-gpu"
+      {/* 2. THE TYPOGRAPHY OVERLAY (STAGE 01 & 02) */}
+      <motion.div
+        id="hero-typography-container"
+        initial={{ opacity: 1, scale: 1 }}
+        animate={{ 
+          opacity: isExpanded ? 0 : 1,
+          scale: isExpanded ? 1.05 : 1,
+          pointerEvents: isExpanded ? "none" : "auto"
+        }}
+        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute inset-0 flex items-center justify-center z-30"
+      >
+        <h1 className="text-[clamp(28px,8.5vw,110px)] font-display font-black uppercase text-black flex items-center justify-center whitespace-nowrap tracking-tighter">
+          ARMEN
+          {/* Tactile, Bubbly Hyphen Trigger Button */}
+          <span className="relative inline-flex items-center justify-center mx-4 md:mx-8 select-none">
+            <motion.button
+              id="hyphen-trigger"
+              onClick={onExpand}
+              whileHover={{ 
+                scale: 1.15,
+                boxShadow: "0 20px 40px rgba(0,0,0,0.25)"
+              }}
+              whileTap={{ scale: 0.9 }}
+              className="cursor-pointer w-12 h-12 md:w-20 md:h-20 bg-black text-[#F5F2EB] hover:bg-white hover:text-black font-display font-black text-2xl md:text-5xl rounded-full shadow-2xl transition-all duration-300 relative z-10 flex items-center justify-center border-2 border-black"
             >
-              <div className="w-8 h-8 rounded-full border border-ink/20 flex items-center justify-center">
-                <ArrowDown className="w-3 h-3 text-accent" />
-              </div>
-              <span className="text-[10px] uppercase font-bold tracking-[0.3em] text-ink/60">Scroll to Explore</span>
-            </motion.div>
+              -
+            </motion.button>
+            
+            {/* Elegant Micro-Interaction Hint */}
+            <span className="absolute top-full left-1/2 -translate-x-1/2 mt-8 md:mt-12 whitespace-nowrap text-[9px] font-mono tracking-[0.4em] text-black font-black uppercase pointer-events-none animate-pulse bg-[#F5F2EB] px-3 py-1 rounded-full shadow-md border border-black/5">
+              [ click hyphen to enter ]
+            </span>
+          </span>
+          WORKS
+        </h1>
+      </motion.div>
 
-            {/* Floating Accent Shape */}
-            <div className="absolute -top-10 -left-10 w-48 h-48 bg-accent/10 blur-3xl rounded-full" />
+      {/* 3. THE GATEWAY REVEAL */}
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            id="gateway-reveal"
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 30 }}
+            transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 flex flex-col items-center justify-center z-10 p-6"
+          >
+            <div className="text-center mb-12 max-w-xl">
+              <span className="text-[10px] uppercase font-mono font-black tracking-[0.4em] text-accent block mb-3 bg-black text-[#F5F2EB] px-4 py-1.5 rounded-full inline-block shadow-md">
+                ARMEN GLOBALWORKS // SYSTEMS CORE
+              </span>
+              <h2 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tight text-black leading-none mt-2">
+                SELECT ARCHITECTURAL PORTFOLIO
+              </h2>
+              <p className="text-xs md:text-sm text-black/50 font-mono tracking-widest mt-3 uppercase">
+                CODENAME: STAGE_02_GATEWAY_ACTIVE
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10 w-full max-w-3xl justify-center px-4">
+              {/* Dynamic visualworks button */}
+              <Link
+                to="/visual"
+                className="w-full sm:w-auto text-center group relative px-12 py-6 bg-black text-[#F5F2EB] hover:text-black rounded-full font-mono text-[11px] font-black uppercase tracking-[0.3em] overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.15)] hover:shadow-[0_15px_45px_rgba(249,185,52,0.3)] transition-all duration-300 hover:-translate-y-1"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Camera className="w-4 h-4 text-accent" />
+                  [ VISUALWORKS ]
+                </span>
+                <div className="absolute inset-0 bg-[#f9b934] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+              </Link>
+
+              {/* Dynamic soundworks button */}
+              <Link
+                to="/sound"
+                className="w-full sm:w-auto text-center group relative px-12 py-6 bg-[#F5F2EB] text-black hover:text-[#F5F2EB] border-2 border-black rounded-full font-mono text-[11px] font-black uppercase tracking-[0.3em] overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Radio className="w-4 h-4 text-black group-hover:text-accent group-hover:animate-spin" />
+                  [ SOUNDWORKS ]
+                </span>
+                <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+              </Link>
+            </div>
+
+            {/* Scroll Indication Arrow once Gate is split */}
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 0.6, y: 0 }}
+              transition={{ delay: 1.2, duration: 1, repeat: Infinity, repeatType: "reverse" }}
+              className="absolute bottom-16 flex flex-col items-center gap-2"
+            >
+              <span className="text-[9px] uppercase tracking-[0.3em] font-mono text-[#f9b934] font-black bg-black px-4 py-1 rounded-full shadow-lg">
+                Scroll to enter database index
+              </span>
+              <ArrowDown className="w-4 h-4 text-black animate-bounce" />
+            </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* 10vh Bottom Flat Floor visualizer indicator */}
+      <div className="absolute bottom-0 left-0 w-full h-[10vh] border-t border-black/5 bg-[#F5F2EB] z-10 flex items-center justify-between px-6 md:px-12">
+        <span className="text-[8px] font-mono tracking-[0.3em] text-black/30 font-bold uppercase">AGW // PLATFORM SEC-01</span>
+        <div className="flex items-center gap-2">
+          <Compass className="w-3.5 h-3.5 text-accent animate-spin [animation-duration:10s]" />
+          <span className="text-[8px] font-mono tracking-[0.3em] text-black/30 font-bold uppercase">CREATIVE DIRECTORY</span>
         </div>
       </div>
-
-      {/* Removed bottom scroll indicator for cleaner UI */}
     </section>
   );
 }

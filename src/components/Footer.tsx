@@ -30,7 +30,7 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-ink/5 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase opacity-40">
-          © 2026 ARMEN VISUALWORKS [AVW]. ALL RIGHTS RESERVED.
+          © 2026 ARMEN GLOBALWORKS [AGW]. ALL RIGHTS RESERVED.
         </div>
         <p className="text-[10px] uppercase font-bold tracking-widest text-ink/30 italic">
           Crafting high-end digital poetry.

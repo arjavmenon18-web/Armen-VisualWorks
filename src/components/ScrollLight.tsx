@@ -33,28 +33,28 @@ export default function ScrollLight() {
     };
   }, [mouseX, mouseY]);
 
-  // For mobile: light follows scroll progress down the screen
-  const mobileY = useTransform(scrollYProgress, [0, 1], ["10%", "90%"]);
-  // Horizontal center for mobile
-  const mobileX = "50%";
+  // For mobile: light follows scroll progress down the screen using percentage-based viewport heights
+  const mobileY = useTransform(scrollYProgress, [0, 1], ["10vh", "90vh"]);
 
-  // Determine which values to use based on machine state (not just screen size, but we use isMobile as proxy)
-  const x = isMobile ? mobileX : smoothX;
+  // Determine which values to use based on machine state
+  const x = isMobile ? "-50%" : smoothX;
   const y = isMobile ? mobileY : smoothY;
 
   return (
     <motion.div
-      className="fixed pointer-events-none z-0"
+      className="fixed pointer-events-none z-0 force-gpu"
       style={{
         width: isMobile ? "600px" : "800px",
         height: isMobile ? "600px" : "800px",
         background: isMobile 
           ? "radial-gradient(circle, rgba(235, 255, 107, 0.15) 0%, transparent 70%)" 
           : "radial-gradient(circle, rgba(235, 255, 107, 0.08) 0%, transparent 70%)",
-        left: x,
-        top: y,
-        translateX: "-50%",
-        translateY: "-50%",
+        left: isMobile ? "50%" : 0,
+        top: isMobile ? 0 : 0,
+        x,
+        y,
+        translateX: isMobile ? 0 : "-50%",
+        translateY: isMobile ? 0 : "-50%",
       }}
     />
   );

@@ -1,135 +1,123 @@
 import { motion } from "motion/react";
-import { useRef } from "react";
-import { useScrollLightHit } from "../hooks/useScrollLightHit";
+import { useNavigate } from "react-router-dom";
+import { Sparkles, Unlock } from "lucide-react";
 
 export default function About() {
-  const archive1Ref = useRef<HTMLDivElement>(null);
-  const archive2Ref = useRef<HTMLDivElement>(null);
-  
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const isHit1 = useScrollLightHit(archive1Ref, isMobile ? 200 : 0, false, "Archive 01 (Munich Study)");
-  const isHit2 = useScrollLightHit(archive2Ref, isMobile ? 200 : 0, false, "Archive 02 (Copenhagen Study)");
+  const navigate = useNavigate();
+
+  const handleDoubleClick = () => {
+    navigate("/about-me");
+  };
 
   return (
-    <section id="about" className="pt-32 pb-40 px-6 bg-ink text-bg relative overflow-hidden group">
-      {/* Decorative Grid */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="h-full w-full" style={{ backgroundImage: 'radial-gradient(var(--color-bg) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10 space-y-32">
-        <div className="flex flex-col lg:flex-row gap-24 items-center">
-          <div className="w-full lg:w-1/2">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1 }}
-              className="space-y-12"
-            >
-              <div className="inline-block px-4 py-1 border border-bg/20 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold mb-4">
-                About the studio
-              </div>
-              <h2 className="text-[clamp(14px,4.8vw,64px)] font-black leading-[1] tracking-tighter uppercase mb-4 w-full">
-                WE BELIEVE IN<br />
-                <span className="text-accent italic block w-fit">INTENTIONAL</span>
-                DESIGN.
-              </h2>
-              <p className="text-xl text-bg/60 leading-relaxed max-w-xl">
-                Armen VisualWorks is a digital-first creative studio working at the intersection of brand strategy, visual storytelling, and high-performance engineering. We help brands stand out in a noisy world through immersive digital experiences that linger in the memory.
-              </p>
-
-              <div className="grid grid-cols-2 gap-8 pt-8 border-t border-bg/10">
-                <div className="bg-white/5 border border-white/10 p-6 rounded-3xl">
-                  <p className="text-4xl font-display font-bold text-accent mb-2">04+</p>
-                  <p className="text-xs uppercase tracking-widest font-bold text-bg/40">Years Experience</p>
-                </div>
-                <div className="bg-white/5 border border-white/10 p-6 rounded-3xl">
-                  <p className="text-4xl font-display font-bold text-accent mb-2">20</p>
-                  <p className="text-xs uppercase tracking-widest font-bold text-bg/40">Projects Delivered</p>
-                </div>
-              </div>
-            </motion.div>
+    <section 
+      id="about" 
+      onDoubleClick={handleDoubleClick}
+      className="bg-[#F5F2EB] text-black py-24 md:py-36 border-t border-black/10 cursor-pointer select-none relative group/section transition-colors duration-500 hover:bg-[#F5F2EB]/95"
+      title="Double-click to unlock personal deep-dive"
+    >
+      <div className="max-w-[95vw] mx-auto px-6 md:px-16 lg:px-24">
+        
+        {/* Plaque Header */}
+        <div className="mb-16 border-b border-black/10 pb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] font-mono tracking-[0.4em] font-black uppercase text-black/60">
+              [ REGISTRY PLATE 02 // IDENTITY REGISTER ]
+            </span>
           </div>
-          <div className="hidden lg:block w-1/2 italic text-bg/10 text-right font-black text-7xl select-none pointer-events-none">
-            AESTHETIC<br />PRECISION
+          <div className="flex items-center gap-2 bg-black/5 px-4 py-2 rounded-full border border-black/5 animate-pulse hover:bg-[#f9b934]/10 transition-colors">
+            <Unlock className="w-3.5 h-3.5 text-[#f9b934]" />
+            <span className="text-[9px] font-mono tracking-widest font-black uppercase text-[#f9b934]">
+              DOUBLE-CLICK TO DEEP DIVE & GRAPHIC VAULT
+            </span>
           </div>
         </div>
 
-        {/* PHOTOGRAPHY (was THE ARCHIVE SERIES) */}
-        <div id="archive-series" className="pt-24 border-t border-bg/5">
-          <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-12 text-center md:text-left">
-            <div className="max-w-2xl">
-              <p className="text-[10px] uppercase tracking-[0.5em] font-bold mb-6 flex items-center justify-center md:justify-start text-bg/40">
-                <span className="w-10 h-[1px] bg-bg/20 mr-4"></span> 
-                Selected Works
-              </p>
-            <h2 className="text-[clamp(32px,8vw,120px)] font-black leading-[0.8] tracking-[-0.07em] uppercase text-white flex flex-col items-center md:items-start">
-              <span className="block opacity-90">ARCHIVE</span>
-              <span className="text-accent relative">
-                SERIES
-                <span className="absolute -bottom-2 right-0 text-[10px] tracking-[0.5em] text-white/20 font-bold hidden md:block">TYPE-DOC.01</span>
+        {/* The Broad Widescreen Grid */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-12 lg:gap-20 items-start border-t border-b border-black/10 py-16">
+          
+          {/* Column Left: High-End Photo of Me (Arjav Menon) */}
+          <div className="xl:col-span-5 relative group w-full">
+            <div className="aspect-[4/5] bg-black overflow-hidden relative border border-black/5 rounded-2xl shadow-xl transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(249,185,52,0.15)]">
+              <img 
+                src="https://i.postimg.cc/jSRYZTB0/mee.png" 
+                alt="Arjav Menon" 
+                className="w-full h-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-[1.03]"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 pointer-events-none" />
+              
+              {/* Geometric Corner Tech Accent */}
+              <div className="absolute top-4 left-4 font-mono text-[8px] bg-black text-[#F5F2EB] px-3 py-1 uppercase tracking-widest border border-white/10 rounded-md">
+                FOUNDER REF: AGW_M01
+              </div>
+
+              {/* Dynamic Bubbly Action Prompt */}
+              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between bg-[#F5F2EB] text-black px-4 py-3 rounded-xl border border-black shadow-lg transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <span className="text-[10px] font-mono tracking-wider font-bold">CLICK TWICE TO REVEAL</span>
+                <Unlock className="w-4 h-4 text-[#f9b934] animate-bounce" />
+              </div>
+            </div>
+            
+            <div className="mt-4 flex justify-between font-mono text-[9px] text-black/40">
+              <span>LOC: DUBAI / GLOBAL</span>
+              <span>BIOMETRIC STATUS: ACTIVE</span>
+            </div>
+          </div>
+
+          {/* Column Right: Profile details structured dynamically into a broad column layout */}
+          <div className="xl:col-span-7 flex flex-col justify-between h-full space-y-12">
+            
+            {/* Top Identity Block */}
+            <div className="space-y-6">
+              <span className="text-[10px] font-mono tracking-[0.35em] text-[#f9b934] font-black uppercase block">
+                [ STAGE 01 IDENTITY REGISTER ]
               </span>
-            </h2>
-            <div className="w-full h-[1px] bg-white/10 mt-8 hidden md:block" />
-            </div>
-            <div className="max-w-xs space-y-6 mb-4">
-              <p className="text-sm font-medium text-bg/40 leading-relaxed italic">
-                "We don't create templates; we create digital legacies that define the next era of aesthetics."
+              <h2 className="text-5xl md:text-7xl font-sans font-extrabold uppercase tracking-tight text-black leading-none group-hover/section:text-[#f9b934] transition-colors duration-300">
+                ARJAV<br />
+                <span className="text-black/30">MENON</span>
+              </h2>
+              <p className="text-xs font-mono tracking-[0.3em] font-black text-black/50 uppercase">
+                FOUNDER & CREATIVE DIRECTOR
               </p>
-              <div className="flex items-center gap-4">
-                 <div className="w-12 h-[1px] bg-bg/10"></div>
-                 <span className="text-[10px] uppercase font-bold tracking-widest text-bg/20">Est. 2018</span>
+            </div>
+
+            {/* Narrative with Premium Typography */}
+            <div className="space-y-8 max-w-2xl">
+              <p className="font-sans text-lg md:text-xl text-black/90 font-medium leading-relaxed tracking-tight">
+                An independent designer, filmmaker, and director managing the multi-sensory visual (AVW), sound (ASW), and cinematic (AFW) output of Armen GlobalWorks (AGW).
+              </p>
+              <p className="font-sans text-xs md:text-sm text-black/60 leading-relaxed font-light">
+                Operating at the absolute frontier of branding and high-end digital architecture, Arjav crafts stark, award-winning ecosystems for brands who value radical aesthetic integrity and strategic boldness.
+              </p>
+            </div>
+
+            {/* Extended Details Table */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-8 border-t border-black/10 font-mono text-[10px]">
+              <div>
+                <div className="text-[9px] uppercase font-bold text-black/40 tracking-widest">ESTABLISHED</div>
+                <div className="text-base font-black text-black mt-1">2018</div>
+              </div>
+              <div>
+                <div className="text-[9px] uppercase font-bold text-black/40 tracking-widest">PROJECT DEPTH</div>
+                <div className="text-base font-black text-black mt-1">GLOBAL SENSORY</div>
+              </div>
+              <div>
+                <div className="text-[9px] uppercase font-bold text-black/40 tracking-widest">CREATIVE DIRECTION</div>
+                <div className="text-base font-black text-black mt-1">PRINCIPAL SYSTEMS</div>
               </div>
             </div>
+
           </div>
+
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-          <motion.div
-            ref={archive1Ref}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6 pt-12 will-change-transform"
-          >
-            <div className={`rounded-[2.5rem] overflow-hidden aspect-[3/4] transition-[filter,transform] duration-700 force-gpu shadow-[0_30px_60px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] ${isHit1 ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0 hover:scale-[1.02]'}`}>
-               <img
-                src="https://i.postimg.cc/TYykr4tV/Archive-01.png"
-                alt="Design work"
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <div className="bg-white/5 border border-white/10 p-8 rounded-[2rem]">
-              <h4 className="text-lg font-bold mb-2 text-white">Archive - 01</h4>
-              <p className="text-sm text-bg/40">A high-contrast architectural study of Munich’s Marienplatz, capturing the sharp intersection of Gothic detail and cinematic atmosphere.</p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            ref={archive2Ref}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="space-y-6 will-change-transform"
-          >
-            <div className="bg-white/5 p-8 rounded-[2rem] border border-accent/20">
-              <h4 className="text-lg font-bold text-white mb-2">Archive - 02</h4>
-              <p className="text-sm text-bg/60">A study of the Landsoldaten in Copenhagen, capturing the raw, oxidized textures of history against a backdrop of urban industrial growth.</p>
-            </div>
-            <div className={`rounded-[2.5rem] overflow-hidden aspect-[3/4] transition-[filter,transform] duration-700 force-gpu shadow-[0_30px_60px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] ${isHit2 ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0 hover:scale-[1.02]'}`}>
-               <img
-                src="https://i.postimg.cc/wT6NzymX/Archive-02.png"
-                alt="Process"
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-          </motion.div>
+        {/* Archival Note Footer */}
+        <div className="mt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-[9px] font-mono tracking-widest text-black/40 uppercase">
+          <span>CODENAME: AGW-DIRECTOR-REVISED</span>
+          <span>© ARMEN GLOBALWORKS [AGW]. ALL SERVICES SYNCHRONIZED</span>
         </div>
+        
       </div>
     </section>
   );

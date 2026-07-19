@@ -39,7 +39,7 @@ export default function Navbar() {
           animate={{ opacity: 1, x: 0 }}
           className="text-[clamp(14px,4.5vw,18px)] md:text-lg font-black tracking-tighter uppercase flex items-center gap-1 max-w-[60vw]"
         >
-          Armen VisualWorks
+          Armen GlobalWorks
         </motion.a>
 
         {/* Desktop Links */}

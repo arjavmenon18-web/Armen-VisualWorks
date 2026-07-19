@@ -9,7 +9,7 @@ export default function CreativeShowcase() {
         </h2>
       </div>
 
-      <div className="max-w-7xl mx-auto w-full px-6 relative z-10 flex flex-col items-center text-center">
+      <div className="max-w-[95vw] mx-auto w-full px-6 md:px-16 lg:px-24 relative z-10 flex flex-col items-center text-center">
         <motion.div
            initial={{ opacity: 0, scale: 0.9 }}
            whileInView={{ opacity: 1, scale: 1 }}

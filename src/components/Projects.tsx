@@ -1,8 +1,152 @@
-import { motion, useScroll, useSpring, useTransform, useVelocity, useAnimationFrame, useMotionValue } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
-import { useScrollLightHit } from "../hooks/useScrollLightHit";
+import { motion } from "motion/react";
+
+interface NewsItem {
+  id: string;
+  category: string;
+  date: string;
+  title: string;
+  subtitle?: string;
+  content: string;
+  meta?: string;
+  tags?: string[];
+  span?: string;
+}
+
+const newsItems: NewsItem[] = [
+  {
+    id: "philosophy-01",
+    category: "IDENTITY MANIFESTO",
+    date: "19.07.2026",
+    title: "ON THE NAMING OF ARMEN",
+    subtitle: "The deliberate choice of moniker and identity.",
+    content: "The name ARMEN—derived from founder Arjav Menon—stands as a seal of creative authorship. Specifically, the formulation of 'Armen - Works' with its deliberate hyphen acts as an architectural spacer, indicating that our horizons are infinitely expandable. While today we craft exclusively in cinema and spatial audio, the hyphen stands ready to link 'Armen' with any physical, digital, or physical domain we choose to conquer in the future.",
+    meta: "BY ARJAV MENON // FOUNDER",
+    tags: ["NOMENCLATURE", "IDENTITY", "FUTURE"],
+    span: "col-span-12 lg:col-span-4"
+  },
+  {
+    id: "filmworks-01",
+    category: "AFW // CO-PRODUCTION",
+    date: "28.06.2026",
+    title: "AFW (ARMEN FILMWORKS) X SWISS FILM COMMISSION",
+    subtitle: "Strategic alliance forged for atmospheric European cinematic ventures.",
+    content: "Armen FilmWorks (AFW) is proud to announce a landmark strategic partnership with the Swiss Film Commission to co-produce atmospheric cinematic works across Europe. Under this co-production alliance, we are launching our inaugural project reveal: 'The Awakening'—a high-stakes corporate thriller screenplay co-authored with Navaneeth Pramod. Set in the razor-sharp glass corridors of elite financial power, this premier script pipeline bypasses traditional agency latency.",
+    meta: "CO-PRODUCED WITH SWISS FILM COMMISSION & NAVANEETH PRAMOD",
+    tags: ["SWISS COMMISSION", "THE AWAKENING", "CO-PRODUCTION", "AFW"],
+    span: "col-span-12 lg:col-span-8"
+  },
+  {
+    id: "soundworks-01",
+    category: "ASW // SIGNAL",
+    date: "08.05.2026",
+    title: "NOVA: SPATIAL AUDIO REVOLUTION BY ASW",
+    subtitle: "The next era of multi-dimensional acoustics and global distribution.",
+    content: "Armen SoundWorks (ASW) is proud to unveil NOVA, our flagship spatial audio development ecosystem designed to pioneer three-dimensional acoustic environments. NOVA utilizes specialized vector-based amplitude panning and real-time modular synthesis to deliver immersive sonic architecture. To support this launch, our department is aggressively executing plans to partner with leading digital distributors and streaming platforms, bridging high-fidelity spatial masters directly to global audiences without compression loss.",
+    meta: "DEVELOPED BY ASW (ARMEN SOUNDWORKS LABS)",
+    tags: ["NOVA", "SPATIAL AUDIO", "ASW", "PARTNERSHIP"],
+    span: "col-span-12 lg:col-span-6"
+  },
+  {
+    id: "philosophy-02",
+    category: "DESIGN ETHOS",
+    date: "28.04.2026",
+    title: "THE POWER OF NEGATIVE SPACE",
+    subtitle: "Embracing maximum negative space to foster visual authority.",
+    content: "True premium visual identity comes from what we leave out. Negative space is not empty space; it is a physical asset that anchors attention and provides layout authority. By utilizing a pristine, highly controlled Cream-White (#f4f2e9) background, we allow each individual structural component to exist on its own merits, resulting in a clean, uncluttered, and deeply memorable reading experience.",
+    meta: "STUDIO NOTE #03",
+    tags: ["SPACE", "TYPOGRAPHY", "MINIMALISM"],
+    span: "col-span-12 lg:col-span-6"
+  }
+];
+
+export default function Projects() {
+  return (
+    <section id="projects" className="bg-[#F5F2EB] text-black border-t border-black/10">
+      {/* Colossal Tracked Headline */}
+      <div className="w-full border-b border-black/10 overflow-hidden select-none bg-[#F5F2EB] py-16 md:py-24 text-center">
+        <span className="text-[10px] font-mono tracking-[0.4em] font-black uppercase text-[#f9b934] mb-3 block">
+          [ ARCHIVAL TRANSMISSION FEED ]
+        </span>
+        <h2 className="text-5xl md:text-8xl font-display font-black tracking-tight text-black uppercase leading-none">
+          ARMEN <span className="text-[#f9b934]">NEWZ</span>
+        </h2>
+        <p className="text-xs font-sans text-black/50 max-w-md mx-auto mt-6 leading-relaxed px-4">
+          Philosophical manifestos, design documentation, and production updates from the core ARMEN GLOBALWORKS [AGW] design lab.
+        </p>
+      </div>
+
+      <div className="max-w-[95vw] mx-auto px-6 md:px-16 lg:px-24 py-16 md:py-24">
+        {/* Newspaper Sub-Header Plate */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-black/10 pb-4 mb-12 gap-4">
+          <div className="font-mono text-[9px] font-bold uppercase tracking-widest text-black/50">
+            CHRONICLE // ISSUE 044 • EURO DEPLOYMENT
+          </div>
+          <div className="font-mono text-[9px] font-bold uppercase tracking-widest text-black/50">
+            GLOBAL PROPAGATION READY • ALL CHANNELS ACTIVE
+          </div>
+          <div className="font-mono text-[9px] font-bold uppercase tracking-widest text-[#f9b934]">
+            [ LAST COMPILATION: LIVE ]
+          </div>
+        </div>
+
+        {/* The Bubbly News Grid */}
+        <div className="grid grid-cols-12 gap-8 md:gap-10">
+          {newsItems.map((item) => (
+            <motion.div
+              key={item.id}
+              whileHover={{ y: -6, scale: 1.01 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className={`${item.span} bg-white/40 backdrop-blur-md border border-black/10 rounded-[2.5rem] flex flex-col justify-between shadow-lg hover:shadow-[0_20px_50px_rgba(249,185,52,0.12)] hover:bg-white overflow-hidden transition-colors duration-300`}
+            >
+              {/* Card Meta Top */}
+              <div className="flex items-center justify-between border-b border-black/5 p-8 font-mono text-[9px] font-bold text-black/40 bg-black/[0.01]">
+                <span className="uppercase tracking-[0.2em]">{item.category}</span>
+                <span className="tracking-[0.1em]">{item.date}</span>
+              </div>
+
+              {/* Card Body */}
+              <div className="p-10 md:p-14 space-y-6 flex-grow">
+                <h3 className="text-2xl md:text-3xl font-display font-black tracking-tight text-black leading-tight uppercase">
+                  {item.title}
+                </h3>
+                {item.subtitle && (
+                  <p className="text-xs font-mono font-bold uppercase tracking-wider text-[#f9b934]">
+                    {item.subtitle}
+                  </p>
+                )}
+                <p className="text-xs md:text-sm text-black/60 leading-relaxed font-sans pt-2">
+                  {item.content}
+                </p>
+              </div>
+
+              {/* Card Footer */}
+              <div className="border-t border-black/5 p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-[9px] bg-black/[0.01]">
+                <span className="font-medium text-black/40 tracking-wider">
+                  {item.meta}
+                </span>
+                <div className="flex gap-2 flex-wrap">
+                  {item.tags?.map((tag) => (
+                    <span
+                      key={tag}
+                      className="border border-black/10 px-3 py-1 font-bold tracking-widest text-black/60 uppercase rounded-full bg-black/5 text-[8px] hover:bg-[#f9b934]/10 transition-colors"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Grid Archival Note */}
+        <div className="mt-16 text-center border-b border-t border-black/10 py-4 font-mono text-[9px] tracking-[0.4em] text-black/40 uppercase">
+          [ INDEX END // STREAM DE-ENVELOPE // ACTIVE FORWARD CHANNELS ]
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export const projects = [
   {
@@ -48,345 +192,25 @@ export const projects = [
     image: "https://i.postimg.cc/tJz2gKkx/Whats-App-Image-2026-05-02-at-10-46-57-PM.jpg",
     description: "The haunting beauty of black sand meeting the violent, rhythmic waves of the Atlantic.",
     year: "2023",
-    cols: "col-span-12 md:col-span-6",
+    cols: "col-span-12 md:col-span-4"
   },
   {
     id: 6,
-    title: "FOSSEN FALLS / ICELAND",
-    category: "Landscape",
-    image: "https://i.postimg.cc/x8Ptdw5N/Whats-App-Image-2026-05-02-at-10-47-31-PM.jpg",
-    description: "The cinematic velocity of glacial meltwater plunging into the deep basalt canyons.",
+    title: "ARCHIVE_1 // MUNICH",
+    category: "Commercial Graphics",
+    image: "https://i.postimg.cc/hGK9FYff/Archive-1.png",
+    description: "From the original Archive Series representing absolute layout rectitude, premium grid design, and bold typography.",
     year: "2024",
-    cols: "col-span-12 md:col-span-6",
+    cols: "col-span-12 md:col-span-4"
   },
   {
     id: 7,
-    title: "ARCTIC VESTIGE / ICELAND",
-    category: "Landscape",
-    image: "https://i.postimg.cc/yxTvNMjJ/Whats-App-Image-2026-05-02-at-10-47-39-9-PM.jpg",
-    description: "Exploring the ancient, topological layers and raw erosion within the Arctic landscape.",
-    year: "2024",
-    cols: "col-span-12 md:col-span-12",
-  },
-  {
-    id: 8,
-    title: "NORDIC RHYTHM / ICELAND",
-    category: "Landscape",
-    image: "https://i.postimg.cc/8cbtC24c/Whats-App-Image-2026-05-02-at-10-48-07-PM.jpg",
-    description: "Where light meets volume—capturing the sharp, natural angles of contemporary Nordic design.",
-    year: "2024",
-    cols: "col-span-12 md:col-span-4",
-  },
-  {
-    id: 9,
-    title: "UBUD MIST / BALI",
-    category: "Landscape",
-    image: "https://i.postimg.cc/ZnLVqGHR/Whats-App-Image-2026-05-02-at-10-49-34-PM.jpg",
-    description: "Finding tranquility in the humid, ethereal layers of the Balinese jungle at dawn.",
-    year: "2024",
-    cols: "col-span-12 md:col-span-4",
-  },
-  {
-    id: 10,
-    title: "PURA SPIRIT / BALI",
-    category: "Landscape",
-    image: "https://i.postimg.cc/1XSvsmG6/Whats-App-Image-2026-05-02-at-10-50-09-PM.jpg",
-    description: "The imposing weight of sacred silhouettes set against the vibrant skies of Bali.",
-    year: "2023",
-    cols: "col-span-12 md:col-span-4",
-  },
-  {
-    id: 11,
-    title: "SIDEMEN VALLEY / BALI",
-    category: "Landscape",
-    image: "https://i.postimg.cc/gjpgmzVZ/Whats-App-Image-2026-05-02-at-10-52-36-PM.jpg",
-    description: "Vast narratives of green found in the emerald rice terraces and tropical ironwood.",
-    year: "2024",
-    cols: "col-span-12 md:col-span-7",
-  },
-  {
-    id: 12,
-    title: "VERDANT MACRO / BALI",
-    category: "Closeup",
-    image: "https://i.postimg.cc/QCDfh8QK/Whats-App-Image-2026-05-02-at-10-54-15-PM.jpg",
-    description: "The rhythmic alignment of tropical flora and biological patterns in the heart of the island.",
-    year: "2024",
-    cols: "col-span-12 md:col-span-5",
-  },
-  {
-    id: 13,
-    title: "TROPICAL FRAGMENTS / BALI",
-    category: "Closeup",
-    image: "https://i.postimg.cc/6qKMtWr3/Whats-App-Image-2026-05-02-at-10-55-45-PM.jpg",
-    description: "Capturing the intricate, micro-details of Balinese craft and natural erosion.",
-    year: "2024",
-    cols: "col-span-12 md:col-span-5",
-  },
-  {
-    id: 14,
-    title: "ROCK FORMATION",
-    category: "Landscape",
-    image: "https://i.postimg.cc/T1xtfdVh/Whats-App-Image-2026-05-02-at-10-56-06-PM.jpg",
-    description: "Finding the architectural curves within natural landscapes and rock formations.",
-    year: "2023",
-    cols: "col-span-12 md:col-span-7",
-  },
-  {
-    id: 15,
-    title: "TROPIC TEXTURES / BALI",
-    category: "Closeup",
-    image: "https://i.postimg.cc/Bb3m4STb/Whats-App-Image-2026-05-02-at-10-57-20-PM.jpg",
-    description: "A macro study of the raw, breathing surfaces found across the Balinese province.",
-    year: "2024",
-    cols: "col-span-12 md:col-span-12",
-  },
-  {
-    id: 16,
-    title: "GLASS FRAGMENTS",
-    category: "Closeup",
-    image: "https://i.postimg.cc/yxKLs1m4/Whats-App-Image-2026-05-02-at-10-57-45-PM.jpg",
-    description: "Layered perspectives using glass and depth to create complex urban tapestries.",
-    year: "2024",
-    cols: "col-span-12 md:col-span-12",
-  },
-  {
-    id: 17,
-    title: "BALI SERENITY",
-    category: "Landscape",
-    image: "https://i.postimg.cc/rs6mVbdr/Whats-App-Image-2026-05-05-at-6-53-00-PM.jpg",
-    description: "A breathtaking view of the serene Balinese landscape, where nature flows in perfect harmony.",
-    year: "2024",
-    cols: "col-span-12 md:col-span-6",
-  },
-  {
-    id: 18,
-    title: "OSLO EXPEDITION",
-    category: "Road",
-    image: "https://i.postimg.cc/zGLTfmvF/hghquality.png",
-    description: "A cinematic perspective of the roadside narratives in Oslo, Norway. Captured during the high-speed transit of 2023.",
-    year: "2023",
-    cols: "col-span-12 md:col-span-12",
-    device: "Realme 7i"
-  },
+    title: "ARCHIVE_2 // CONCRETE STUDY",
+    category: "Commercial Branding",
+    image: "https://i.postimg.cc/d0nGJ9ys/Archive-02.png",
+    description: "From the original Archive Series capturing spatial visual compositions and hyper-focused structural patterns.",
+    year: "2025",
+    cols: "col-span-12 md:col-span-8"
+  }
 ];
-
-interface MarqueeProps {
-  baseVelocity: number;
-}
-
-function Marquee({ baseVelocity = 100 }: MarqueeProps) {
-  const baseX = useMotionValue(0);
-  const { scrollY } = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
-  const smoothVelocity = useSpring(scrollVelocity, {
-    damping: 50,
-    stiffness: 400
-  });
-  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
-    clamp: false
-  });
-
-  const x = useTransform(baseX, (v) => `${((v + 100) % 100) - 100}%`);
-
-  const directionFactor = useRef<number>(1);
-  useAnimationFrame((_t, delta) => {
-    let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
-
-    if (velocityFactor.get() < 0) {
-      directionFactor.current = -1;
-    } else if (velocityFactor.get() > 0) {
-      directionFactor.current = 1;
-    }
-
-    moveBy += directionFactor.current * moveBy * velocityFactor.get();
-
-    baseX.set(baseX.get() + moveBy);
-  });
-
-  return (
-    <div className="overflow-hidden whitespace-nowrap flex flex-nowrap py-10 mt-8 md:mt-20 border-y border-ink/5">
-      <motion.div className="flex whitespace-nowrap flex-nowrap text-[clamp(16px,4vw,80px)] font-black uppercase tracking-tighter leading-none text-accent" style={{ x }}>
-        <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
-        <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
-        <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
-        <span className="mr-20">INDUSTRIAL • RAW • TEXTURED • </span>
-      </motion.div>
-    </div>
-  );
-}
-
-function ProjectCard({ project, i, navigate, toggleTitle, hiddenTitles }: any) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const isHit = useScrollLightHit(cardRef, isMobile ? 200 : 0, false, `Project: ${project.title}`);
-
-  return (
-    <motion.div
-      key={project.id}
-      ref={cardRef}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 1, delay: i % 2 * 0.1 }}
-      className="group relative will-change-transform"
-    >
-      <motion.div 
-        className="relative rounded-[2.5rem] overflow-hidden bg-ink transition-[transform,opacity] duration-700 aspect-square cursor-pointer z-10 force-gpu shadow-2xl"
-        whileHover={{ scale: 1.05, zIndex: 40 }}
-        animate={isHit ? { scale: 1.05, zIndex: 40 } : { scale: 1, zIndex: 10 }}
-        onClick={() => {
-          if (isMobile) {
-            navigate(`/project/${project.id}`);
-          } else {
-            toggleTitle(project.id);
-          }
-        }}
-        onDoubleClick={() => !isMobile && navigate(`/project/${project.id}`)}
-        transition={{ 
-          type: "spring",
-          stiffness: 100,
-          damping: 20,
-          mass: 1
-        }}
-      >
-        {/* Image Wrap */}
-        <div className="w-full h-full relative">
-          <img
-            src={project.image}
-            alt={project.title}
-            loading="lazy"
-            className={`w-full h-full object-cover transition-[filter,transform,opacity] duration-1000 ${isHit ? 'grayscale-0 scale-105 opacity-90' : 'grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-60 group-hover:opacity-90'}`}
-            referrerPolicy="no-referrer"
-          />
-          {/* Color Tint Overlay */}
-          <div className={`absolute inset-0 bg-accent/5 mix-blend-overlay transition-opacity duration-1000 ${isHit ? 'opacity-0' : 'group-hover:opacity-0'}`} />
-        </div>
-
-        {/* Info Overlay removed as per user request to avoid overlap */}
-      </motion.div>
-
-      {/* Title Outside */}
-      <div className={`mt-6 flex justify-between items-start transition-all duration-500 ${hiddenTitles.includes(project.id) ? 'opacity-0 h-0 overflow-hidden mt-0' : 'opacity-100'}`}>
-        <div className="flex-1 min-w-0 pr-6">
-           <h3 className="text-xs md:text-base font-display font-black leading-tight uppercase tracking-tight break-words">{project.title}</h3>
-           <p className="text-[8px] font-bold uppercase tracking-widest text-ink/40 mt-2">{project.category}</p>
-        </div>
-        <div className="flex flex-col items-end shrink-0 pt-1">
-           <span className="text-[9px] font-mono opacity-20">0{project.id}</span>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-export default function Projects() {
-  const navigate = useNavigate();
-  const [hiddenTitles, setHiddenTitles] = useState<number[]>([]);
-  const featuredRef = useRef<HTMLDivElement>(null);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  useScrollLightHit(featuredRef, isMobile ? 300 : 0, false, "Oslo Expedition (Featured Highlight)");
-
-  const toggleTitle = (id: number) => {
-    setHiddenTitles((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-    );
-  };
-
-  return (
-    <section id="projects" className="pb-40 pt-0 px-6 lg:px-12 bg-bg relative overflow-hidden">
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-12 text-center md:text-left">
-          <div className="max-w-2xl flex flex-col items-center md:items-start">
-            <p className="text-[10px] uppercase tracking-[0.5em] font-bold mb-6 flex items-center justify-center md:justify-start">
-              <span className="w-10 h-[1px] bg-ink mr-4"></span> 
-              Portfolio
-            </p>
-            <h2 className="text-[clamp(18px,6vw,70px)] font-black leading-none tracking-tighter uppercase group cursor-default">
-              <motion.span 
-                initial={{ opacity: 1 }}
-                whileHover={{ x: 20, color: "var(--color-accent)" }}
-                className="block transition-colors duration-500"
-              >
-                PHOTO
-              </motion.span>
-              <motion.span 
-                initial={{ opacity: 1 }}
-                whileHover={{ x: -20 }}
-                className="block text-accent transition-transform duration-500 md:ml-20"
-              >
-                GRAPHY
-              </motion.span>
-            </h2>
-          </div>
-          <div className="pb-6">
-            <p className="text-[12px] font-bold uppercase tracking-[0.6em] text-ink/30 mb-2">Original photograph from around the world</p>
-            <div className="w-24 h-[2px] bg-accent" />
-          </div>
-        </div>
-
-        {/* Portfolio Hero Featured Section */}
-        <motion.div 
-          ref={featuredRef}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2 }}
-          className="mb-12 md:mb-32 relative group cursor-pointer"
-          onClick={() => navigate('/project/18')}
-        >
-          <div className="relative">
-            <div className="aspect-[4/5] md:aspect-[21/9] w-full rounded-[2.5rem] md:rounded-[3rem] overflow-hidden bg-ink relative">
-              <img 
-                src="https://i.postimg.cc/zGLTfmvF/hghquality.png" 
-                loading="lazy"
-                className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
-                alt="Oslo Expedition"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent opacity-80 md:opacity-60" />
-            </div>
-            
-            <div className="md:absolute md:bottom-12 md:left-12 md:right-12 mt-4 md:mt-0 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-6 text-center md:text-left">
-              <div>
-                <p className="text-[8px] md:text-[9px] uppercase font-bold tracking-[0.4em] text-ink/40 md:text-white/40 mb-2">Highlight Project</p>
-                <h3 className="text-2xl md:text-5xl font-black text-ink md:text-white uppercase tracking-tighter">Oslo Expedition</h3>
-              </div>
-              <div className="bg-ink/5 md:bg-white/5 backdrop-blur-md px-6 py-3 md:px-8 md:py-4 rounded-full border border-ink/10 md:border-white/10 shadow-lg group-hover:bg-accent group-hover:border-accent transition-all group">
-                <span className="text-[9px] md:text-[10px] uppercase font-bold tracking-[0.3em] text-ink md:text-white group-hover:text-ink">Explore Detail</span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Marquee Section */}
-        <div className="mb-12 md:mb-40">
-          <Marquee baseVelocity={-2} />
-        </div>
-
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 md:gap-x-12 gap-y-12 md:gap-y-32">
-          {projects.map((project, i) => (
-            <ProjectCard 
-              key={project.id}
-              project={project}
-              i={i}
-              navigate={navigate}
-              toggleTitle={toggleTitle}
-              hiddenTitles={hiddenTitles}
-            />
-          ))}
-        </div>
-
-         <div className="mt-12 md:mt-40 flex flex-col items-center">
-            <div className="w-px h-12 md:h-24 bg-ink/10 mb-8 md:mb-12" />
-            <button className="group flex flex-col items-center gap-6">
-              <span className="text-xs font-bold uppercase tracking-[0.5em] text-ink/40 group-hover:text-accent transition-colors">View All Works</span>
-              <div className="w-20 h-20 border border-ink/10 rounded-full flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all transform group-hover:scale-110 shadow-[0_10px_20px_rgba(0,0,0,0.05),inset_0_1px_1px_rgba(255,255,255,0.8)]">
-                 <ArrowUpRight className="w-8 h-8 group-rotate-0 group-hover:-rotate-45 transition-transform" />
-              </div>
-            </button>
-         </div>
-      </div>
-    </section>
-  );
-}
 
