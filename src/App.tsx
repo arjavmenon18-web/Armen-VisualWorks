@@ -19,6 +19,7 @@ import { motion, useScroll, useSpring, AnimatePresence } from "motion/react";
 import { Sparkles } from "lucide-react";
 
 import PixelChatbot from "./components/PixelChatbot";
+import ScrollUpdatePopup from "./components/ScrollUpdatePopup";
 import { useState } from "react";
 
 function Portfolio() {
@@ -67,6 +68,7 @@ export default function App() {
     <Router>
       <ScrollToTop />
       <ImageGuard />
+      <ScrollUpdatePopup />
       <Routes>
         <Route path="/" element={<Portfolio />} />
         <Route path="/about-me" element={<AboutMe />} />
