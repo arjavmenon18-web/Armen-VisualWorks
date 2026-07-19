@@ -23,7 +23,7 @@ export default function Hero() {
       {/* Background Decorative Element */}
       <motion.div
         id="hero-bg-text"
-        style={{ y: y1 }}
+        style={{ y: isMobile ? 0 : y1 }}
         className="absolute top-1/4 -left-20 text-[20vw] font-black text-ink/[0.03] whitespace-nowrap pointer-events-none select-none force-gpu"
       >
         ARMEN VISUALWORKS
@@ -62,7 +62,7 @@ export default function Hero() {
           <motion.div
             id="hero-image-container"
             ref={heroImageRef}
-            style={{ y: y2 }}
+            style={{ y: isMobile ? 0 : y2 }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isHit ? { opacity: 1, scale: 1.05 } : { opacity: 1, scale: 1 }}
             transition={{ 
@@ -95,7 +95,7 @@ export default function Hero() {
                    initial={{ y: 10, opacity: 0 }}
                    animate={isHit ? { y: 0, opacity: 1 } : {}}
                    whileHover={{ scale: 1.05 }}
-                   className="glass-button text-white"
+                   className="px-6 py-3 bg-white text-ink rounded-full text-[10px] font-black uppercase tracking-widest transition-all hover:bg-accent hover:text-white"
                  >
                    View Profile :)
                  </motion.span>

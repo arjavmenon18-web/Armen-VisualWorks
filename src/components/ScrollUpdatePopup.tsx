@@ -43,10 +43,8 @@ export default function ScrollUpdatePopup() {
       if (elapsed < TOTAL_DURATION) {
         initialTimeLeft = TOTAL_DURATION - elapsed;
       } else {
-        // If 2 hours already passed, we can either finish or restart for demo purposes
-        // Let's restart a fresh 2-hour window so the user/reviewer always gets to see the live countdown
-        localStorage.setItem("domain_update_start_time", Date.now().toString());
-        initialTimeLeft = TOTAL_DURATION;
+        // If 2 hours passed, let it sit at 0 so it stays complete and irreversible
+        initialTimeLeft = 0;
       }
     }
 
@@ -65,10 +63,9 @@ export default function ScrollUpdatePopup() {
           setTimeLeft(remaining);
           setPercentDone(((TOTAL_DURATION - remaining) / TOTAL_DURATION) * 100);
         } else {
-          // Reset for demo loop
-          localStorage.setItem("domain_update_start_time", Date.now().toString());
-          setTimeLeft(TOTAL_DURATION);
-          setPercentDone(0);
+          // Keep at zero/completed state
+          setTimeLeft(0);
+          setPercentDone(100);
         }
       }
     }, 1000);
@@ -87,12 +84,6 @@ export default function ScrollUpdatePopup() {
       minutes: mins.toString().padStart(2, "0"),
       seconds: secs.toString().padStart(2, "0"),
     };
-  };
-
-  const handleResetTimer = () => {
-    localStorage.setItem("domain_update_start_time", Date.now().toString());
-    setTimeLeft(TOTAL_DURATION);
-    setPercentDone(0);
   };
 
   const { hours, minutes, seconds } = formatTime(timeLeft);
@@ -153,13 +144,15 @@ export default function ScrollUpdatePopup() {
 
                 {/* Main Heading */}
                 <h3 className="text-xl md:text-3xl font-display font-black uppercase tracking-tight text-ink mb-3 leading-none">
-                  UI UPGRADE<br />
-                  <span className="text-accent">IN PROGRESS</span>
+                  {timeLeft === 0 ? "UI UPGRADE" : "UI UPGRADE"}<br />
+                  <span className="text-accent">{timeLeft === 0 ? "COMPLETED" : "IN PROGRESS"}</span>
                 </h3>
 
                 {/* Subtext explaining the new purchased domain */}
                 <p className="text-xs md:text-sm font-sans text-ink/70 max-w-sm mb-8 leading-relaxed">
-                  I recently bought a custom domain and am rolling out an entirely fresh, remastered user interface! Please wait <span className="font-bold text-ink">2 hours</span> while the system update deploys globally.
+                  {timeLeft === 0 
+                    ? "The fresh, remastered user interface has successfully deployed! Re-establishing database sockets and syncing asset pipelines."
+                    : "I recently bought a custom domain and am rolling out an entirely fresh, remastered user interface! Please wait 2 hours while the system update deploys globally."}
                 </p>
 
                 {/* Live Digital Clock Countdown */}
@@ -186,7 +179,7 @@ export default function ScrollUpdatePopup() {
                 {/* Progress bar */}
                 <div className="w-full mb-8">
                   <div className="flex justify-between text-[10px] uppercase font-bold text-ink/50 mb-2 tracking-widest">
-                    <span>Deploying UI Remaster</span>
+                    <span>{timeLeft === 0 ? "UI Remaster Live" : "Deploying UI Remaster"}</span>
                     <span>{percentDone.toFixed(1)}%</span>
                   </div>
                   <div className="w-full h-2 bg-ink/10 rounded-full overflow-hidden">
@@ -205,23 +198,14 @@ export default function ScrollUpdatePopup() {
                     onClick={() => setIsMinimized(true)}
                     className="w-full py-4 bg-ink text-bg font-sans font-black text-xs uppercase tracking-widest rounded-xl hover:bg-accent hover:text-ink transition-colors duration-300 shadow-md flex items-center justify-center gap-2"
                   >
-                    <span>Browse with upgrade warning</span>
+                    <span>{timeLeft === 0 ? "Enter Remastered Site" : "Browse with upgrade warning"}</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
 
-                  <div className="flex justify-between items-center px-2 mt-2">
-                    <button
-                      onClick={handleResetTimer}
-                      className="text-[9px] font-bold text-ink/40 hover:text-ink uppercase tracking-widest flex items-center gap-1.5 transition-colors"
-                      title="Reset 2-Hour Timer (Demo)"
-                    >
-                      <RefreshCw className="w-3 h-3" />
-                      <span>Reset Timer</span>
-                    </button>
-
+                  <div className="flex justify-end items-center px-2 mt-2">
                     <div className="flex items-center gap-1.5 text-[9px] font-bold text-emerald-600 uppercase tracking-widest">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                      <span>SSL Certified</span>
+                      <span>{timeLeft === 0 ? "Systems Operational" : "SSL Certified"}</span>
                     </div>
                   </div>
                 </div>
@@ -255,9 +239,11 @@ export default function ScrollUpdatePopup() {
                 <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent border-2 border-ink rounded-full group-hover:bg-ink group-hover:border-accent" />
               </div>
               <div className="flex flex-col items-start pr-2">
-                <span className="text-[8px] uppercase tracking-widest font-black opacity-50">UI Update</span>
+                <span className="text-[8px] uppercase tracking-widest font-black opacity-50">
+                  {timeLeft === 0 ? "Remaster Live" : "UI Update"}
+                </span>
                 <span className="font-mono text-xs font-bold tracking-wider text-accent group-hover:text-ink">
-                  {hours}:{minutes}:{seconds}
+                  {timeLeft === 0 ? "Active" : `${hours}:${minutes}:${seconds}`}
                 </span>
               </div>
             </button>

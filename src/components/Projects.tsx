@@ -234,8 +234,14 @@ function ProjectCard({ project, i, navigate, toggleTitle, hiddenTitles }: any) {
         className="relative rounded-[2.5rem] overflow-hidden bg-ink transition-[transform,opacity] duration-700 aspect-square cursor-pointer z-10 force-gpu shadow-2xl"
         whileHover={{ scale: 1.05, zIndex: 40 }}
         animate={isHit ? { scale: 1.05, zIndex: 40 } : { scale: 1, zIndex: 10 }}
-        onClick={() => toggleTitle(project.id)}
-        onDoubleClick={() => navigate(`/project/${project.id}`)}
+        onClick={() => {
+          if (isMobile) {
+            navigate(`/project/${project.id}`);
+          } else {
+            toggleTitle(project.id);
+          }
+        }}
+        onDoubleClick={() => !isMobile && navigate(`/project/${project.id}`)}
         transition={{ 
           type: "spring",
           stiffness: 100,
