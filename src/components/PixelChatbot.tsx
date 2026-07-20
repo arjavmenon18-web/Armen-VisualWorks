@@ -61,18 +61,32 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
       // Add a placeholder message for the streaming response
       setMessages(prev => [...prev, { role: 'model', content: "" }]);
       
-      // Determine project context if on a project page
-      let context = location.pathname;
+      // Determine project context based on current page path
+      let context = `User is on page: ${location.pathname}.`;
+      if (location.pathname === '/') {
+        context = `User is on the AGW HOME PAGE (/).
+        This page displays the main hero landing, the identity manifesto, 'Armen Newz' covering 'THE AWAKENING' screenplay (co-authored by Arjav's school friend Navaneeth Pramod), ASW 'NOVA' spatial audio system, and our design philosophies.`;
+      } else if (location.pathname === '/about-me') {
+        context = `User is on the ABOUT ME page (/about-me).
+        This features Arjav Menon's detailed biography, and highlights outstanding raw capture photography projects like 'OSLO EXPEDITION' and 'FOSSEN FALLS'.`;
+      } else if (location.pathname === '/visual') {
+        context = `User is on the VISUAL WORKS page (/visual).
+        This serves as the AVW hub, exhibiting outstanding photography captures, grid layouts, and spatial imagery.`;
+      } else if (location.pathname === '/sound') {
+        context = `User is on the SOUND WORKS page (/sound).
+        This is the ASW hub, displaying custom-engineered synthesizer audio loops and spatial sound design modules.`;
+      }
+
       const projectMatch = location.pathname.match(/\/project\/(\d+)/);
       if (projectMatch) {
         const projectId = parseInt(projectMatch[1]);
         const project = projects.find(p => p.id === projectId);
         if (project) {
-          context = `User is viewing PROJECT DETAILS: ${project.title}. 
+          context = `User is viewing PROJECT DETAILS page for project: ${project.title} (ID: ${projectId}). 
           Category/Segment: ${project.category}. 
           Description: ${project.description}. 
           Year: ${project.year}.
-          Technical Insight: This work is a RAW capture. No heavy post-grading. The aesthetic is achieved through in-camera intentionality.`;
+          Technical Insight: This work is an uncompromised RAW capture. The visual atmospheric feel is achieved completely in-camera through intentional composition and staging.`;
         }
       }
       

@@ -90,41 +90,41 @@ export default function Projects() {
         </div>
 
         {/* The Bubbly News Grid */}
-        <div className="grid grid-cols-12 gap-8 md:gap-10">
+        <div className="grid grid-cols-12 gap-6 md:gap-10">
           {newsItems.map((item) => (
             <motion.div
               key={item.id}
               whileHover={{ y: -6, scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className={`${item.span} bg-white/40 backdrop-blur-md border border-black/10 rounded-[2.5rem] flex flex-col justify-between shadow-lg hover:shadow-[0_20px_50px_rgba(249,185,52,0.12)] hover:bg-white overflow-hidden transition-colors duration-300`}
+              className={`${item.span} bg-white/40 backdrop-blur-md border border-black/10 rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] flex flex-col justify-between shadow-lg hover:shadow-[0_20px_50px_rgba(249,185,52,0.12)] hover:bg-white overflow-hidden transition-colors duration-300`}
             >
               {/* Card Meta Top */}
-              <div className="flex items-center justify-between border-b border-black/5 p-8 font-mono text-[9px] font-bold text-black/40 bg-black/[0.01]">
+              <div className="flex items-center justify-between border-b border-black/5 p-5 sm:p-8 font-mono text-[9px] font-bold text-black/40 bg-black/[0.01]">
                 <span className="uppercase tracking-[0.2em]">{item.category}</span>
                 <span className="tracking-[0.1em]">{item.date}</span>
               </div>
 
               {/* Card Body */}
-              <div className="p-10 md:p-14 space-y-6 flex-grow">
-                <h3 className="text-2xl md:text-3xl font-display font-black tracking-tight text-black leading-tight uppercase">
+              <div className="p-6 sm:p-10 md:p-14 space-y-6 flex-grow text-center sm:text-left flex flex-col items-center sm:items-start justify-center">
+                <h3 className="text-2xl md:text-3xl font-display font-black tracking-tight text-black leading-tight uppercase w-full">
                   {item.title}
                 </h3>
                 {item.subtitle && (
-                  <p className="text-xs font-mono font-bold uppercase tracking-wider text-[#f9b934]">
+                  <p className="text-xs font-mono font-bold uppercase tracking-wider text-[#f9b934] w-full">
                     {item.subtitle}
                   </p>
                 )}
-                <p className="text-xs md:text-sm text-black/60 leading-relaxed font-sans pt-2">
+                <p className="text-xs md:text-sm text-black/60 leading-relaxed font-sans pt-2 w-full">
                   {item.content}
                 </p>
               </div>
 
               {/* Card Footer */}
-              <div className="border-t border-black/5 p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-[9px] bg-black/[0.01]">
-                <span className="font-medium text-black/40 tracking-wider">
+              <div className="border-t border-black/5 p-5 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[9px] bg-black/[0.01]">
+                <span className="font-medium text-black/40 tracking-wider text-center sm:text-left">
                   {item.meta}
                 </span>
-                <div className="flex gap-2 flex-wrap">
+                <div className="flex gap-2 flex-wrap justify-center sm:justify-end">
                   {item.tags?.map((tag) => (
                     <span
                       key={tag}

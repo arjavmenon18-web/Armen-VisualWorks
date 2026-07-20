@@ -66,10 +66,10 @@ export default function About() {
           </div>
 
           {/* Column Right: Profile details structured dynamically into a broad column layout */}
-          <div className="xl:col-span-7 flex flex-col justify-between h-full space-y-12">
+          <div className="xl:col-span-7 flex flex-col justify-between h-full space-y-12 text-center xl:text-left items-center xl:items-start">
             
             {/* Top Identity Block */}
-            <div className="space-y-6">
+            <div className="space-y-6 w-full">
               <span className="text-[10px] font-mono tracking-[0.35em] text-[#f9b934] font-black uppercase block">
                 [ STAGE 01 IDENTITY REGISTER ]
               </span>
@@ -83,7 +83,7 @@ export default function About() {
             </div>
 
             {/* Narrative with Premium Typography */}
-            <div className="space-y-8 max-w-2xl">
+            <div className="space-y-8 max-w-2xl w-full">
               <p className="font-sans text-lg md:text-xl text-black/90 font-medium leading-relaxed tracking-tight">
                 An independent designer, filmmaker, and director managing the multi-sensory visual (AVW), sound (ASW), and cinematic (AFW) output of Armen GlobalWorks (AGW).
               </p>
@@ -93,16 +93,16 @@ export default function About() {
             </div>
 
             {/* Extended Details Table */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-8 border-t border-black/10 font-mono text-[10px]">
-              <div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-8 border-t border-black/10 font-mono text-[10px] w-full">
+              <div className="text-center sm:text-left">
                 <div className="text-[9px] uppercase font-bold text-black/40 tracking-widest">ESTABLISHED</div>
                 <div className="text-base font-black text-black mt-1">2018</div>
               </div>
-              <div>
+              <div className="text-center sm:text-left">
                 <div className="text-[9px] uppercase font-bold text-black/40 tracking-widest">PROJECT DEPTH</div>
                 <div className="text-base font-black text-black mt-1">GLOBAL SENSORY</div>
               </div>
-              <div>
+              <div className="text-center sm:text-left">
                 <div className="text-[9px] uppercase font-bold text-black/40 tracking-widest">CREATIVE DIRECTION</div>
                 <div className="text-base font-black text-black mt-1">PRINCIPAL SYSTEMS</div>
               </div>

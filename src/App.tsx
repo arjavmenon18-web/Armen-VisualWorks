@@ -110,21 +110,21 @@ export default function App() {
         >
           <motion.div
             animate={{ rotate: 360 }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             className="relative"
           >
-            <svg className="w-24 h-24 md:w-32 md:h-32 text-black/10 fill-current opacity-40 md:opacity-100" viewBox="0 0 100 100">
+            <svg className="w-20 h-20 md:w-32 md:h-32 text-black/10 fill-current opacity-45 md:opacity-100" viewBox="0 0 100 100">
               <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent" />
-              <text className="text-[12px] uppercase font-black tracking-widest fill-black/60">
-                <textPath href="#circlePath">Work with Armen GlobalWorks • </textPath>
+              <text className="text-[8.5px] md:text-[9.5px] uppercase font-black tracking-[0.14em] fill-black/60">
+                <textPath href="#circlePath">• Work with Armen GlobalWorks • Work with Armen GlobalWorks </textPath>
               </text>
             </svg>
           </motion.div>
           <div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-[#F5F2EB] rounded-full flex items-center justify-center shadow-2xl border border-black/10 hover:border-[#f9b934] transition-all"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 md:w-16 md:h-16 bg-[#F5F2EB] rounded-full flex items-center justify-center shadow-2xl border border-black/10 hover:border-[#f9b934] transition-all"
             id="style-advisor-trigger"
           >
-            <Sparkles className="w-5 h-5 text-black hover:text-[#f9b934] animate-pulse" />
+            <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-black hover:text-[#f9b934] animate-pulse" />
           </div>
         </motion.button>
       </div>

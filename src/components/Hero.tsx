@@ -62,32 +62,36 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
           pointerEvents: isExpanded ? "none" : "auto"
         }}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 flex items-center justify-center z-30"
+        className="absolute inset-0 flex flex-col items-center justify-center z-30 px-6"
       >
-        <h1 className="text-[clamp(28px,8.5vw,110px)] font-display font-black uppercase text-black flex items-center justify-center whitespace-nowrap tracking-tighter">
-          ARMEN
-          {/* Tactile, Bubbly Hyphen Trigger Button */}
-          <span className="relative inline-flex items-center justify-center mx-4 md:mx-8 select-none">
+        <div className="flex flex-col items-center justify-center text-center">
+          <h1 className="text-[clamp(44px,8.5vw,110px)] font-display font-black uppercase text-white tracking-tighter select-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+            ARMEN WORKS
+          </h1>
+
+          {/* Clean, completely transparent hyphen button directly under WORKS */}
+          <div className="mt-8 flex flex-col items-center justify-center relative select-none">
             <motion.button
               id="hyphen-trigger"
               onClick={onExpand}
               whileHover={{ 
-                scale: 1.15,
-                boxShadow: "0 20px 40px rgba(0,0,0,0.25)"
+                scale: 1.3,
+                color: "#f9b934"
               }}
               whileTap={{ scale: 0.9 }}
-              className="cursor-pointer w-12 h-12 md:w-20 md:h-20 bg-black text-[#F5F2EB] hover:bg-white hover:text-black font-display font-black text-2xl md:text-5xl rounded-full shadow-2xl transition-all duration-300 relative z-10 flex items-center justify-center border-2 border-black"
+              className="cursor-pointer bg-transparent text-white font-display font-black transition-all duration-300 relative z-10 flex items-center justify-center outline-none border-none p-4"
+              style={{ minWidth: "44px", minHeight: "44px" }}
             >
-              -
+              {/* Perfectly symmetrical and clean transparent visual hyphen bar */}
+              <div className="w-8 h-1.5 bg-current rounded-full" />
             </motion.button>
             
-            {/* Elegant Micro-Interaction Hint */}
-            <span className="absolute top-full left-1/2 -translate-x-1/2 mt-8 md:mt-12 whitespace-nowrap text-[9px] font-mono tracking-[0.4em] text-black font-black uppercase pointer-events-none animate-pulse bg-[#F5F2EB] px-3 py-1 rounded-full shadow-md border border-black/5">
-              [ click hyphen to enter ]
+            {/* Elegant Micro-Interaction Hint without any bubble background, just clean text */}
+            <span className="mt-3 whitespace-nowrap text-[9px] font-mono tracking-[0.4em] text-white/60 font-black uppercase pointer-events-none animate-pulse">
+              [ tap hyphen to enter ]
             </span>
-          </span>
-          WORKS
-        </h1>
+          </div>
+        </div>
       </motion.div>
 
       {/* 3. THE GATEWAY REVEAL */}
@@ -99,25 +103,25 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 30 }}
             transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 flex flex-col items-center justify-center z-10 p-6"
+            className="absolute inset-0 flex flex-col items-center justify-center z-10 p-4 sm:p-6"
           >
-            <div className="text-center mb-12 max-w-xl">
-              <span className="text-[10px] uppercase font-mono font-black tracking-[0.4em] text-accent block mb-3 bg-black text-[#F5F2EB] px-4 py-1.5 rounded-full inline-block shadow-md">
+            <div className="text-center mb-8 md:mb-12 max-w-2xl mx-auto flex flex-col items-center">
+              <span className="text-[9px] sm:text-[10px] uppercase font-mono font-black tracking-[0.4em] text-[#f9b934] block mb-3">
                 ARMEN GLOBALWORKS // SYSTEMS CORE
               </span>
-              <h2 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tight text-black leading-none mt-2">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tight text-black leading-tight mt-2 px-2 max-w-[90vw]">
                 SELECT ARCHITECTURAL PORTFOLIO
               </h2>
-              <p className="text-xs md:text-sm text-black/50 font-mono tracking-widest mt-3 uppercase">
+              <p className="text-[10px] sm:text-xs md:text-sm text-black/50 font-mono tracking-[0.2em] sm:tracking-widest mt-4 uppercase">
                 CODENAME: STAGE_02_GATEWAY_ACTIVE
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10 w-full max-w-3xl justify-center px-4">
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full max-w-xl justify-center px-4">
               {/* Dynamic visualworks button */}
               <Link
                 to="/visual"
-                className="w-full sm:w-auto text-center group relative px-12 py-6 bg-black text-[#F5F2EB] hover:text-black rounded-full font-mono text-[11px] font-black uppercase tracking-[0.3em] overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.15)] hover:shadow-[0_15px_45px_rgba(249,185,52,0.3)] transition-all duration-300 hover:-translate-y-1"
+                className="w-full sm:w-auto text-center group relative px-8 py-4 sm:px-10 sm:py-5 bg-black text-[#F5F2EB] hover:text-black rounded-full font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] overflow-hidden shadow-lg hover:shadow-[0_15px_45px_rgba(249,185,52,0.3)] transition-all duration-300 hover:-translate-y-1"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   <Camera className="w-4 h-4 text-accent" />
@@ -129,7 +133,7 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
               {/* Dynamic soundworks button */}
               <Link
                 to="/sound"
-                className="w-full sm:w-auto text-center group relative px-12 py-6 bg-[#F5F2EB] text-black hover:text-[#F5F2EB] border-2 border-black rounded-full font-mono text-[11px] font-black uppercase tracking-[0.3em] overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1"
+                className="w-full sm:w-auto text-center group relative px-8 py-4 sm:px-10 sm:py-5 bg-[#F5F2EB] text-black hover:text-[#F5F2EB] border-2 border-black rounded-full font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] overflow-hidden shadow-md hover:shadow-[0_15px_40px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   <Radio className="w-4 h-4 text-black group-hover:text-accent group-hover:animate-spin" />
@@ -144,12 +148,12 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 0.6, y: 0 }}
               transition={{ delay: 1.2, duration: 1, repeat: Infinity, repeatType: "reverse" }}
-              className="absolute bottom-16 flex flex-col items-center gap-2"
+              className="absolute bottom-12 sm:bottom-16 flex flex-col items-center gap-2"
             >
-              <span className="text-[9px] uppercase tracking-[0.3em] font-mono text-[#f9b934] font-black bg-black px-4 py-1 rounded-full shadow-lg">
+              <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.3em] font-mono text-black/50 font-black">
                 Scroll to enter database index
               </span>
-              <ArrowDown className="w-4 h-4 text-black animate-bounce" />
+              <ArrowDown className="w-4 h-4 text-black/70 animate-bounce" />
             </motion.div>
           </motion.div>
         )}

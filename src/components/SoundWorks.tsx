@@ -76,7 +76,7 @@ export default function SoundWorks() {
                   <div className="relative group">
                     <div className="absolute inset-0 bg-[#f9b934]/20 blur-xl rounded-2xl group-hover:bg-[#f9b934]/30 transition-all duration-500 opacity-60" />
                     <motion.div
-                      whileHover={{ scale: 1.03, rotate: 1 }}
+                      whileHover={{ scale: 1.03, rotate: 0 }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                       className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl aspect-square w-52 h-52 md:w-48 md:h-48 lg:w-56 lg:h-56 shrink-0 cursor-pointer"
                     >

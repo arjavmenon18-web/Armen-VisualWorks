@@ -26,8 +26,8 @@ function GalleryItem({ p, i, navigate }: any) {
     >
       <motion.div 
         className="w-24 h-24 md:w-32 md:h-32 rounded-2xl md:rounded-3xl overflow-hidden border border-bg/10 transition-[transform,border-color,z-index] duration-500 z-10 relative will-change-transform force-gpu"
-        animate={isHit ? { scale: 1.1, rotate: -3, borderColor: "var(--color-accent)", zIndex: 30 } : { scale: 1, rotate: 0, borderColor: "rgba(235, 240, 245, 0.1)", zIndex: 10 }}
-        whileHover={{ scale: 1.1, rotate: -3, borderColor: "var(--color-accent)", zIndex: 30 }}
+        animate={isHit ? { scale: 1.1, rotate: 0, borderColor: "var(--color-accent)", zIndex: 30 } : { scale: 1, rotate: 0, borderColor: "rgba(235, 240, 245, 0.1)", zIndex: 10 }}
+        whileHover={{ scale: 1.1, rotate: 0, borderColor: "var(--color-accent)", zIndex: 30 }}
         transition={{ 
           type: "spring",
           stiffness: 150,

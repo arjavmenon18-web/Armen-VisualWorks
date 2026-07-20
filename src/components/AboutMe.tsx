@@ -6,59 +6,165 @@ import React, { useRef, useState } from "react";
 export const archivePhotos = [
   {
     id: "p-01",
-    title: "OSLO EXPEDITION",
+    title: "OSLO EXPEDITION // CANOPY",
     category: "HIGHLIGHT PROJECT",
-    image: "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1600&q=80",
-    description: "An atmospheric exploration into the dense, mist-enshrouded evergreen canopies of Oslo, capturing the pure majesty and rhythmic patterns of wild conifers.",
+    image: "https://i.postimg.cc/fLZ4Mh16/Whats-App-Image-2026-05-02-at-10-44-44-PM.jpg",
+    description: "Deep visual immersion into the dense, mist-enshrouded pine canopies of Oslo, capturing the raw majesty and repeating architectural symmetries of conifer clusters.",
     year: "2025",
+    aspect: "landscape",
   },
   {
     id: "p-02",
-    title: "FOSSEN FALLS / ICELAND",
+    title: "MIST OVER HORIZON",
     category: "CINEMATIC LANDSCAPE",
-    image: "https://images.unsplash.com/photo-1504893524553-ac55fce698be?q=80&w=1200",
-    description: "The cinematic velocity of glacial meltwater plunging into the deep basalt canyons.",
-    year: "2024",
+    image: "https://i.postimg.cc/pTxNPt3w/Whats-App-Image-2026-05-02-at-10-45-22-PM.jpg",
+    description: "Low-lying atmospheric fog clinging to dark pine ridges under early morning cold northern exposure.",
+    year: "2025",
+    aspect: "landscape",
   },
   {
     id: "p-03",
-    title: "URBAN ROAD / ROAD",
-    category: "URBAN STUDIES",
-    image: "https://i.postimg.cc/nr10Ly2v/Whats-App-Image-2026-05-02-at-10-44-44-PM.jpg",
-    description: "A sharp study of verticality and brutalist rhythm within urban structural voids.",
+    title: "GLACIAL BASALT FLOW",
+    category: "RAW CAPTURE",
+    image: "https://i.postimg.cc/B6sWJGRR/Whats-App-Image-2026-05-02-at-10-45-51-PM.jpg",
+    description: "The velocity of crystalline glacial meltwater cascading down sheer basalt stone pillars.",
     year: "2024",
+    aspect: "landscape",
   },
   {
     id: "p-04",
-    title: "AVIAN HORIZON / ICELAND",
-    category: "LANDSCAPE",
-    image: "https://i.postimg.cc/nr10Ly2q/Whats-App-Image-2026-05-02-at-10-45-22-PM.jpg",
-    description: "Capturing the graceful patterns of bird flight across the vast, misty horizons of the North.",
-    year: "2023",
+    title: "URBAN ELEVATION",
+    category: "METROPOLITAN VOIDS",
+    image: "https://i.postimg.cc/zB5mq14P/Whats-App-Image-2026-05-02-at-10-46-23-PM.jpg",
+    description: "A stark study of vertical architectural alignments and brutalist rhythms in metropolitan centers.",
+    year: "2025",
+    aspect: "portrait",
   },
   {
     id: "p-05",
-    title: "WINDING ARTERY / ICELAND",
-    category: "LANDSCAPE",
-    image: "https://i.postimg.cc/T1cCPz0g/Whats-App-Image-2026-05-02-at-10-45-51-PM.jpg",
-    description: "The rhythmic curves of asphalt cutting through the raw, volcanic textures of the Icelandic highlands.",
+    title: "RHYTHMIC CURVES // VOLCANIC ROAD",
+    category: "ROADS & VISIONS",
+    image: "https://i.postimg.cc/k49r7dLY/Whats-App-Image-2026-05-02-at-10-46-57-PM.jpg",
+    description: "Capturing severe winding highways cutting through the pure, dark ash-rich sands of volcanic expanses.",
     year: "2024",
+    aspect: "landscape",
   },
   {
     id: "p-06",
-    title: "ONYX SHORE / REYNISFJARA",
+    title: "THE BLACK SHORELINE",
     category: "KINETIC SHORES",
-    image: "https://i.postimg.cc/tJz2gKkx/Whats-App-Image-2026-05-02-at-10-46-57-PM.jpg",
-    description: "The haunting beauty of black sand meeting the violent, rhythmic waves of the Atlantic.",
-    year: "2023",
+    image: "https://i.postimg.cc/Y9kctwTd/Whats-App-Image-2026-05-02-at-10-47-31-PM.jpg",
+    description: "Stark monochrome coastline textures where the absolute dark of volcanic sand meets violent Atlantic crests.",
+    year: "2024",
+    aspect: "landscape",
   },
   {
     id: "p-07",
-    title: "TERRA BOREALIS / ICELAND",
-    category: "GEOLOGICAL SHAPE",
-    image: "https://i.postimg.cc/brR3v7gn/Whats-App-Image-2026-05-02-at-10-46-23-PM.jpg",
-    description: "An expansive study of the rugged, moss-covered terrains that define the heart of Iceland.",
+    title: "TERRA BOREALIS // SUMMIT",
+    category: "GEOLOGICAL SHAPES",
+    image: "https://i.postimg.cc/26mpCfgw/Whats-App-Image-2026-05-02-at-10-47-39-PM.jpg",
+    description: "Expansive patterns of moss-covered plateaus and cold ridges illustrating pure scale.",
     year: "2024",
+    aspect: "landscape",
+  },
+  {
+    id: "p-08",
+    title: "MISTY MONUMENTS",
+    category: "ATMOSPHERIC LANDSCAPE",
+    image: "https://i.postimg.cc/QtsLjrvJ/Whats-App-Image-2026-05-02-at-10-48-07-PM.jpg",
+    description: "Ancient stone peaks looming through heavy, low-hanging early-winter cloud formations.",
+    year: "2024",
+    aspect: "portrait",
+  },
+  {
+    id: "p-09",
+    title: "INDUSTRIAL PATTERNS",
+    category: "METROPOLITAN GEOMETRY",
+    image: "https://i.postimg.cc/26mpCfg4/Whats-App-Image-2026-05-02-at-10-49-34-PM.jpg",
+    description: "Structural concrete partitions and negative spaces composing clean brutalist frames.",
+    year: "2025",
+    aspect: "portrait",
+  },
+  {
+    id: "p-10",
+    title: "EVERGREEN SILHOUETTE",
+    category: "NATURE MINIMALISM",
+    image: "https://i.postimg.cc/4dZCXTjH/Whats-App-Image-2026-05-02-at-10-50-09-PM.jpg",
+    description: "Cold conifer peaks standing sharply outlined against clear, pale sub-zero horizons.",
+    year: "2025",
+    aspect: "landscape",
+  },
+  {
+    id: "p-11",
+    title: "FOSSEN HYDROLOGY",
+    category: "KINETIC LANDSCAPE",
+    image: "https://i.postimg.cc/Ssq0mpHz/Whats-App-Image-2026-05-02-at-10-52-36-PM.jpg",
+    description: "A precision high-shutter study isolating free-falling droplets of pure glacial meltwater.",
+    year: "2024",
+    aspect: "landscape",
+  },
+  {
+    id: "p-12",
+    title: "VOLCANIC ROADWAY // PATHWAY",
+    category: "ROADS & VISIONS",
+    image: "https://i.postimg.cc/zB5mq14h/Whats-App-Image-2026-05-02-at-10-54-15-PM.jpg",
+    description: "The sharp yellow vector line of a highway cutting through frozen Icelandic lava fields.",
+    year: "2024",
+    aspect: "portrait",
+  },
+  {
+    id: "p-13",
+    title: "MONOCHROME BRUTALISM",
+    category: "ARCHITECTURAL STUDY",
+    image: "https://i.postimg.cc/HxHGTCFc/Whats-App-Image-2026-05-02-at-10-55-45-PM.jpg",
+    description: "Heavy concrete shadows composing high-contrast diagonal structures under natural overhead light.",
+    year: "2025",
+    aspect: "portrait",
+  },
+  {
+    id: "p-14",
+    title: "BASALT CATHEDRALS",
+    category: "GEOLOGICAL FORMATIONS",
+    image: "https://i.postimg.cc/Zq6tkqs8/Whats-App-Image-2026-05-02-at-10-56-06-PM.jpg",
+    description: "Magnificent hexagonal columns forming natural basalt sea walls along Reynisfjara.",
+    year: "2024",
+    aspect: "portrait",
+  },
+  {
+    id: "p-15",
+    title: "THE ISOLATED PINNACLE",
+    category: "ATMOSPHERIC STUDY",
+    image: "https://i.postimg.cc/vm5FRm2W/Whats-App-Image-2026-05-02-at-10-57-20-PM.jpg",
+    description: "An isolated evergreen spear reaching up through thick layer fog layers.",
+    year: "2025",
+    aspect: "portrait",
+  },
+  {
+    id: "p-16",
+    title: "COLD PEAK TRANSITION",
+    category: "CINEMATIC LANDSCAPE",
+    image: "https://i.postimg.cc/Dz1kVzpQ/Whats-App-Image-2026-05-02-at-10-57-45-PM.jpg",
+    description: "Cinematic desaturation and cold blue tones draping steep volcanic ridges.",
+    year: "2025",
+    aspect: "portrait",
+  },
+  {
+    id: "p-17",
+    title: "ATMOSPHERIC ISOLATION",
+    category: "RAW CAPTURE",
+    image: "https://i.postimg.cc/nLqb8LSY/Whats-App-Image-2026-05-05-at-6-53-00-PM.jpg",
+    description: "The chilling still air of mountain valleys cloaked in heavy low clouds.",
+    year: "2026",
+    aspect: "landscape",
+  },
+  {
+    id: "p-18",
+    title: "ELEVATED PERSPECTIVE",
+    category: "MOUNTAIN VOYAGE",
+    image: "https://i.postimg.cc/hGVWFGZJ/Whats-App-Image-2026-05-05-at-7-29-37-PM.jpg",
+    description: "Distant ridges and mountain contours dissolving softly into the high atmospheric twilight.",
+    year: "2026",
+    aspect: "square",
   }
 ];
 
@@ -118,22 +224,22 @@ export default function AboutMe() {
     <div className="min-h-screen bg-[#f4f2e9] text-[#0A0A0A] relative overflow-hidden font-sans select-none">
       
       {/* Top Navigation Line */}
-      <nav className="fixed top-0 left-0 w-full p-6 md:p-8 z-50 flex justify-between items-center bg-[#f4f2e9]/90 backdrop-blur-md border-b border-black/5">
+      <nav className="fixed top-0 left-0 w-full p-4 md:p-8 z-50 flex justify-between items-center bg-[#f4f2e9]/90 backdrop-blur-md border-b border-black/5">
         <Link 
           to="/" 
-          className="flex items-center gap-3 group px-4 py-2 bg-white hover:bg-black hover:text-[#f4f2e9] rounded-full border border-black/5 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 text-[10px] font-mono font-black uppercase tracking-[0.2em]"
+          className="flex items-center gap-2 md:gap-3 group px-3.5 py-2 md:px-4 md:py-2 bg-white hover:bg-black hover:text-[#f4f2e9] rounded-full border border-black/5 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 text-[9px] md:text-[10px] font-mono font-black uppercase tracking-[0.15em] md:tracking-[0.2em]"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>[ BACK TO CORE INDEX ]</span>
+          <ArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4" />
+          <span>[ <span className="hidden md:inline">BACK TO CORE </span>INDEX ]</span>
         </Link>
-        <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.3em] bg-black/5 px-4 py-2 rounded-full border border-black/5">
+        <div className="hidden sm:flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.3em] bg-black/5 px-4 py-2 rounded-full border border-black/5">
           <Sparkles className="w-3.5 h-3.5 text-accent animate-pulse" />
           <span>PORTAL SEC-04 // DEEP DIVE</span>
         </div>
       </nav>
 
       {/* Main Container */}
-      <main className="max-w-[95vw] mx-auto px-6 md:px-12 lg:px-16 pt-32 md:pt-40 pb-24 space-y-24">
+      <main className="max-w-[95vw] mx-auto px-4 md:px-12 lg:px-16 pt-24 md:pt-40 pb-24 space-y-16 md:space-y-24">
         
         {/* Intro Biography Block */}
         <div className="grid grid-cols-12 gap-8 md:gap-16 items-start border-b border-black/10 pb-16">
@@ -147,7 +253,7 @@ export default function AboutMe() {
               <span className="text-[10px] font-mono tracking-[0.4em] text-accent font-black uppercase block">
                 [ UNLOCKED BIOGRAPHICAL INDEX ]
               </span>
-              <h1 className="text-[clamp(44px,10vw,120px)] font-black leading-[0.85] tracking-tight uppercase">
+              <h1 className="text-[clamp(36px,8vw,120px)] font-black leading-[0.85] tracking-tight uppercase">
                 ARJAV<br />
                 <span className="text-accent italic font-display">MENON</span>
               </h1>
@@ -156,7 +262,7 @@ export default function AboutMe() {
 
           {/* Left bio column */}
           <div className="col-span-12 lg:col-span-5 space-y-6">
-            <div className="relative group overflow-hidden rounded-2xl border border-black/10 shadow-2xl aspect-[4/5] bg-black">
+            <div className="relative group overflow-hidden rounded-2xl border border-black/10 shadow-2xl aspect-[4/5] max-h-[55vh] md:max-h-none bg-black">
               <img 
                 src="https://i.postimg.cc/jSRYZTB0/mee.png" 
                 alt="Arjav Menon" 
@@ -177,10 +283,10 @@ export default function AboutMe() {
           {/* Right bio column */}
           <div className="col-span-12 lg:col-span-7 flex flex-col justify-between h-full py-2 space-y-8">
             <div className="space-y-6 md:space-y-8">
-              <h2 className="text-2xl md:text-4xl font-display font-bold tracking-tight text-black leading-tight">
+              <h2 className="text-xl md:text-4xl font-display font-bold tracking-tight text-black leading-tight">
                 Operating at the intersection of stark visuals, atmospheric acoustics, and digital logic.
               </h2>
-              <div className="space-y-4 text-sm md:text-base text-black/70 leading-relaxed font-light">
+              <div className="space-y-4 text-xs md:text-base text-black/70 leading-relaxed font-light">
                 <p>
                   I'm Arjav Menon, an independent designer, filmmaker, and director managing the multi-sensory visual (AVW), sound (ASW), and cinematic (AFW) output of Armen GlobalWorks (AGW). Currently a student in Class 11th at Pearl Wisdom School Dubai, my work is defined by a deep curiosity for how aesthetics shape human emotions and architectural environments.
                 </p>
@@ -194,22 +300,22 @@ export default function AboutMe() {
             </div>
 
             {/* Competencies */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-black/10 font-mono text-[10px]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-black/10 font-mono text-[9px] md:text-[10px]">
               <div>
-                <div className="font-bold text-black/40 uppercase tracking-widest">ART DIRECTION</div>
-                <div className="text-sm font-black text-black mt-1">CINEMATIC SCALES</div>
+                <div className="font-bold text-black/40 uppercase tracking-widest text-[8px] md:text-[9px]">ART DIRECTION</div>
+                <div className="text-xs md:text-sm font-black text-black mt-1">CINEMATIC SCALES</div>
               </div>
               <div>
-                <div className="font-bold text-black/40 uppercase tracking-widest">ACOUSTIC STUDY</div>
-                <div className="text-sm font-black text-black mt-1">MODULAR SYNTH</div>
+                <div className="font-bold text-black/40 uppercase tracking-widest text-[8px] md:text-[9px]">ACOUSTIC STUDY</div>
+                <div className="text-xs md:text-sm font-black text-black mt-1">MODULAR SYNTH</div>
               </div>
               <div>
-                <div className="font-bold text-black/40 uppercase tracking-widest">FILMMAKING</div>
-                <div className="text-sm font-black text-black mt-1">8K DIRECTED RAW</div>
+                <div className="font-bold text-black/40 uppercase tracking-widest text-[8px] md:text-[9px]">FILMMAKING</div>
+                <div className="text-xs md:text-sm font-black text-black mt-1">8K DIRECTED RAW</div>
               </div>
               <div>
-                <div className="font-bold text-black/40 uppercase tracking-widest">DEVELOPMENT</div>
-                <div className="text-sm font-black text-black mt-1">TYPESCRIPT VITE</div>
+                <div className="font-bold text-black/40 uppercase tracking-widest text-[8px] md:text-[9px]">DEVELOPMENT</div>
+                <div className="text-xs md:text-sm font-black text-black mt-1">TYPESCRIPT VITE</div>
               </div>
             </div>
           </div>
@@ -220,7 +326,7 @@ export default function AboutMe() {
           
           {/* Header styled exactly like Screenshot 3 */}
           <div className="text-left space-y-4 border-b border-black/10 pb-8">
-            <h2 className="text-[clamp(44px,10vw,120px)] font-black leading-[0.8] tracking-tighter uppercase font-display">
+            <h2 className="text-[clamp(36px,8vw,120px)] font-black leading-[0.8] tracking-tighter uppercase font-display">
               PHOTO <br className="sm:hidden" />
               <span className="text-[#f9b934]">GRAPHY</span>
             </h2>
@@ -235,7 +341,7 @@ export default function AboutMe() {
           {/* Oslo Expedition - Highlight Spotlight Project Card as shown in Screenshot 3 */}
           <div 
             onClick={() => setSelectedPhoto(archivePhotos[0])}
-            className="relative group overflow-hidden rounded-[2.5rem] border border-black/10 shadow-2xl bg-black aspect-[21/10] min-h-[350px] cursor-zoom-in"
+            className="relative group overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] border border-black/10 shadow-2xl bg-black aspect-[4/3] sm:aspect-[16/9] md:aspect-[16/10] min-h-[350px] md:min-h-[480px] cursor-zoom-in"
           >
             <img 
               src={archivePhotos[0].image} 
@@ -247,33 +353,33 @@ export default function AboutMe() {
             <div className="absolute inset-0 bg-[#f9b934]/5 mix-blend-overlay pointer-events-none" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
             
-            {/* Spotlight Annotations */}
-            <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 max-w-xl space-y-2 text-white">
-              <div className="font-mono text-[9px] text-[#f9b934] uppercase tracking-[0.3em] bg-[#f9b934]/10 border border-[#f9b934]/20 px-3 py-1 rounded-md inline-block">
-                HIGHLIGHT PROJECT
+            {/* Spotlight Annotations & Button integrated together to prevent any overlap on small devices */}
+            <div className="absolute inset-x-0 bottom-0 p-6 md:p-12 bg-gradient-to-t from-black/95 via-black/60 to-transparent flex flex-col md:flex-row justify-between items-start md:items-end gap-6 text-left">
+              <div className="space-y-2 max-w-xl text-white">
+                <div className="font-mono text-[9px] text-[#f9b934] uppercase tracking-[0.3em] bg-[#f9b934]/10 border border-[#f9b934]/20 px-3 py-1 rounded-md inline-block">
+                  HIGHLIGHT PROJECT
+                </div>
+                <h3 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tight leading-none text-white break-words">
+                  {archivePhotos[0].title}
+                </h3>
+                <p className="text-xs md:text-sm text-white/70 font-light leading-relaxed hidden sm:block">
+                  {archivePhotos[0].description}
+                </p>
               </div>
-              <h3 className="text-3xl md:text-6xl font-display font-black uppercase tracking-tight leading-none text-white">
-                {archivePhotos[0].title}
-              </h3>
-              <p className="text-xs md:text-sm text-white/70 font-light leading-relaxed hidden sm:block">
-                {archivePhotos[0].description}
-              </p>
-            </div>
 
-            {/* Explore Detail yellow button on bottom right */}
-            <div className="absolute bottom-6 right-6 md:bottom-12 md:right-12">
-              <button className="px-6 py-3 md:px-8 md:py-4 bg-[#f9b934] hover:bg-white text-black font-mono font-black text-[9px] md:text-[10px] tracking-widest uppercase rounded-full shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer flex items-center gap-2">
+              {/* Explore Detail yellow button */}
+              <button className="px-5 py-2.5 md:px-8 md:py-4 bg-[#f9b934] hover:bg-white text-black font-mono font-black text-[8px] md:text-[10px] tracking-widest uppercase rounded-full shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer flex items-center gap-2 shrink-0">
                 <span>EXPLORE DETAIL</span>
               </button>
             </div>
           </div>
 
           {/* Interactive Marquee banner as shown in Screenshot 2 */}
-          <div className="w-full overflow-hidden py-8 border-y border-black/10 flex relative bg-[#ebe7d9]/30">
+          <div className="w-full overflow-hidden py-4 md:py-8 border-y border-black/10 flex relative bg-[#ebe7d9]/30">
             <motion.div
               animate={{ x: [0, -1200] }}
               transition={{ ease: "linear", duration: 30, repeat: Infinity }}
-              className="flex whitespace-nowrap text-4xl md:text-6xl font-display font-black text-[#f9b934] tracking-[0.15em] uppercase gap-12"
+              className="flex whitespace-nowrap text-2xl md:text-6xl font-display font-black text-[#f9b934] tracking-[0.15em] uppercase gap-6 md:gap-12"
             >
               <span>INDUSTRIAL</span>
               <span>•</span>
@@ -325,10 +431,22 @@ export default function AboutMe() {
                   <div
                     key={photo.id}
                     onMouseUp={() => handleMouseUp(photo)}
-                    className="snap-center shrink-0 w-[80vw] md:w-[45vw] lg:w-[35vw] flex flex-col space-y-4 group/photo pointer-events-auto"
+                    className={`snap-center shrink-0 flex flex-col space-y-4 group/photo pointer-events-auto ${
+                      photo.aspect === "landscape" 
+                        ? "w-[293px] md:w-[453px]" 
+                        : photo.aspect === "portrait" 
+                        ? "w-[165px] md:w-[255px]" 
+                        : "w-[220px] md:w-[340px]"
+                    }`}
                   >
-                    {/* Photo Frame */}
-                    <div className="relative overflow-hidden aspect-[16/10] bg-black border border-black/10 rounded-3xl shadow-lg transition-all duration-500 group-hover/photo:shadow-[0_15px_40px_rgba(249,185,52,0.15)]">
+                    {/* Photo Frame with dynamic aspect ratio depending on the photo type */}
+                    <div className={`relative overflow-hidden bg-black border border-black/10 rounded-3xl shadow-lg transition-all duration-500 group-hover/photo:shadow-[0_15px_40px_rgba(249,185,52,0.15)] h-[220px] md:h-[340px] w-full ${
+                      photo.aspect === "landscape" 
+                        ? "aspect-[4/3]" 
+                        : photo.aspect === "portrait" 
+                        ? "aspect-[3/4]" 
+                        : "aspect-square"
+                    }`}>
                       <img
                         src={photo.image}
                         alt={photo.title}
@@ -349,15 +467,15 @@ export default function AboutMe() {
                     </div>
 
                     {/* Photo Details */}
-                    <div className="space-y-1.5 px-1 text-left">
+                    <div className="space-y-1.5 px-1 text-left w-full">
                       <div className="flex justify-between items-center text-[9px] font-mono">
                         <span className="text-[#f9b934] font-black tracking-widest uppercase">{photo.category}</span>
                         <span className="text-black/40 font-bold">YEAR: {photo.year}</span>
                       </div>
-                      <h3 className="text-base font-bold uppercase tracking-tight text-black">
+                      <h3 className="text-sm md:text-base font-bold uppercase tracking-tight text-black truncate">
                         {photo.title}
                       </h3>
-                      <p className="text-xs text-black/60 font-light leading-relaxed max-w-sm line-clamp-2">
+                      <p className="text-xs text-black/60 font-light leading-relaxed line-clamp-2">
                         {photo.description}
                       </p>
                     </div>
@@ -423,7 +541,7 @@ export default function AboutMe() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Aspect frame */}
-              <div className="w-full bg-[#0d0d0d] flex items-center justify-center p-4 sm:p-6 overflow-hidden border border-white/10 rounded-3xl max-h-[65vh] aspect-[16/10] shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
+              <div className="w-full bg-[#0d0d0d] flex items-center justify-center p-4 sm:p-6 overflow-hidden border border-white/10 rounded-3xl max-h-[65vh] shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
                 <img
                   src={selectedPhoto.image}
                   alt={selectedPhoto.title}
