@@ -8,14 +8,44 @@ export default function Contact() {
     message: ""
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", message: "" });
-    }, 3000);
+    setSubmitting(true);
+    setErrorMsg("");
+
+    try {
+      const accessKey = (import.meta as any).env.VITE_WEB3FORMS_ACCESS_KEY || "ffa429b4-988a-49b0-97ab-9ce4ef0294ec";
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          subject: `New Collaboration Inquiry from ${formData.name}`
+        })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setErrorMsg(result.message || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      setErrorMsg("Failed to connect. Please check your network connection.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -97,16 +127,23 @@ export default function Contact() {
             <div className="absolute top-0 left-0 w-full h-0.5 bg-[#f9b934]" />
             
             {submitted ? (
-              <div className="py-24 flex flex-col items-center justify-center text-center space-y-4">
+              <div className="py-24 flex flex-col items-center justify-center text-center space-y-6">
                 <div className="w-12 h-12 rounded-none border border-[#f9b934]/30 flex items-center justify-center text-[#f9b934] bg-white/5">
                   <Check className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-display font-black uppercase tracking-widest text-[#f9b934]">
                   TRANSMISSION RECEIVED
                 </h3>
-                <p className="text-xs font-mono tracking-wider text-white/50 max-w-xs uppercase">
+                <p className="text-xs font-mono tracking-wider text-white/50 max-w-xs uppercase leading-relaxed">
                   Your details have been registered. Our creative office will follow up shortly.
                 </p>
+                <button
+                  type="button"
+                  onClick={() => setSubmitted(false)}
+                  className="mt-4 px-6 py-2.5 border border-[#f9b934]/40 hover:border-[#f9b934] hover:bg-[#f9b934]/10 text-[#f9b934] text-[10px] font-mono tracking-widest uppercase transition-all duration-200"
+                >
+                  Send another inquiry
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-10">
@@ -116,6 +153,12 @@ export default function Contact() {
                     CREATIVE INQUIRY FORM
                   </span>
                 </div>
+
+                {errorMsg && (
+                  <div className="p-4 bg-red-950/30 border border-red-500/30 text-red-400 font-mono text-[10px] tracking-wider uppercase leading-relaxed">
+                    ERROR: {errorMsg}
+                  </div>
+                )}
 
                 {/* Field 1: Name */}
                 <div className="space-y-2 relative">
@@ -165,9 +208,10 @@ export default function Contact() {
                 {/* Submit button */}
                 <button
                   type="submit"
-                  className="w-full py-4 bg-[#f9b934] hover:bg-white text-black font-mono font-bold text-[10px] tracking-[0.3em] uppercase transition-all duration-300 flex items-center justify-center gap-2 rounded-none"
+                  disabled={submitting}
+                  className="w-full py-4 bg-[#f9b934] hover:bg-white text-black font-mono font-bold text-[10px] tracking-[0.3em] uppercase transition-all duration-300 flex items-center justify-center gap-2 rounded-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span>SEND INQUIRY</span>
+                  <span>{submitting ? "TRANSMITTING..." : "SEND INQUIRY"}</span>
                 </button>
               </form>
             )}
