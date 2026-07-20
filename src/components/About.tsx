@@ -66,7 +66,7 @@ export default function About() {
           </div>
 
           {/* Column Right: Profile details structured dynamically into a broad column layout */}
-          <div className="xl:col-span-7 flex flex-col justify-between h-full space-y-12 text-center xl:text-left items-center xl:items-start">
+          <div className="xl:col-span-7 w-full px-4 sm:px-6 md:px-8 xl:px-0 flex flex-col justify-between h-full space-y-12 text-center xl:text-left items-center xl:items-start">
             
             {/* Top Identity Block */}
             <div className="space-y-6 w-full">
@@ -96,7 +96,7 @@ export default function About() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-8 border-t border-black/10 font-mono text-[10px] w-full">
               <div className="text-center sm:text-left">
                 <div className="text-[9px] uppercase font-bold text-black/40 tracking-widest">ESTABLISHED</div>
-                <div className="text-base font-black text-black mt-1">2018</div>
+                <div className="text-base font-black text-black mt-1">2022</div>
               </div>
               <div className="text-center sm:text-left">
                 <div className="text-[9px] uppercase font-bold text-black/40 tracking-widest">PROJECT DEPTH</div>

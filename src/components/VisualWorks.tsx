@@ -98,7 +98,7 @@ export default function VisualWorks() {
             <p className="italic text-white/60 text-sm md:text-base leading-relaxed max-w-sm font-light">
               "We don't create templates; we create digital legacies that define the next era of aesthetics."
             </p>
-            <div className="font-mono text-[9px] tracking-[0.3em] text-white/30 uppercase">EST. 2018</div>
+            <div className="font-mono text-[9px] tracking-[0.3em] text-white/30 uppercase">EST. 2022</div>
           </div>
         </div>
 

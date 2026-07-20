@@ -1,6 +1,8 @@
 {
-  "name": "AVW Portfolio",
-  "description": "A premium, modern, editorial-style portfolio for Armen VisualWorks, featuring brutalist typography and immersive interactions.",
+  "name": "Armen GlobalWorks",
+  "description": "The premium, multi-sensory portal for Armen GlobalWorks, founded and directed by Arjav Menon. Exhibits creative systems across Visual (AVW), Sound (ASW), and Film (AFW) divisions.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

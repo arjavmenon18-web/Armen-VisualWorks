@@ -24,13 +24,12 @@ import PixelChatbot from "./components/PixelChatbot";
 import DisclaimerModal from "./components/DisclaimerModal";
 import { useState } from "react";
 
-function Portfolio() {
-  const [isExpanded, setIsExpanded] = useState(false);
+interface PortfolioProps {
+  isExpanded: boolean;
+  onExpand: () => void;
+}
 
-  const handleExpand = () => {
-    setIsExpanded(true);
-  };
-
+function Portfolio({ isExpanded, onExpand }: PortfolioProps) {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -61,7 +60,7 @@ function Portfolio() {
       <div className="relative z-10 font-sans">
         {isExpanded && <Navbar />}
         <main>
-          <Hero isExpanded={isExpanded} onExpand={handleExpand} />
+          <Hero isExpanded={isExpanded} onExpand={onExpand} />
           {isExpanded && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -83,6 +82,11 @@ function Portfolio() {
 
 export default function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleExpand = () => {
+    setIsExpanded(true);
+  };
 
   return (
     <Router>
@@ -90,7 +94,7 @@ export default function App() {
       <ImageGuard />
       <DisclaimerModal />
       <Routes>
-        <Route path="/" element={<Portfolio />} />
+        <Route path="/" element={<Portfolio isExpanded={isExpanded} onExpand={handleExpand} />} />
         <Route path="/about-me" element={<AboutMe />} />
         <Route path="/project/:id" element={<ProjectView />} />
         <Route path="/visual" element={<VisualWorks />} />
@@ -98,7 +102,7 @@ export default function App() {
       </Routes>
 
       {/* Pixel Chatbot Popup */}
-      <PixelChatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+      <PixelChatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} onExpand={handleExpand} />
 
       {/* Floating UI Elements - Common across all pages */}
       <div className="fixed bottom-6 right-6 md:bottom-12 md:right-12 z-[100]">

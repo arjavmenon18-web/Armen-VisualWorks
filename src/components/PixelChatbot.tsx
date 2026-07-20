@@ -13,9 +13,10 @@ interface Message {
 interface PixelChatbotProps {
   isOpen: boolean;
   onClose: () => void;
+  onExpand?: () => void;
 }
 
-export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
+export default function PixelChatbot({ isOpen, onClose, onExpand }: PixelChatbotProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [messages, setMessages] = useState<Message[]>([
@@ -115,23 +116,33 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
   };
 
   const handleAction = (path: string) => {
+    // If navigating to a home page section, trigger page expansion first
+    if (onExpand && (path.startsWith('#') || path.startsWith('/#') || path === '/')) {
+      onExpand();
+    }
+
     if (path.startsWith('#')) {
       const id = path.substring(1);
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        // If on a different page, go to home first
-        navigate('/' + path);
-      }
+      // Give React a brief moment to render components if we just expanded
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          element.classList.add('ring-4', 'ring-[#f9b934]', 'transition-all', 'duration-1000');
+          setTimeout(() => {
+            element.classList.remove('ring-4', 'ring-[#f9b934]');
+          }, 3000);
+        } else {
+          // If on a different page, go to home first
+          navigate('/' + path);
+        }
+      }, 150);
     } else {
       const [basePath, hash] = path.split('#');
       
       if (hash) {
-        // If there's a hash, we navigate and then try to scroll
         navigate(path);
-        // Small timeout to allow the path to change and elements to render
-        // Increased timeout to account for route change and component mounting
+        // Timeout to account for route change, component mounting, and potential page expansion
         setTimeout(() => {
           const element = document.getElementById(hash);
           if (element) {
@@ -141,8 +152,12 @@ export default function PixelChatbot({ isOpen, onClose }: PixelChatbotProps) {
               top: elementPosition - navHeight,
               behavior: 'smooth'
             });
+            element.classList.add('ring-4', 'ring-[#f9b934]', 'transition-all', 'duration-1000');
+            setTimeout(() => {
+              element.classList.remove('ring-4', 'ring-[#f9b934]');
+            }, 3000);
           }
-        }, 300);
+        }, 500);
       } else {
         navigate(path);
         window.scrollTo(0, 0);

@@ -281,12 +281,12 @@ export default function AboutMe() {
           </div>
 
           {/* Right bio column */}
-          <div className="col-span-12 lg:col-span-7 flex flex-col justify-between h-full py-2 space-y-8">
-            <div className="space-y-6 md:space-y-8">
-              <h2 className="text-xl md:text-4xl font-display font-bold tracking-tight text-black leading-tight">
+          <div className="col-span-12 lg:col-span-7 w-full px-4 sm:px-6 md:px-8 lg:px-0 flex flex-col justify-between h-full py-2 space-y-8 text-center items-center">
+            <div className="space-y-6 md:space-y-8 w-full max-w-2xl mx-auto">
+              <h2 className="text-xl md:text-4xl font-display font-bold tracking-tight text-black leading-tight text-center">
                 Operating at the intersection of stark visuals, atmospheric acoustics, and digital logic.
               </h2>
-              <div className="space-y-4 text-xs md:text-base text-black/70 leading-relaxed font-light">
+              <div className="space-y-4 text-xs md:text-base text-black/70 leading-relaxed font-light text-center">
                 <p>
                   I'm Arjav Menon, an independent designer, filmmaker, and director managing the multi-sensory visual (AVW), sound (ASW), and cinematic (AFW) output of Armen GlobalWorks (AGW). Currently a student in Class 11th at Pearl Wisdom School Dubai, my work is defined by a deep curiosity for how aesthetics shape human emotions and architectural environments.
                 </p>
@@ -300,7 +300,7 @@ export default function AboutMe() {
             </div>
 
             {/* Competencies */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-black/10 font-mono text-[9px] md:text-[10px]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-black/10 font-mono text-[9px] md:text-[10px] w-full text-center">
               <div>
                 <div className="font-bold text-black/40 uppercase tracking-widest text-[8px] md:text-[9px]">ART DIRECTION</div>
                 <div className="text-xs md:text-sm font-black text-black mt-1">CINEMATIC SCALES</div>

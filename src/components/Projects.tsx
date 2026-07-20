@@ -56,6 +56,17 @@ const newsItems: NewsItem[] = [
     meta: "STUDIO NOTE #03",
     tags: ["SPACE", "TYPOGRAPHY", "MINIMALISM"],
     span: "col-span-12 lg:col-span-6"
+  },
+  {
+    id: "navaneeth-01",
+    category: "AFW // CREATIVE FOCUS",
+    date: "20.07.2026",
+    title: "MEET THE SCREENWRITER: NAVANEETH PRAMOD",
+    subtitle: "The 16-year-old visionary penning the coming-of-age thriller THE AWAKENING.",
+    content: "Behind the sharp, suspenseful architecture of AFW's upcoming thriller 'The Awakening' is Navaneeth Pramod, an exceptionally gifted 16-year-old screenwriter. Coming from the same school as Arjav Menon—Pearl Wisdom School, Dubai—Navaneeth brings a raw, coming-of-age authenticity to the corporate thriller's narrative. This shared school lineage and early cinematic obsession formed the bedrock of their creative synergy, leading to a screenplay that blends youthful high-stakes friction with deep atmospheric tension.",
+    meta: "AFW SPOTLIGHT CHRONICLE",
+    tags: ["NAVANEETH PRAMOD", "THE AWAKENING", "PEARL WISDOM", "AFW"],
+    span: "col-span-12 lg:col-span-12"
   }
 ];
 
@@ -94,6 +105,7 @@ export default function Projects() {
           {newsItems.map((item) => (
             <motion.div
               key={item.id}
+              id={item.id}
               whileHover={{ y: -6, scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className={`${item.span} bg-white/40 backdrop-blur-md border border-black/10 rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] flex flex-col justify-between shadow-lg hover:shadow-[0_20px_50px_rgba(249,185,52,0.12)] hover:bg-white overflow-hidden transition-colors duration-300`}
