@@ -22,7 +22,7 @@ import { Sparkles } from "lucide-react";
 
 import PixelChatbot from "./components/PixelChatbot";
 import DisclaimerModal from "./components/DisclaimerModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface PortfolioProps {
   isExpanded: boolean;
@@ -36,6 +36,13 @@ function Portfolio({ isExpanded, onExpand }: PortfolioProps) {
     damping: 30,
     restDelta: 0.001
   });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("name") || params.get("email") || params.get("message")) {
+      onExpand();
+    }
+  }, [onExpand]);
 
   return (
     <div className={`relative overflow-x-hidden bg-[#F5F2EB] ${isExpanded ? "" : "h-screen w-screen overflow-hidden"}`}>

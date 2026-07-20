@@ -1,12 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ArrowUpRight, Check } from "lucide-react";
 
 export default function Contact() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: ""
   });
+
+  useEffect(() => {
+    const nameParam = searchParams.get("name") || "";
+    const emailParam = searchParams.get("email") || "";
+    const messageParam = searchParams.get("message") || "";
+
+    if (nameParam || emailParam || messageParam) {
+      setFormData({
+        name: nameParam,
+        email: emailParam,
+        message: messageParam
+      });
+
+      // Clear params from URL
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete("name");
+      newParams.delete("email");
+      newParams.delete("message");
+      setSearchParams(newParams, { replace: true });
+
+      // Smooth scroll to contact form section
+      setTimeout(() => {
+        const element = document.getElementById("contact");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 300);
+    }
+  }, [searchParams, setSearchParams]);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");

@@ -46,7 +46,16 @@ export default function VisualWorks() {
   const handleRegisterBrand = (e: React.FormEvent) => {
     e.preventDefault();
     if (!brandName || !brandEmail) return;
-    setRegistrationSubmitted(true);
+
+    // Construct structured message body including the Brand Name and Brand Email
+    const structuredMessage = `[PRIVATE BRAND REGISTRY INQUIRY]\nBrand/Enterprise Name: ${brandName}\nBrand Contact Email: ${brandEmail}\nPrimary Campaign Objective: ${campaignObjective}\n\nBrief Specs / Desired Deliverables:\n${brandMessage || "None provided"}`;
+
+    // Construct query parameters - Only setting message so Name & Email fields in Contact can be filled by the actual user
+    const params = new URLSearchParams();
+    params.set("message", structuredMessage);
+
+    // Redirect to home and scroll to contact
+    navigate(`/?${params.toString()}#contact`);
   };
 
   return (
