@@ -85,10 +85,10 @@ export default function About() {
             {/* Narrative with Premium Typography */}
             <div className="space-y-8 max-w-2xl w-full">
               <p className="font-sans text-lg md:text-xl text-black/90 font-medium leading-relaxed tracking-tight">
-                An independent designer, filmmaker, and director managing the multi-sensory visual (AVW), sound (ASW), and cinematic (AFW) output of Armen GlobalWorks (AGW).
+                An independent designer, filmmaker, and director leading Armen GlobalWorks.
               </p>
               <p className="font-sans text-xs md:text-sm text-black/60 leading-relaxed font-light">
-                Operating at the absolute frontier of branding and high-end digital architecture, Arjav crafts stark, award-winning ecosystems for brands who value radical aesthetic integrity and strategic boldness.
+                Specializing in visual design, media production, and sound—crafting clean, intentional systems for brands and projects that value strong aesthetic integrity and clarity.
               </p>
             </div>
 
