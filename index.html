@@ -36,62 +36,78 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Arjav Menon",
-        "alternateName": ["Arjav", "Armen"],
-        "url": "https://armenworks.com",
-        "image": [
-          "https://postimg.cc/kVxj13Z8",
-          "https://postimg.cc/f3xH2nFC"
-        ],
-        "jobTitle": "Creative Director & Founder",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Armen GlobalWorks",
-          "url": "https://armenworks.com"
-        },
-        "alumniOf": [
+        "@graph": [
           {
-            "@type": "EducationalOrganization",
-            "name": "Pearl Wisdom School, Dubai"
+            "@type": "Person",
+            "@id": "https://armenworks.com/#person",
+            "name": "Arjav Menon",
+            "alternateName": ["Arjav", "Armen"],
+            "url": "https://armenworks.com",
+            "image": [
+              "https://i.postimg.cc/jSRYZTB0/mee.png",
+              "https://i.postimg.cc/fLZ4Mh16/Whats-App-Image-2026-05-02-at-10-44-44-PM.jpg"
+            ],
+            "jobTitle": "Creative Director & Founder",
+            "worksFor": {
+              "@type": "Organization",
+              "@id": "https://armenworks.com/#organization"
+            },
+            "alumniOf": [
+              {
+                "@type": "EducationalOrganization",
+                "name": "Pearl Wisdom School, Dubai"
+              },
+              {
+                "@type": "EducationalOrganization",
+                "name": "Our Own English High School, Sharjah"
+              }
+            ],
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Dubai",
+              "addressCountry": "UAE"
+            },
+            "knowsAbout": [
+              "Graphic Design",
+              "Filmmaking",
+              "Brand Strategy",
+              "Music Production"
+            ],
+            "description": "Arjav Menon is a Dubai-based creative entrepreneur, filmmaker, designer, and founder of Armen GlobalWorks, specializing in visual design, media production, and digital strategy.",
+            "sameAs": [
+              "https://www.instagram.com/arjavmenon",
+              "https://www.linkedin.com/in/arjavmenon/",
+              "https://www.therookies.co/arjavmenon"
+            ]
           },
           {
-            "@type": "EducationalOrganization",
-            "name": "Our Own English High School, Sharjah"
+            "@type": "Organization",
+            "@id": "https://armenworks.com/#organization",
+            "name": "Armen GlobalWorks",
+            "alternateName": "AGW",
+            "url": "https://armenworks.com",
+            "logo": "https://i.postimg.cc/jSRYZTB0/mee.png",
+            "founder": {
+              "@type": "Person",
+              "@id": "https://armenworks.com/#person"
+            },
+            "description": "Official creative organization founded by Arjav Menon, specializing in visual design, media production, and sound."
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://armenworks.com/#website",
+            "url": "https://armenworks.com",
+            "name": "Armen GlobalWorks",
+            "publisher": {
+              "@type": "Organization",
+              "@id": "https://armenworks.com/#organization"
+            },
+            "author": {
+              "@type": "Person",
+              "@id": "https://armenworks.com/#person"
+            }
           }
-        ],
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Dubai",
-          "addressCountry": "UAE"
-        },
-        "knowsAbout": [
-          "Graphic Design",
-          "Filmmaking",
-          "Brand Strategy",
-          "Music Production"
-        ],
-        "description": "Arjav Menon is a Dubai-based creative entrepreneur, filmmaker, designer, and founder of Armen GlobalWorks, specializing in visual design, media production, and digital strategy.",
-        "sameAs": [
-          "https://www.instagram.com/arjavmenon",
-          "https://www.linkedin.com/in/arjavmenon/",
-          "https://www.therookies.co/arjavmenon"
         ]
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Armen GlobalWorks",
-        "alternateName": "AGW",
-        "url": "https://armen-globalworks.com",
-        "logo": "https://i.postimg.cc/jSRYZTB0/mee.png",
-        "founder": {
-          "@type": "Person",
-          "name": "Arjav Menon"
-        },
-        "description": "Official creative organization founded by Arjav Menon, specializing in visual design, media production, and sound."
       }
     </script>
   </head>
