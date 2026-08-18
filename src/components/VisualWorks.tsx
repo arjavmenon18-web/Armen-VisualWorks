@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from "motion/react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight, Camera, Sparkles, X, Eye, Box, FileText, Monitor, ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
+import OptimizedImage from "./OptimizedImage";
+import FilmPosterTrails from "./FilmPosterTrails";
 
 const archiveProjects = [
   {
@@ -10,7 +12,9 @@ const archiveProjects = [
     subtitle: "MUNICH // MARIENPLATZ",
     category: "COMMERCIAL GRAPHIC",
     year: "2024",
-    image: "https://i.postimg.cc/hGK9FYff/Archive-1.png",
+    webp: "/images/archive_01.webp",
+    image: "/images/archive_01.png",
+    remoteFallback: "https://i.postimg.cc/hGK9FYff/Archive-1.png",
     description: "A high-contrast architectural study of Munich's Marienplatz, capturing the sharp intersection of Gothic detail and cinematic atmosphere.",
     client: "Armen VisualWorks (Munich Division)",
     duration: "3 Months",
@@ -23,7 +27,9 @@ const archiveProjects = [
     subtitle: "COPENHAGEN // LANDSOLDATEN",
     category: "COMMERCIAL BRANDING",
     year: "2025",
-    image: "https://i.postimg.cc/d0nGJ9ys/Archive-02.png",
+    webp: "/images/archive_02.webp",
+    image: "/images/archive_02.png",
+    remoteFallback: "https://i.postimg.cc/d0nGJ9ys/Archive-02.png",
     description: "A study of the Landsoldaten in Copenhagen, capturing the raw, oxidized textures of history against a backdrop of urban industrial growth.",
     client: "Armen VisualWorks (Copenhagen Division)",
     duration: "4 Months",
@@ -180,17 +186,19 @@ export default function VisualWorks() {
                   className={`lg:col-span-7 relative group border border-white/10 overflow-hidden bg-[#0a0a0a] flex items-center justify-center p-4 md:p-8 lg:p-12 aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:h-full min-h-[400px] rounded-3xl shadow-2xl transition-all duration-500 hover:shadow-[0_20px_50px_rgba(249,185,52,0.15)] cursor-zoom-in ${!isEven ? 'lg:order-1' : ''}`}
                   onClick={() => setSelectedProject(project)}
                 >
-                  <img
+                  <OptimizedImage
+                    webpSrc={project.webp}
                     src={project.image}
+                    fallbackSrc={project.remoteFallback}
                     alt={project.title}
+                    containerClassName="max-w-full max-h-full flex items-center justify-center"
                     className="max-w-full max-h-full object-contain transition-all duration-1000 group-hover:scale-102"
-                    referrerPolicy="no-referrer"
                   />
                   {/* Subtle ambient light gradient overlay */}
                   <div className="absolute inset-0 bg-[#f9b934]/5 mix-blend-overlay pointer-events-none rounded-3xl" />
                   
                   {/* Label in corner matching the original screen styling */}
-                  <div className="absolute bottom-6 left-6 bg-black/80 backdrop-blur-md text-[#F5F2EB] px-4 py-2 font-mono text-[9px] uppercase tracking-widest border border-white/10 rounded-lg">
+                  <div className="absolute bottom-6 left-6 bg-black/80 backdrop-blur-md text-[#F5F2EB] px-4 py-2 font-mono text-[9px] uppercase tracking-widest border border-white/10 rounded-lg z-10">
                     {project.title} // {project.location}
                   </div>
                 </div>
@@ -198,6 +206,9 @@ export default function VisualWorks() {
             );
           })}
         </div>
+
+        {/* Film Poster Trails Section */}
+        <FilmPosterTrails />
 
         {/* Commercial Works / Private Brand Registry Section - Styled to match the elite dark look */}
         <motion.div
@@ -403,11 +414,14 @@ export default function VisualWorks() {
                 {/* Image Section (lg:col-span-7) */}
                 <div className="lg:col-span-7 space-y-6">
                   <div className="aspect-[4/5] sm:aspect-[16/10] w-full flex items-center justify-center p-4 md:p-8 overflow-hidden rounded-2xl border border-white/10 bg-[#0a0a0a] relative">
-                    <img
+                    <OptimizedImage
+                      webpSrc={selectedProject.webp}
                       src={selectedProject.image}
+                      fallbackSrc={selectedProject.remoteFallback}
                       alt={selectedProject.title}
+                      priority={true}
+                      containerClassName="max-w-full max-h-full flex items-center justify-center"
                       className="max-w-full max-h-full object-contain"
-                      referrerPolicy="no-referrer"
                     />
                     <div className="absolute inset-0 bg-[#f9b934]/5 mix-blend-overlay pointer-events-none rounded-2xl" />
                   </div>

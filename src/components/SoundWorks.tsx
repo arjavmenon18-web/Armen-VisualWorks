@@ -1,8 +1,7 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Sparkles, ExternalLink, Disc } from "lucide-react";
-// @ts-ignore
-import aadhyaCover from "../assets/images/aadhya_cover_1784455915106.jpg";
+import OptimizedImage from "./OptimizedImage";
 
 export default function SoundWorks() {
   return (
@@ -80,11 +79,13 @@ export default function SoundWorks() {
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                       className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl aspect-square w-52 h-52 md:w-48 md:h-48 lg:w-56 lg:h-56 shrink-0 cursor-pointer"
                     >
-                      <img 
-                        src={aadhyaCover} 
+                      <OptimizedImage 
+                        webpSrc="/images/aadhya_cover.webp"
+                        src="/images/aadhya_cover.jpg"
                         alt="Aadhya Notathil Cover" 
+                        priority={true}
+                        containerClassName="w-full h-full"
                         className="w-full h-full object-cover"
-                        referrerPolicy="no-referrer"
                       />
                     </motion.div>
                   </div>

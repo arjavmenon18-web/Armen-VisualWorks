@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { Sparkles, Unlock } from "lucide-react";
+import OptimizedImage from "./OptimizedImage";
 
 export default function About() {
   const navigate = useNavigate();
@@ -39,21 +40,24 @@ export default function About() {
           {/* Column Left: High-End Photo of Me (Arjav Menon) */}
           <div className="xl:col-span-5 relative group w-full">
             <div className="aspect-[4/5] bg-black overflow-hidden relative border border-black/5 rounded-2xl shadow-xl transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(249,185,52,0.15)]">
-              <img 
-                src="https://i.postimg.cc/jSRYZTB0/mee.png" 
+              <OptimizedImage 
+                webpSrc="/images/mee.webp"
+                src="/images/mee.png"
+                fallbackSrc="https://i.postimg.cc/jSRYZTB0/mee.png"
                 alt="Arjav Menon" 
+                priority={true}
+                containerClassName="w-full h-full"
                 className="w-full h-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-[1.03]"
-                referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 pointer-events-none" />
               
               {/* Geometric Corner Tech Accent */}
-              <div className="absolute top-4 left-4 font-mono text-[8px] bg-black text-[#F5F2EB] px-3 py-1 uppercase tracking-widest border border-white/10 rounded-md">
+              <div className="absolute top-4 left-4 font-mono text-[8px] bg-black text-[#F5F2EB] px-3 py-1 uppercase tracking-widest border border-white/10 rounded-md z-10">
                 FOUNDER REF: AGW_M01
               </div>
 
               {/* Dynamic Bubbly Action Prompt */}
-              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between bg-[#F5F2EB] text-black px-4 py-3 rounded-xl border border-black shadow-lg transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between bg-[#F5F2EB] text-black px-4 py-3 rounded-xl border border-black shadow-lg transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10">
                 <span className="text-[10px] font-mono tracking-wider font-bold">CLICK TWICE TO REVEAL</span>
                 <Unlock className="w-4 h-4 text-[#f9b934] animate-bounce" />
               </div>

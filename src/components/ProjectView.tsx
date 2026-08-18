@@ -5,6 +5,7 @@ import { projects } from "./Projects";
 import { useState, useEffect, useRef } from "react";
 import { useScrollLightHit } from "../hooks/useScrollLightHit";
 import Magnifier from "./Magnifier";
+import OptimizedImage from "./OptimizedImage";
 
 function GalleryItem({ p, i, navigate }: any) {
   const itemRef = useRef<HTMLDivElement>(null);
@@ -34,11 +35,13 @@ function GalleryItem({ p, i, navigate }: any) {
           damping: 20
         }}
       >
-        <img 
+        <OptimizedImage 
+          webpSrc={p.webp}
           src={p.image} 
+          fallbackSrc={p.remoteFallback}
           alt={p.title} 
+          containerClassName="w-full h-full"
           className={`w-full h-full object-cover transition-[filter,opacity,transform] duration-700 ${isHit ? 'grayscale-0 opacity-100 scale-105' : 'grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105'}`}
-          referrerPolicy="no-referrer"
         />
       </motion.div>
     </motion.div>
@@ -142,11 +145,14 @@ export default function ProjectView() {
                 {isMagnifying ? (
                   <Magnifier src={project.image} />
                 ) : (
-                  <img 
+                  <OptimizedImage 
+                    webpSrc={project.webp}
                     src={project.image} 
+                    fallbackSrc={project.remoteFallback}
                     alt={project.title} 
+                    priority={true}
+                    containerClassName="max-w-full max-h-[40vh] md:max-h-[60vh] lg:max-h-[75vh] flex items-center justify-center"
                     className="max-w-full max-h-[40vh] md:max-h-[60vh] lg:max-h-[75vh] w-auto h-auto object-contain block mx-auto rounded-xl md:rounded-[2rem] shadow-2xl transition-all duration-700"
-                    referrerPolicy="no-referrer"
                   />
                 )}
               </motion.div>
