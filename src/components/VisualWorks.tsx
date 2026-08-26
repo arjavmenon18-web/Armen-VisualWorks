@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowUpRight, Camera, Sparkles, X, Eye, Box, FileText, Monit
 import React, { useState } from "react";
 import OptimizedImage from "./OptimizedImage";
 import FilmPosterTrails from "./FilmPosterTrails";
+import AlreadyWithAVW from "./AlreadyWithAVW";
 
 const archiveProjects = [
   {
@@ -209,6 +210,9 @@ export default function VisualWorks() {
 
         {/* Film Poster Trails Section */}
         <FilmPosterTrails />
+
+        {/* Already With AVW? - Formal Collaboration Registration Experience */}
+        <AlreadyWithAVW />
 
         {/* Commercial Works / Private Brand Registry Section - Styled to match the elite dark look */}
         <motion.div

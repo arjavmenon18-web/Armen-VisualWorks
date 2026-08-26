@@ -463,7 +463,7 @@ export default function AboutMe() {
                 onMouseMove={handleMouseMove}
                 onMouseUp={() => setIsDragging(false)}
                 onMouseLeave={handleMouseLeave}
-                className={`flex gap-8 overflow-x-auto pb-12 snap-x scrollbar-hide select-none relative z-10 ${
+                className={`flex gap-4 sm:gap-8 overflow-x-auto pb-8 sm:pb-12 snap-x scroll-touch scrollbar-hide select-none relative z-10 overscroll-x-contain ${
                   isDragging ? "cursor-grabbing" : "cursor-grab"
                 }`}
                 style={{ scrollBehavior: isDragging ? "auto" : "smooth" }}
@@ -471,17 +471,22 @@ export default function AboutMe() {
                 {archivePhotos.map((photo, i) => (
                   <div
                     key={photo.id}
+                    onClick={() => {
+                      if (!isDragging) {
+                        setSelectedPhoto(photo);
+                      }
+                    }}
                     onMouseUp={() => handleMouseUp(photo)}
-                    className={`snap-center shrink-0 flex flex-col space-y-4 group/photo pointer-events-auto ${
+                    className={`snap-start sm:snap-center shrink-0 flex flex-col space-y-3 sm:space-y-4 group/photo pointer-events-auto cursor-pointer ${
                       photo.aspect === "landscape" 
-                        ? "w-[293px] md:w-[453px]" 
+                        ? "w-[260px] sm:w-[320px] md:w-[453px]" 
                         : photo.aspect === "portrait" 
-                        ? "w-[165px] md:w-[255px]" 
-                        : "w-[220px] md:w-[340px]"
+                        ? "w-[175px] sm:w-[210px] md:w-[255px]" 
+                        : "w-[210px] sm:w-[260px] md:w-[340px]"
                     }`}
                   >
                     {/* Photo Frame with dynamic aspect ratio */}
-                    <div className={`relative overflow-hidden bg-black border border-black/10 rounded-3xl shadow-lg transition-all duration-500 group-hover/photo:shadow-[0_15px_40px_rgba(249,185,52,0.15)] h-[220px] md:h-[340px] w-full ${
+                    <div className={`relative overflow-hidden bg-black border border-black/10 rounded-2xl sm:rounded-3xl shadow-lg transition-all duration-500 group-hover/photo:shadow-[0_15px_40px_rgba(249,185,52,0.15)] h-[190px] sm:h-[240px] md:h-[340px] w-full ${
                       photo.aspect === "landscape" 
                         ? "aspect-[4/3]" 
                         : photo.aspect === "portrait" 
@@ -500,25 +505,25 @@ export default function AboutMe() {
                       <div className="absolute inset-0 bg-[#f9b934]/5 mix-blend-overlay pointer-events-none" />
                       
                       {/* Corner Expand Hint */}
-                      <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center opacity-0 group-hover/photo:opacity-100 transition-opacity duration-300 z-10">
-                        <Maximize2 className="w-3.5 h-3.5 text-white" />
+                      <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center sm:opacity-0 group-hover/photo:opacity-100 transition-opacity duration-300 z-10">
+                        <Maximize2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
                       </div>
 
-                      <div className="absolute bottom-4 left-4 font-mono text-[8px] bg-black text-[#F5F2EB] px-3 py-1 uppercase tracking-widest border border-white/10 rounded-md z-10">
+                      <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 font-mono text-[7.5px] sm:text-[8px] bg-black text-[#F5F2EB] px-2.5 sm:px-3 py-1 uppercase tracking-widest border border-white/10 rounded-md z-10">
                         PLATE 0{i + 1} // AVW_RAW
                       </div>
                     </div>
 
                     {/* Photo Details */}
-                    <div className="space-y-1.5 px-1 text-left w-full">
-                      <div className="flex justify-between items-center text-[9px] font-mono">
-                        <span className="text-[#f9b934] font-black tracking-widest uppercase">{photo.category}</span>
-                        <span className="text-black/40 font-bold">YEAR: {photo.year}</span>
+                    <div className="space-y-1 sm:space-y-1.5 px-1 text-left w-full">
+                      <div className="flex justify-between items-center text-[8.5px] sm:text-[9px] font-mono">
+                        <span className="text-[#f9b934] font-black tracking-widest uppercase truncate max-w-[130px]">{photo.category}</span>
+                        <span className="text-black/40 font-bold">{photo.year}</span>
                       </div>
-                      <h3 className="text-sm md:text-base font-bold uppercase tracking-tight text-black truncate">
+                      <h3 className="text-xs sm:text-sm md:text-base font-bold uppercase tracking-tight text-black truncate">
                         {photo.title}
                       </h3>
-                      <p className="text-xs text-black/60 font-light leading-relaxed line-clamp-2">
+                      <p className="text-[11px] sm:text-xs text-black/60 font-light leading-relaxed line-clamp-2">
                         {photo.description}
                       </p>
                     </div>
@@ -527,9 +532,9 @@ export default function AboutMe() {
               </div>
 
               {/* Visual indicator lines */}
-              <div className="flex justify-between items-center pt-4 border-t border-black/5 font-mono text-[9px] text-black/40">
-                <span>SWIPE OR DRAG TRAVEL DIRECTIONAL</span>
-                <span className="animate-pulse">ONLINE ARCHIVE PIPELINE ESTABLISHED // OPTICAL EXTREME</span>
+              <div className="flex justify-between items-center pt-3 sm:pt-4 border-t border-black/5 font-mono text-[8px] sm:text-[9px] text-black/40">
+                <span>← SWIPE TO BROWSE 18+ PLATES →</span>
+                <span className="hidden sm:inline animate-pulse">ONLINE ARCHIVE PIPELINE ESTABLISHED // OPTICAL EXTREME</span>
               </div>
             </div>
           </div>
@@ -544,15 +549,20 @@ export default function AboutMe() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/95 backdrop-blur-xl z-[200] flex items-center justify-center p-6 select-none"
+            className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[200] flex items-center justify-center p-3 sm:p-6 select-none overflow-y-auto"
+            style={{
+              paddingTop: 'calc(1rem + env(safe-area-inset-top))',
+              paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))'
+            }}
           >
             {/* Close trigger boundary */}
             <div className="absolute inset-0 cursor-zoom-out" onClick={() => setSelectedPhoto(null)} />
 
-            {/* Left controller */}
+            {/* Left controller (hidden on very small screens, visible on tablet/desktop) */}
             <button
               onClick={(e) => { e.stopPropagation(); navigateLightbox("prev"); }}
-              className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95 cursor-pointer z-10"
+              className="hidden sm:flex absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 items-center justify-center text-white transition-all hover:scale-110 active:scale-95 cursor-pointer z-20"
+              aria-label="Previous plate"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
@@ -560,7 +570,8 @@ export default function AboutMe() {
             {/* Right controller */}
             <button
               onClick={(e) => { e.stopPropagation(); navigateLightbox("next"); }}
-              className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95 cursor-pointer z-10"
+              className="hidden sm:flex absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 items-center justify-center text-white transition-all hover:scale-110 active:scale-95 cursor-pointer z-20"
+              aria-label="Next plate"
             >
               <ChevronRight className="w-6 h-6" />
             </button>
@@ -568,7 +579,8 @@ export default function AboutMe() {
             {/* Top Close Button */}
             <button
               onClick={() => setSelectedPhoto(null)}
-              className="absolute top-6 right-6 md:top-12 md:right-12 w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95 cursor-pointer z-10"
+              className="absolute top-4 right-4 sm:top-8 sm:right-8 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/15 hover:bg-white/25 active:bg-white/30 border border-white/20 flex items-center justify-center text-white transition-all active:scale-95 cursor-pointer z-30 shadow-lg"
+              aria-label="Close lightbox"
             >
               <X className="w-5 h-5" />
             </button>
@@ -576,44 +588,67 @@ export default function AboutMe() {
             {/* Lightbox Core Card */}
             <motion.div
               key={selectedPhoto.id}
-              initial={{ scale: 0.95, y: 15 }}
+              initial={{ scale: 0.96, y: 10 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
+              exit={{ scale: 0.96, y: 10 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="relative max-w-5xl w-full flex flex-col gap-6 z-10 pointer-events-auto"
+              className="relative max-w-5xl w-full flex flex-col gap-3 sm:gap-5 z-10 pointer-events-auto my-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Aspect frame */}
-              <div className="w-full bg-[#0d0d0d] flex items-center justify-center p-4 sm:p-6 overflow-hidden border border-white/10 rounded-3xl max-h-[65vh] shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
+              <div className="w-full bg-[#0d0d0d] flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-hidden border border-white/10 rounded-2xl sm:rounded-3xl max-h-[52vh] sm:max-h-[60vh] shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
                 <OptimizedImage
                   webpSrc={selectedPhoto.webp}
                   src={selectedPhoto.image}
                   fallbackSrc={selectedPhoto.remoteFallback}
                   alt={selectedPhoto.title}
                   priority={true}
-                  containerClassName="max-w-full max-h-[55vh] flex items-center justify-center"
-                  className="max-w-full max-h-[55vh] object-contain select-none pointer-events-none rounded-xl"
+                  containerClassName="max-w-full max-h-[48vh] sm:max-h-[55vh] flex items-center justify-center"
+                  className="max-w-full max-h-[48vh] sm:max-h-[55vh] object-contain select-none pointer-events-none rounded-lg sm:rounded-xl"
                 />
               </div>
 
+              {/* Mobile Next/Prev Pill Bar */}
+              <div className="flex sm:hidden justify-between items-center px-1">
+                <button
+                  onClick={() => navigateLightbox("prev")}
+                  className="px-4 py-2 bg-white/10 active:bg-white/20 rounded-full text-white text-[10px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 border border-white/15"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>PREV</span>
+                </button>
+
+                <span className="text-[9px] font-mono text-white/50 tracking-widest uppercase">
+                  {archivePhotos.findIndex(p => p.id === selectedPhoto.id) + 1} / {archivePhotos.length}
+                </span>
+
+                <button
+                  onClick={() => navigateLightbox("next")}
+                  className="px-4 py-2 bg-white/10 active:bg-white/20 rounded-full text-white text-[10px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 border border-white/15"
+                >
+                  <span>NEXT</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
               {/* Annotation Plaque below image */}
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-white/95 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-xl text-left">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 sm:gap-4 text-white/95 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl text-left">
                 <div className="space-y-1 max-w-xl">
-                  <div className="flex items-center gap-3 font-mono text-[10px]">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-[8.5px] sm:text-[10px]">
                     <span className="text-[#f9b934] font-black tracking-widest">{selectedPhoto.category}</span>
                     <span className="text-white/20">•</span>
                     <span className="text-white/40">YEAR: {selectedPhoto.year}</span>
                     <span className="text-white/20">•</span>
                     <span className="text-white/40">REF: {selectedPhoto.id}</span>
                   </div>
-                  <h3 className="text-xl md:text-2xl font-display font-black uppercase tracking-tight text-white">
+                  <h3 className="text-base sm:text-xl md:text-2xl font-display font-black uppercase tracking-tight text-white leading-snug">
                     {selectedPhoto.title}
                   </h3>
-                  <p className="text-sm text-white/60 font-light leading-relaxed">
+                  <p className="text-xs sm:text-sm text-white/60 font-light leading-relaxed">
                     {selectedPhoto.description}
                   </p>
                 </div>
-                <div className="font-mono text-[9px] text-white/30 tracking-[0.3em] uppercase bg-white/5 border border-white/10 px-4 py-2 rounded-lg">
+                <div className="hidden sm:block font-mono text-[8.5px] sm:text-[9px] text-white/40 tracking-[0.25em] uppercase bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">
                   AVW_8K_OPT_RAW
                 </div>
               </div>

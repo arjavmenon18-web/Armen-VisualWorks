@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { ArrowUpRight, Check } from "lucide-react";
+import { useSearchParams, Link } from "react-router-dom";
+import { ArrowUpRight, Check, Lock, ShieldCheck, ArrowRight } from "lucide-react";
 
 export default function Contact() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -149,6 +149,50 @@ export default function Contact() {
                   <span>TWITTER FEED</span>
                   <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform text-black/40 group-hover:text-[#f9b934]" />
                 </a>
+              </div>
+            </div>
+
+            {/* AVW Internal Team Access Station */}
+            <div className="pt-8 border-t border-black/10">
+              <div className="bg-[#101010] text-[#F5F2EB] p-6 border border-black/10 rounded-2xl relative overflow-hidden shadow-xl space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#f9b934] animate-pulse" />
+                    <span className="text-[9px] font-mono font-bold tracking-[0.25em] text-[#f9b934] uppercase">
+                      STUDIO TEAM ACCESS ONLY
+                    </span>
+                  </div>
+                  <div className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#f9b934]">
+                    <Lock className="w-3 h-3" />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <h4 className="font-display font-black text-sm uppercase tracking-tight text-white">
+                    AVW Production Registry & Management Portal
+                  </h4>
+                  <p className="text-[11px] font-sans text-white/50 leading-relaxed font-light">
+                    Restricted gateway for authorized AVW crew & studio leads to audit collaboration records, update production statuses, and manage contracts.
+                  </p>
+                </div>
+
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  <Link
+                    to="/studio"
+                    className="py-2.5 px-4 bg-[#f9b934] hover:bg-white text-black font-mono font-bold text-[9px] tracking-widest uppercase rounded-xl transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-md active:scale-95 group/btn"
+                  >
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>Open Private Team Portal</span>
+                    <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-0.5 transition-transform" />
+                  </Link>
+
+                  <Link
+                    to="/verify"
+                    className="font-mono text-[9px] uppercase tracking-wider text-white/40 hover:text-[#f9b934] transition-colors py-1"
+                  >
+                    Verify Client Dossier →
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

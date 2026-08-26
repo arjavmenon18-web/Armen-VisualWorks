@@ -16,6 +16,8 @@ import AboutMe from "./components/AboutMe";
 import ProjectView from "./components/ProjectView";
 import VisualWorks from "./components/VisualWorks";
 import SoundWorks from "./components/SoundWorks";
+import VerifyCollaboration from "./pages/VerifyCollaboration";
+import StudioCollaborationRegistry from "./pages/StudioCollaborationRegistry";
 import ScrollToTop from "./components/ScrollToTop";
 import { motion, useScroll, useSpring } from "motion/react";
 import { Sparkles } from "lucide-react";
@@ -106,6 +108,11 @@ export default function App() {
         <Route path="/project/:id" element={<ProjectView />} />
         <Route path="/visual" element={<VisualWorks />} />
         <Route path="/sound" element={<SoundWorks />} />
+        <Route path="/verify" element={<VerifyCollaboration />} />
+        <Route path="/collaboration/verify" element={<VerifyCollaboration />} />
+        <Route path="/studio" element={<StudioCollaborationRegistry />} />
+        <Route path="/studio/portal" element={<StudioCollaborationRegistry />} />
+        <Route path="/studio/collaborations" element={<StudioCollaborationRegistry />} />
       </Routes>
 
       {/* Pixel Chatbot Popup */}

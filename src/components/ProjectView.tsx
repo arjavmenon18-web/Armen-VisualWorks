@@ -143,7 +143,7 @@ export default function ProjectView() {
                 className={`flex items-center justify-center w-full relative group/img transition-all duration-500 ${isMagnifying ? '' : 'bg-white/5 rounded-[2rem] md:rounded-[3rem] p-4 md:p-12 lg:p-16'}`}
               >
                 {isMagnifying ? (
-                  <Magnifier src={project.image} />
+                  <Magnifier src={project.remoteFallback || project.image} />
                 ) : (
                   <OptimizedImage 
                     webpSrc={project.webp}

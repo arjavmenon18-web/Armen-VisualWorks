@@ -221,7 +221,7 @@ export default function PixelChatbot({ isOpen, onClose, onExpand }: PixelChatbot
           initial={{ opacity: 0, y: 100, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 100, scale: 0.95 }}
-          className="fixed bottom-32 right-6 md:right-12 w-[calc(100vw-3rem)] md:w-[450px] h-[700px] max-h-[calc(100vh-200px)] bg-white/95 backdrop-blur-xl rounded-[40px] z-[200] flex flex-col overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.3)] border border-white"
+          className="fixed inset-x-3 bottom-24 sm:bottom-32 sm:right-12 sm:left-auto w-auto sm:w-[450px] h-[580px] sm:h-[700px] max-h-[calc(100dvh-120px)] sm:max-h-[calc(100vh-200px)] bg-white/95 backdrop-blur-xl rounded-3xl sm:rounded-[40px] z-[200] flex flex-col overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.3)] border border-white"
         >
           {/* Header */}
           <div className="p-6 border-b border-ink/5 flex items-center justify-between bg-white relative overflow-hidden">

@@ -13,9 +13,17 @@
 
 * {
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    height: -webkit-fill-available;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-bg text-ink font-sans;
     overflow-x: hidden;
@@ -24,12 +32,16 @@
     text-rendering: optimizeLegibility;
     overscroll-behavior-y: auto;
     padding-bottom: env(safe-area-inset-bottom);
+    min-height: 100vh;
+    min-height: 100dvh;
     min-height: -webkit-fill-available;
   }
 
-  html {
-    scroll-behavior: smooth;
-    height: -webkit-fill-available;
+  /* Prevent auto-zoom on mobile inputs in Safari iOS */
+  @media screen and (max-width: 768px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -41,6 +53,7 @@
   /* Smooth touch momentum scrolling */
   .scroll-touch {
     -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
   
   /* Force hardware acceleration for common animated elements */
@@ -58,8 +71,8 @@
 
 @layer utilities {
   .text-huge {
-    font-size: clamp(3rem, 15vw, 12rem);
-    line-height: 0.85;
+    font-size: clamp(2.5rem, 12vw, 12rem);
+    line-height: 0.88;
   }
   
   .editorial-grid {
@@ -97,6 +110,20 @@
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 ::-webkit-scrollbar-track {

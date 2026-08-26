@@ -204,21 +204,21 @@ export default function FilmPosterTrails() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="flex justify-between items-center px-6 md:px-8 py-5 border-b border-white/10 bg-white/5">
-                <div className="flex items-center gap-3">
-                  <Clapperboard className="w-4 h-4 text-accent" />
-                  <span className="font-mono text-[10px] font-black tracking-[0.3em] uppercase text-white/70">
-                    [ FICTIONAL FILM POSTER TRAIL // REF: {selectedPoster.trailCode} ]
+              <div className="flex justify-between items-center px-4 sm:px-6 md:px-8 py-3.5 sm:py-5 border-b border-white/10 bg-white/5">
+                <div className="flex items-center gap-2 sm:gap-3 truncate max-w-[55%] sm:max-w-[70%]">
+                  <Clapperboard className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent shrink-0" />
+                  <span className="font-mono text-[8px] sm:text-[10px] font-black tracking-[0.2em] sm:tracking-[0.3em] uppercase text-white/70 truncate">
+                    [ POSTER TRAIL // {selectedPoster.trailCode} ]
                   </span>
                 </div>
                 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                   <button
                     onClick={() => setIsZoomed(!isZoomed)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-white font-mono text-[9px] uppercase tracking-wider transition-colors cursor-pointer"
+                    className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 min-h-[34px] rounded-full border border-white/10 bg-white/5 hover:bg-white/10 active:bg-white/15 text-white font-mono text-[8px] sm:text-[9px] uppercase tracking-wider transition-colors cursor-pointer"
                   >
-                    {isZoomed ? <ZoomOut className="w-3.5 h-3.5 text-accent" /> : <ZoomIn className="w-3.5 h-3.5 text-accent" />}
-                    <span>{isZoomed ? "DEFAULT VIEW" : "FULL RES 100% ZOOM"}</span>
+                    {isZoomed ? <ZoomOut className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent" /> : <ZoomIn className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent" />}
+                    <span>{isZoomed ? "DEFAULT" : "ZOOM"}</span>
                   </button>
 
                   <button
@@ -226,7 +226,7 @@ export default function FilmPosterTrails() {
                       setSelectedPoster(null);
                       setIsZoomed(false);
                     }}
-                    className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all cursor-pointer group text-white"
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black active:bg-white active:text-black transition-all cursor-pointer group text-white"
                   >
                     <X className="w-4 h-4 transition-transform group-hover:rotate-90" />
                   </button>
@@ -234,7 +234,7 @@ export default function FilmPosterTrails() {
               </div>
 
               {/* Modal Content */}
-              <div className={`grid grid-cols-1 ${isZoomed ? 'lg:grid-cols-12' : 'lg:grid-cols-12'} gap-8 p-6 md:p-10 items-start`}>
+              <div className={`grid grid-cols-1 ${isZoomed ? 'lg:grid-cols-12' : 'lg:grid-cols-12'} gap-6 sm:gap-8 p-4 sm:p-6 md:p-10 items-start`}>
                 {/* Left: Poster View - Completely Unobstructed Crystal Clarity */}
                 <div className={`${isZoomed ? 'lg:col-span-8' : 'lg:col-span-6'} flex flex-col items-center justify-center transition-all duration-500`}>
                   <div className="relative w-full aspect-[2/3] rounded-2xl overflow-hidden border border-white/15 bg-black shadow-2xl group flex items-center justify-center">

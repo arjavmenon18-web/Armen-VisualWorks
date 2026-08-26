@@ -11,7 +11,7 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative w-full h-[100vh] select-none bg-[#F5F2EB] overflow-hidden"
+      className="relative w-full h-[100vh] h-[100dvh] select-none bg-[#F5F2EB] overflow-hidden"
     >
       {/* 1. THE INVERTED HEMISPHERE (THE VAULT) SPLIT MECHANICAL GATES */}
       {/* LEFT GATE */}
@@ -20,7 +20,7 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
         initial={{ x: "0%" }}
         animate={{ x: isExpanded ? "-100%" : "0%" }}
         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-0 left-0 w-1/2 h-[90vh] bg-gradient-to-b from-[#f9b934] via-[#f5b127] to-[#e09b12] z-20 overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.15)] force-gpu"
+        className="absolute top-0 left-0 w-1/2 h-[90vh] h-[90dvh] bg-gradient-to-b from-[#f9b934] via-[#f5b127] to-[#e09b12] z-20 overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.15)] force-gpu"
         style={{
           clipPath: "ellipse(180% 100% at 100% 0%)"
         }}
@@ -39,7 +39,7 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
         initial={{ x: "0%" }}
         animate={{ x: isExpanded ? "100%" : "0%" }}
         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-0 right-0 w-1/2 h-[90vh] bg-gradient-to-b from-[#f9b934] via-[#f5b127] to-[#e09b12] z-20 overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.15)] force-gpu"
+        className="absolute top-0 right-0 w-1/2 h-[90vh] h-[90dvh] bg-gradient-to-b from-[#f9b934] via-[#f5b127] to-[#e09b12] z-20 overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.15)] force-gpu"
         style={{
           clipPath: "ellipse(180% 100% at 0% 0%)"
         }}
@@ -62,15 +62,15 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
           pointerEvents: isExpanded ? "none" : "auto"
         }}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 flex flex-col items-center justify-center z-30 px-6"
+        className="absolute inset-0 flex flex-col items-center justify-center z-30 px-4 sm:px-6"
       >
-        <div className="flex flex-col items-center justify-center text-center">
-          <h1 className="text-[clamp(44px,8.5vw,110px)] font-display font-black uppercase text-white tracking-tighter select-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+        <div className="flex flex-col items-center justify-center text-center max-w-full">
+          <h1 className="text-[clamp(36px,8.5vw,110px)] font-display font-black uppercase text-white tracking-tighter select-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.2)] px-2">
             ARMEN WORKS
           </h1>
 
-          {/* Clean, completely transparent hyphen button directly under WORKS */}
-          <div className="mt-8 flex flex-col items-center justify-center relative select-none">
+          {/* Clean, touch-optimized hyphen button directly under WORKS */}
+          <div className="mt-6 sm:mt-8 flex flex-col items-center justify-center relative select-none">
             <motion.button
               id="hyphen-trigger"
               onClick={onExpand}
@@ -79,15 +79,15 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
                 color: "#f9b934"
               }}
               whileTap={{ scale: 0.9 }}
-              className="cursor-pointer bg-transparent text-white font-display font-black transition-all duration-300 relative z-10 flex items-center justify-center outline-none border-none p-4"
-              style={{ minWidth: "44px", minHeight: "44px" }}
+              className="cursor-pointer bg-transparent text-white font-display font-black transition-all duration-300 relative z-10 flex items-center justify-center outline-none border-none p-4 min-h-[48px] min-w-[48px]"
+              aria-label="Enter Armen Works Portfolio"
             >
-              {/* Perfectly symmetrical and clean transparent visual hyphen bar */}
-              <div className="w-8 h-1.5 bg-current rounded-full" />
+              {/* Symmetrical visual hyphen bar */}
+              <div className="w-8 sm:w-10 h-1.5 bg-current rounded-full shadow-md" />
             </motion.button>
             
-            {/* Elegant Micro-Interaction Hint without any bubble background, just clean text */}
-            <span className="mt-3 whitespace-nowrap text-[9px] font-mono tracking-[0.4em] text-white/60 font-black uppercase pointer-events-none animate-pulse">
+            {/* Elegant Micro-Interaction Hint */}
+            <span className="mt-2.5 sm:mt-3 whitespace-nowrap text-[8.5px] sm:text-[9px] font-mono tracking-[0.3em] sm:tracking-[0.4em] text-white/70 font-black uppercase pointer-events-none animate-pulse">
               [ tap hyphen to enter ]
             </span>
           </div>
@@ -105,27 +105,27 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
             transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="absolute inset-0 flex flex-col items-center justify-center z-10 p-4 sm:p-6"
           >
-            <div className="text-center mb-8 md:mb-12 max-w-2xl mx-auto flex flex-col items-center">
-              <span className="text-[9px] sm:text-[10px] uppercase font-mono font-black tracking-[0.4em] text-[#f9b934] block mb-3">
+            <div className="text-center mb-6 sm:mb-8 md:mb-12 max-w-2xl mx-auto flex flex-col items-center">
+              <span className="text-[8.5px] sm:text-[10px] uppercase font-mono font-black tracking-[0.35em] sm:tracking-[0.4em] text-[#f9b934] block mb-2 sm:mb-3">
                 ARMEN GLOBALWORKS // SYSTEMS CORE
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tight text-black leading-tight mt-2 px-2 max-w-[90vw]">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tight text-black leading-tight mt-1 sm:mt-2 px-2 max-w-[90vw]">
                 SELECT ARCHITECTURAL PORTFOLIO
               </h2>
-              <p className="text-[10px] sm:text-xs md:text-sm text-black/50 font-mono tracking-[0.2em] sm:tracking-widest mt-4 uppercase">
+              <p className="text-[9.5px] sm:text-xs md:text-sm text-black/50 font-mono tracking-[0.15em] sm:tracking-widest mt-2.5 sm:mt-4 uppercase">
                 CODENAME: STAGE_02_GATEWAY_ACTIVE
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full max-w-xl justify-center px-4">
+            <div className="flex flex-col sm:flex-row items-center gap-3.5 sm:gap-6 w-full max-w-md sm:max-w-xl justify-center px-4">
               {/* Dynamic visualworks button */}
               <Link
                 to="/visual"
-                className="w-full sm:w-auto text-center group relative px-8 py-4 sm:px-10 sm:py-5 bg-black text-[#F5F2EB] hover:text-black rounded-full font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] overflow-hidden shadow-lg hover:shadow-[0_15px_45px_rgba(249,185,52,0.3)] transition-all duration-300 hover:-translate-y-1"
+                className="w-full sm:w-auto text-center group relative px-7 py-3.5 sm:px-10 sm:py-5 min-h-[48px] bg-black text-[#F5F2EB] hover:text-black rounded-full font-mono text-[9.5px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.3em] overflow-hidden shadow-lg hover:shadow-[0_15px_45px_rgba(249,185,52,0.3)] transition-all duration-300 flex items-center justify-center active:scale-[0.98]"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   <Camera className="w-4 h-4 text-accent" />
-                  [ VISUALWORKS ]
+                  <span>[ VISUALWORKS ]</span>
                 </span>
                 <div className="absolute inset-0 bg-[#f9b934] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
               </Link>
@@ -133,27 +133,27 @@ export default function Hero({ isExpanded, onExpand }: HeroProps) {
               {/* Dynamic soundworks button */}
               <Link
                 to="/sound"
-                className="w-full sm:w-auto text-center group relative px-8 py-4 sm:px-10 sm:py-5 bg-[#F5F2EB] text-black hover:text-[#F5F2EB] border-2 border-black rounded-full font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] overflow-hidden shadow-md hover:shadow-[0_15px_40px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1"
+                className="w-full sm:w-auto text-center group relative px-7 py-3.5 sm:px-10 sm:py-5 min-h-[48px] bg-[#F5F2EB] text-black hover:text-[#F5F2EB] border-2 border-black rounded-full font-mono text-[9.5px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.3em] overflow-hidden shadow-md hover:shadow-[0_15px_40px_rgba(0,0,0,0.25)] transition-all duration-300 flex items-center justify-center active:scale-[0.98]"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   <Radio className="w-4 h-4 text-black group-hover:text-accent group-hover:animate-spin" />
-                  [ SOUNDWORKS ]
+                  <span>[ SOUNDWORKS ]</span>
                 </span>
                 <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
               </Link>
             </div>
 
-            {/* Scroll Indication Arrow once Gate is split */}
+            {/* Scroll Indication Arrow */}
             <motion.div 
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 0.6, y: 0 }}
               transition={{ delay: 1.2, duration: 1, repeat: Infinity, repeatType: "reverse" }}
-              className="absolute bottom-12 sm:bottom-16 flex flex-col items-center gap-2"
+              className="absolute bottom-8 sm:bottom-12 md:bottom-16 flex flex-col items-center gap-1.5 sm:gap-2"
             >
-              <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.3em] font-mono text-black/50 font-black">
+              <span className="text-[7.5px] sm:text-[9px] uppercase tracking-[0.25em] sm:tracking-[0.3em] font-mono text-black/50 font-black">
                 Scroll to enter database index
               </span>
-              <ArrowDown className="w-4 h-4 text-black/70 animate-bounce" />
+              <ArrowDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black/70 animate-bounce" />
             </motion.div>
           </motion.div>
         )}

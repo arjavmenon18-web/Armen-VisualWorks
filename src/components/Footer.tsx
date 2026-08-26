@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { Lock } from "lucide-react";
 import { motion } from "motion/react";
 
 export default function Footer() {
@@ -15,6 +17,19 @@ export default function Footer() {
           <div>
             <div className="text-[10px] uppercase font-bold text-gray-400 mb-2 tracking-widest">Location</div>
             <div className="text-xs font-bold uppercase">Dubai, UAE &mdash; GMT+4</div>
+          </div>
+          <div>
+            <div className="text-[10px] uppercase font-bold text-gray-400 mb-2 tracking-widest">Portals</div>
+            <div className="flex items-center gap-3 text-xs font-bold uppercase">
+              <Link to="/verify" className="hover:text-accent transition-colors">
+                Verify
+              </Link>
+              <span className="text-gray-300">•</span>
+              <Link to="/studio" className="hover:text-accent transition-colors inline-flex items-center gap-1">
+                <Lock className="w-2.5 h-2.5" />
+                <span>Team Portal</span>
+              </Link>
+            </div>
           </div>
         </div>
         
