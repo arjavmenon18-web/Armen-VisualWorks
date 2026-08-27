@@ -274,6 +274,51 @@ async function startServer() {
   });
 
   /**
+   * GET /api/studio/collaborations/live-stream
+   * Real-time Server-Sent Events (SSE) stream for instant live collaboration updates
+   */
+  app.get("/api/studio/collaborations/live-stream", (req, res) => {
+    const token =
+      (req.query.token as string) ||
+      (req.headers.authorization?.startsWith("Bearer ") ? req.headers.authorization.split(" ")[1] : null);
+
+    if (!token || !collaborationStore.validateStudioSession(token)) {
+      return res.status(401).json({ success: false, message: "Unauthorized for studio live stream." });
+    }
+
+    res.writeHead(200, {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache, no-transform",
+      "Connection": "keep-alive",
+      "X-Accel-Buffering": "no"
+    });
+
+    const initialStats = collaborationStore.getStats();
+    res.write(`event: init\ndata: ${JSON.stringify({ status: "connected", stats: initialStats, timestamp: new Date().toISOString() })}\n\n`);
+
+    const unsubscribe = collaborationStore.subscribe((event) => {
+      try {
+        res.write(`event: collaboration\ndata: ${JSON.stringify(event)}\n\n`);
+      } catch (err) {
+        console.warn("Error streaming SSE event:", err);
+      }
+    });
+
+    const pingInterval = setInterval(() => {
+      try {
+        res.write(`: ping ${Date.now()}\n\n`);
+      } catch {
+        clearInterval(pingInterval);
+      }
+    }, 15000);
+
+    req.on("close", () => {
+      clearInterval(pingInterval);
+      unsubscribe();
+    });
+  });
+
+  /**
    * GET /api/studio/collaborations
    * Internal Registry: List all records with searching, filtering, and summary statistics
    */

@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
+import { EventEmitter } from "events";
 import {
   StudioCollaborationRecord,
   ContributorCollaborationRecord,
@@ -16,12 +17,27 @@ if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
+export interface LiveCollaborationEvent {
+  action: "CREATED" | "UPDATED" | "STATUS_CHANGED";
+  record: StudioCollaborationRecord;
+  stats: {
+    total: number;
+    active: number;
+    completed: number;
+    archived: number;
+    recentCount: number;
+  };
+  timestamp: string;
+}
+
 class CollaborationStore {
   private records: StudioCollaborationRecord[] = [];
   private rateLimitMap = new Map<string, { count: number; resetAt: number }>();
   private activeSessions = new Set<string>();
+  private emitter = new EventEmitter();
 
   constructor() {
+    this.emitter.setMaxListeners(100);
     this.loadFromDisk();
   }
 
@@ -132,6 +148,15 @@ class CollaborationStore {
 
     this.records.unshift(newRecord);
     this.saveToDisk();
+
+    // Broadcast real-time event to all connected AVW studio dashboards
+    const stats = this.getStats();
+    this.emitter.emit("collaboration_event", {
+      action: "CREATED",
+      record: newRecord,
+      stats,
+      timestamp: new Date().toISOString()
+    } as LiveCollaborationEvent);
 
     return { record: newRecord, referenceKey };
   }
@@ -252,10 +277,18 @@ class CollaborationStore {
     }
 
     // Calculate registry statistics
+    const stats = this.getStats();
+    return { records: filtered, stats };
+  }
+
+  /**
+   * Calculate live registry statistics
+   */
+  public getStats() {
     const now = Date.now();
     const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
 
-    const stats = {
+    return {
       total: this.records.length,
       active: this.records.filter((r) => r.status === "active").length,
       completed: this.records.filter((r) => r.status === "completed").length,
@@ -264,8 +297,16 @@ class CollaborationStore {
         (r) => new Date(r.createdAt).getTime() >= sevenDaysAgo
       ).length
     };
+  }
 
-    return { records: filtered, stats };
+  /**
+   * Subscribe to live collaboration changes
+   */
+  public subscribe(listener: (event: LiveCollaborationEvent) => void): () => void {
+    this.emitter.on("collaboration_event", listener);
+    return () => {
+      this.emitter.off("collaboration_event", listener);
+    };
   }
 
   /**
@@ -303,6 +344,15 @@ class CollaborationStore {
     record.updatedAt = new Date().toISOString();
     this.records[index] = record;
     this.saveToDisk();
+
+    // Broadcast update event to all connected AVW studio dashboards
+    const stats = this.getStats();
+    this.emitter.emit("collaboration_event", {
+      action: "UPDATED",
+      record,
+      stats,
+      timestamp: new Date().toISOString()
+    } as LiveCollaborationEvent);
 
     return record;
   }

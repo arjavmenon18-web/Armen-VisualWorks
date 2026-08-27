@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -26,7 +26,11 @@ import {
   Edit3,
   Layers,
   Sparkles,
-  ArrowUpDown
+  ArrowUpDown,
+  Radio,
+  Activity,
+  Zap,
+  Bell
 } from "lucide-react";
 import {
   StudioCollaborationRecord,
@@ -59,6 +63,17 @@ export default function StudioCollaborationRegistry() {
   const [sortBy, setSortBy] = useState("newest");
   const [loadingRecords, setLoadingRecords] = useState(false);
 
+  // Real-time live synchronization state
+  const [isLiveConnected, setIsLiveConnected] = useState(false);
+  const [lastSyncTime, setLastSyncTime] = useState<string>("");
+  const [liveAlert, setLiveAlert] = useState<{
+    title: string;
+    subtitle: string;
+    referenceKey: string;
+    action: string;
+  } | null>(null);
+  const [recentlyUpdatedKeys, setRecentlyUpdatedKeys] = useState<Set<string>>(new Set());
+
   // Selected Record Drawer / Modal
   const [selectedRecord, setSelectedRecord] = useState<StudioCollaborationRecord | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -73,12 +88,126 @@ export default function StudioCollaborationRegistry() {
   const [copiedKey, setCopiedKey] = useState(false);
   const [termsModalOpen, setTermsModalOpen] = useState(false);
 
-  // Check auth on load
+  // Check auth and fetch records on filter changes
   useEffect(() => {
     if (authToken) {
-      fetchRecords();
+      fetchRecords(false);
     }
   }, [authToken, searchQuery, statusFilter, typeFilter, sortBy]);
+
+  // Real-time SSE Live Event Stream subscription
+  useEffect(() => {
+    if (!authToken) return;
+
+    let eventSource: EventSource | null = null;
+    let reconnectTimeout: any = null;
+
+    const connectStream = () => {
+      try {
+        const streamUrl = `/api/studio/collaborations/live-stream?token=${encodeURIComponent(authToken)}`;
+        eventSource = new EventSource(streamUrl);
+
+        eventSource.onopen = () => {
+          setIsLiveConnected(true);
+          setLastSyncTime(new Date().toLocaleTimeString());
+        };
+
+        eventSource.addEventListener("init", (e: MessageEvent) => {
+          setIsLiveConnected(true);
+          try {
+            const parsed = JSON.parse(e.data);
+            if (parsed.stats) setStats(parsed.stats);
+          } catch {}
+        });
+
+        eventSource.addEventListener("collaboration", (e: MessageEvent) => {
+          try {
+            const data = JSON.parse(e.data);
+            setLastSyncTime(new Date().toLocaleTimeString());
+            setIsLiveConnected(true);
+
+            if (data.stats) {
+              setStats(data.stats);
+            }
+
+            if (data.action === "CREATED" && data.record) {
+              const newRec: StudioCollaborationRecord = data.record;
+
+              // Prepend newly registered collaboration directly to live records list
+              setRecords((prev) => {
+                const filtered = prev.filter((r) => r.referenceKey !== newRec.referenceKey);
+                return [newRec, ...filtered];
+              });
+
+              // Tag as newly updated for glowing border
+              setRecentlyUpdatedKeys((prev) => new Set([...prev, newRec.referenceKey]));
+              setTimeout(() => {
+                setRecentlyUpdatedKeys((prev) => {
+                  const next = new Set(prev);
+                  next.delete(newRec.referenceKey);
+                  return next;
+                });
+              }, 15000);
+
+              // Display live incoming banner alert
+              setLiveAlert({
+                title: "Live Client Registration Received",
+                subtitle: `${newRec.projectName} • ${newRec.representativeName} (${newRec.referenceKey})`,
+                referenceKey: newRec.referenceKey,
+                action: "CREATED"
+              });
+            } else if (data.action === "UPDATED" && data.record) {
+              const updatedRec: StudioCollaborationRecord = data.record;
+              setRecords((prev) =>
+                prev.map((r) => (r.referenceKey === updatedRec.referenceKey ? updatedRec : r))
+              );
+
+              // Update drawer record if currently open
+              setSelectedRecord((prev) =>
+                prev && prev.referenceKey === updatedRec.referenceKey ? updatedRec : prev
+              );
+
+              setRecentlyUpdatedKeys((prev) => new Set([...prev, updatedRec.referenceKey]));
+              setTimeout(() => {
+                setRecentlyUpdatedKeys((prev) => {
+                  const next = new Set(prev);
+                  next.delete(updatedRec.referenceKey);
+                  return next;
+                });
+              }, 8000);
+            }
+          } catch (parseErr) {
+            console.warn("Live event parse error:", parseErr);
+          }
+        });
+
+        eventSource.onerror = () => {
+          setIsLiveConnected(false);
+          if (eventSource) {
+            eventSource.close();
+            eventSource = null;
+          }
+          // Reconnect after 3 seconds
+          reconnectTimeout = setTimeout(connectStream, 3000);
+        };
+      } catch (err) {
+        console.warn("EventSource setup exception:", err);
+      }
+    };
+
+    connectStream();
+
+    // Heartbeat fallback polling every 6 seconds to guarantee 100% data freshness
+    const pollingInterval = setInterval(() => {
+      fetchRecords(true);
+    }, 6000);
+
+    return () => {
+      if (eventSource) eventSource.close();
+      if (reconnectTimeout) clearTimeout(reconnectTimeout);
+      clearInterval(pollingInterval);
+    };
+  }, [authToken]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -155,9 +284,9 @@ export default function StudioCollaborationRegistry() {
     setDrawerOpen(false);
   };
 
-  const fetchRecords = async () => {
+  const fetchRecords = async (silent: boolean = false) => {
     if (!authToken) return;
-    setLoadingRecords(true);
+    if (!silent) setLoadingRecords(true);
 
     try {
       const params = new URLSearchParams();
@@ -189,11 +318,12 @@ export default function StudioCollaborationRegistry() {
       if (res.ok && data?.success) {
         setRecords(data.records || []);
         if (data.stats) setStats(data.stats);
+        setLastSyncTime(new Date().toLocaleTimeString());
       }
     } catch (err) {
       console.error("Error fetching records:", err);
     } finally {
-      setLoadingRecords(false);
+      if (!silent) setLoadingRecords(false);
     }
   };
 
@@ -205,6 +335,14 @@ export default function StudioCollaborationRegistry() {
     setEditInternalStatus(rec.internalStatus || "In Active Production");
     setSaveSuccessMessage("");
     setDrawerOpen(true);
+  };
+
+  const openRecordByKey = (key: string) => {
+    const rec = records.find((r) => r.referenceKey === key);
+    if (rec) {
+      openRecordDrawer(rec);
+      setLiveAlert(null);
+    }
   };
 
   const handleSaveInternalChanges = async () => {
@@ -418,8 +556,38 @@ Armen VisualWorks Studio Registry • Confidential Internal Document
             </div>
           </div>
 
-          {/* Director Badge & Controls */}
+          {/* Director Badge, Live Indicator & Controls */}
           <div className="flex items-center gap-3 font-mono text-[10px]">
+            {/* Real-time sync status beacon */}
+            <div
+              className={`flex items-center gap-2 px-3 py-1 rounded-full border transition-all ${
+                isLiveConnected
+                  ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                  : "bg-amber-500/10 border-amber-500/30 text-amber-300"
+              }`}
+              title={
+                isLiveConnected
+                  ? `Live SSE stream connected. Last updated at ${lastSyncTime || "now"}`
+                  : "Connecting live stream..."
+              }
+            >
+              <span className="relative flex h-2 w-2">
+                <span
+                  className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                    isLiveConnected ? "bg-emerald-400" : "bg-amber-400"
+                  }`}
+                />
+                <span
+                  className={`relative inline-flex rounded-full h-2 w-2 ${
+                    isLiveConnected ? "bg-emerald-500" : "bg-amber-500"
+                  }`}
+                />
+              </span>
+              <span className="font-bold tracking-wider">
+                {isLiveConnected ? "LIVE SYNC ACTIVE" : "CONNECTING LIVE"}
+              </span>
+            </div>
+
             <div className="hidden sm:flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-white/80">
               <User className="w-3.5 h-3.5 text-accent" />
               <span>Arjav Menon (Studio Lead)</span>
@@ -454,6 +622,48 @@ Armen VisualWorks Studio Registry • Confidential Internal Document
 
       {/* Main Studio Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-8 w-full flex-grow space-y-6">
+        {/* LIVE INCOMING CLIENT REGISTRATION ALERT BANNER */}
+        <AnimatePresence>
+          {liveAlert && (
+            <motion.div
+              initial={{ opacity: 0, y: -16, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -16, scale: 0.98 }}
+              className="bg-accent text-black p-4 rounded-2xl shadow-2xl flex flex-wrap items-center justify-between gap-4 border border-yellow-300 relative overflow-hidden"
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-black text-accent flex items-center justify-center shrink-0 shadow-md">
+                  <Zap className="w-5 h-5 animate-pulse" />
+                </div>
+                <div>
+                  <div className="font-mono text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-black/70 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-black animate-ping" />
+                    <span>REAL-TIME COLLABORATION ARCHIVE EVENT</span>
+                  </div>
+                  <div className="font-display font-black text-sm sm:text-base leading-tight uppercase">
+                    {liveAlert.subtitle}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => openRecordByKey(liveAlert.referenceKey)}
+                  className="px-4 py-2 bg-black text-white hover:bg-neutral-900 font-mono text-xs uppercase font-bold rounded-xl transition-transform active:scale-95 cursor-pointer flex items-center gap-1.5 shadow"
+                >
+                  <span>Open Dossier</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setLiveAlert(null)}
+                  className="p-2 text-black/60 hover:text-black transition-colors cursor-pointer"
+                  aria-label="Dismiss alert"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         {/* STATS STRIP */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
           <div className="bg-[#121212] border border-white/10 rounded-2xl p-4 space-y-1">
@@ -605,57 +815,72 @@ Armen VisualWorks Studio Registry • Confidential Internal Document
             <>
               {/* MOBILE CARDS VIEW (md:hidden) */}
               <div className="md:hidden divide-y divide-white/5">
-                {records.map((rec) => (
-                  <div
-                    key={rec.referenceKey}
-                    onClick={() => openRecordDrawer(rec)}
-                    className="p-4 space-y-3 hover:bg-white/[0.04] active:bg-white/[0.06] transition-colors cursor-pointer"
-                  >
-                    <div className="flex justify-between items-start gap-2">
-                      <div>
-                        <span className="font-black text-accent font-mono text-xs tracking-wider">
-                          {rec.referenceKey}
-                        </span>
-                        <h3 className="font-display font-bold text-white uppercase text-base mt-0.5 leading-snug">
-                          {rec.projectName}
-                        </h3>
-                      </div>
-                      <span
-                        className={`px-2 py-0.5 rounded-full text-[8.5px] uppercase font-bold border shrink-0 ${
-                          rec.status === "active"
-                            ? "bg-green-500/10 text-green-400 border-green-500/30"
-                            : rec.status === "completed"
-                            ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
-                            : "bg-white/10 text-white/60 border-white/20"
-                        }`}
-                      >
-                        {rec.status}
-                      </span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1">
-                      {rec.collaborationTypes.map((t) => (
+                {records.map((rec) => {
+                  const isRecentlyNew = recentlyUpdatedKeys.has(rec.referenceKey);
+                  return (
+                    <div
+                      key={rec.referenceKey}
+                      onClick={() => openRecordDrawer(rec)}
+                      className={`p-4 space-y-3 transition-all cursor-pointer relative ${
+                        isRecentlyNew
+                          ? "bg-accent/10 border-l-2 border-accent"
+                          : "hover:bg-white/[0.04] active:bg-white/[0.06]"
+                      }`}
+                    >
+                      <div className="flex justify-between items-start gap-2">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-black text-accent font-mono text-xs tracking-wider">
+                              {rec.referenceKey}
+                            </span>
+                            {isRecentlyNew && (
+                              <span className="px-1.5 py-0.5 rounded bg-accent text-black font-mono text-[8px] font-black uppercase tracking-wider flex items-center gap-1 animate-pulse">
+                                <Sparkles className="w-2.5 h-2.5" />
+                                <span>LIVE</span>
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="font-display font-bold text-white uppercase text-base mt-0.5 leading-snug">
+                            {rec.projectName}
+                          </h3>
+                        </div>
                         <span
-                          key={t}
-                          className="px-2 py-0.5 rounded bg-white/5 text-[8.5px] font-mono text-white/70 uppercase"
+                          className={`px-2 py-0.5 rounded-full text-[8.5px] uppercase font-bold border shrink-0 ${
+                            rec.status === "active"
+                              ? "bg-green-500/10 text-green-400 border-green-500/30"
+                              : rec.status === "completed"
+                              ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
+                              : "bg-white/10 text-white/60 border-white/20"
+                          }`}
                         >
-                          {t}
+                          {rec.status}
                         </span>
-                      ))}
-                    </div>
-
-                    <div className="flex justify-between items-center text-[10px] font-mono text-white/50 pt-2 border-t border-white/5">
-                      <div className="truncate max-w-[65%]">
-                        <span className="text-white/80">{rec.representativeName}</span>
-                        {rec.organisation && <span> • {rec.organisation}</span>}
                       </div>
-                      <span className="text-accent flex items-center gap-0.5 font-bold">
-                        <span>MANAGE</span>
-                        <ChevronRight className="w-3 h-3" />
-                      </span>
+
+                      <div className="flex flex-wrap gap-1">
+                        {rec.collaborationTypes.map((t) => (
+                          <span
+                            key={t}
+                            className="px-2 py-0.5 rounded bg-white/5 text-[8.5px] font-mono text-white/70 uppercase"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex justify-between items-center text-[10px] font-mono text-white/50 pt-2 border-t border-white/5">
+                        <div className="truncate max-w-[65%]">
+                          <span className="text-white/80">{rec.representativeName}</span>
+                          {rec.organisation && <span> • {rec.organisation}</span>}
+                        </div>
+                        <span className="text-accent flex items-center gap-0.5 font-bold">
+                          <span>MANAGE</span>
+                          <ChevronRight className="w-3 h-3" />
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* DESKTOP TABLE VIEW (hidden md:block) */}
@@ -673,87 +898,102 @@ Armen VisualWorks Studio Registry • Confidential Internal Document
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5 text-xs font-mono">
-                    {records.map((rec) => (
-                      <tr
-                        key={rec.referenceKey}
-                        onClick={() => openRecordDrawer(rec)}
-                        className="hover:bg-white/[0.04] transition-colors cursor-pointer group"
-                      >
-                        {/* Reference Key */}
-                        <td className="py-4 px-4 sm:px-6 whitespace-nowrap">
-                          <span className="font-black text-accent font-mono tracking-wider group-hover:underline">
-                            {rec.referenceKey}
-                          </span>
-                        </td>
-
-                        {/* Project & Category */}
-                        <td className="py-4 px-4">
-                          <div className="font-display font-bold text-white uppercase text-sm group-hover:text-accent transition-colors">
-                            {rec.projectName}
-                          </div>
-                          <div className="flex flex-wrap gap-1 mt-1">
-                            {rec.collaborationTypes.slice(0, 2).map((t) => (
-                              <span
-                                key={t}
-                                className="px-2 py-0.5 rounded bg-white/5 text-[8.5px] text-white/70 uppercase"
-                              >
-                                {t}
+                    {records.map((rec) => {
+                      const isRecentlyNew = recentlyUpdatedKeys.has(rec.referenceKey);
+                      return (
+                        <tr
+                          key={rec.referenceKey}
+                          onClick={() => openRecordDrawer(rec)}
+                          className={`transition-colors cursor-pointer group ${
+                            isRecentlyNew
+                              ? "bg-accent/[0.08] hover:bg-accent/[0.12]"
+                              : "hover:bg-white/[0.04]"
+                          }`}
+                        >
+                          {/* Reference Key */}
+                          <td className="py-4 px-4 sm:px-6 whitespace-nowrap">
+                            <div className="flex items-center gap-2">
+                              <span className="font-black text-accent font-mono tracking-wider group-hover:underline">
+                                {rec.referenceKey}
                               </span>
-                            ))}
-                            {rec.collaborationTypes.length > 2 && (
-                              <span className="px-1.5 py-0.5 rounded bg-white/5 text-[8.5px] text-white/40">
-                                +{rec.collaborationTypes.length - 2}
-                              </span>
-                            )}
-                          </div>
-                        </td>
+                              {isRecentlyNew && (
+                                <span className="px-1.5 py-0.5 rounded bg-accent text-black font-mono text-[8px] font-black uppercase tracking-wider flex items-center gap-1 animate-pulse">
+                                  <Sparkles className="w-2.5 h-2.5" />
+                                  <span>LIVE</span>
+                                </span>
+                              )}
+                            </div>
+                          </td>
 
-                        {/* Organisation */}
-                        <td className="py-4 px-4 text-white/80 whitespace-nowrap">
-                          {rec.organisation || <span className="text-white/30 italic">None specified</span>}
-                        </td>
+                          {/* Project & Category */}
+                          <td className="py-4 px-4">
+                            <div className="font-display font-bold text-white uppercase text-sm group-hover:text-accent transition-colors">
+                              {rec.projectName}
+                            </div>
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {rec.collaborationTypes.slice(0, 2).map((t) => (
+                                <span
+                                  key={t}
+                                  className="px-2 py-0.5 rounded bg-white/5 text-[8.5px] text-white/70 uppercase"
+                                >
+                                  {t}
+                                </span>
+                              ))}
+                              {rec.collaborationTypes.length > 2 && (
+                                <span className="px-1.5 py-0.5 rounded bg-white/5 text-[8.5px] text-white/40">
+                                  +{rec.collaborationTypes.length - 2}
+                                </span>
+                              )}
+                            </div>
+                          </td>
 
-                        {/* Representative */}
-                        <td className="py-4 px-4 whitespace-nowrap">
-                          <div className="text-white font-medium">{rec.representativeName}</div>
-                          <div className="text-[10px] text-white/50">{rec.representativeRole}</div>
-                        </td>
+                          {/* Organisation */}
+                          <td className="py-4 px-4 text-white/80 whitespace-nowrap">
+                            {rec.organisation || <span className="text-white/30 italic">None specified</span>}
+                          </td>
 
-                        {/* Registered Date */}
-                        <td className="py-4 px-4 text-white/60 text-[11px] whitespace-nowrap">
-                          {rec.registeredAt}
-                        </td>
+                          {/* Representative */}
+                          <td className="py-4 px-4 whitespace-nowrap">
+                            <div className="text-white font-medium">{rec.representativeName}</div>
+                            <div className="text-[10px] text-white/50">{rec.representativeRole}</div>
+                          </td>
 
-                        {/* Status */}
-                        <td className="py-4 px-4 whitespace-nowrap">
-                          <span
-                            className={`px-2.5 py-1 rounded-full text-[9px] uppercase font-bold border ${
-                              rec.status === "active"
-                                ? "bg-green-500/10 text-green-400 border-green-500/30"
-                                : rec.status === "completed"
-                                ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
-                                : "bg-white/10 text-white/60 border-white/20"
-                            }`}
-                          >
-                            {rec.status}
-                          </span>
-                        </td>
+                          {/* Registered Date */}
+                          <td className="py-4 px-4 text-white/60 text-[11px] whitespace-nowrap">
+                            {rec.registeredAt}
+                          </td>
 
-                        {/* Actions */}
-                        <td className="py-4 px-4 text-right whitespace-nowrap">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              openRecordDrawer(rec);
-                            }}
-                            className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-accent hover:text-black text-white/80 font-mono text-[9px] uppercase tracking-wider transition-all cursor-pointer inline-flex items-center gap-1"
-                          >
-                            <span>Manage</span>
-                            <ChevronRight className="w-3 h-3" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                          {/* Status */}
+                          <td className="py-4 px-4 whitespace-nowrap">
+                            <span
+                              className={`px-2.5 py-1 rounded-full text-[9px] uppercase font-bold border ${
+                                rec.status === "active"
+                                  ? "bg-green-500/10 text-green-400 border-green-500/30"
+                                  : rec.status === "completed"
+                                  ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
+                                  : "bg-white/10 text-white/60 border-white/20"
+                              }`}
+                            >
+                              {rec.status}
+                            </span>
+                          </td>
+
+                          {/* Actions */}
+                          <td className="py-4 px-4 text-right whitespace-nowrap">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openRecordDrawer(rec);
+                              }}
+                              className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-accent hover:text-black text-white/80 font-mono text-[9px] uppercase tracking-wider transition-all cursor-pointer inline-flex items-center gap-1"
+                            >
+                              <span>Manage</span>
+                              <ChevronRight className="w-3 h-3" />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
