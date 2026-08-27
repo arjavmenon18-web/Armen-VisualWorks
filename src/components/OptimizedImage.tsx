@@ -97,6 +97,36 @@ const GLOBAL_IMAGE_FALLBACKS: Record<string, string[]> = {
     "/images/film_trail_02.webp",
     "https://i.ibb.co/nqPMVVVC/Chat-GPT-Image-Aug-18-2026-07-27-27-PM.png",
     "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1400&auto=format&fit=crop"
+  ],
+  "aadhya": [
+    "/images/aadhya_cover.jpg",
+    "/images/aadhya_cover.webp",
+    "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1400&auto=format&fit=crop"
+  ],
+  "poster_awakening": [
+    "/images/poster_awakening.webp",
+    "/images/poster_awakening.jpg",
+    "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1400&auto=format&fit=crop"
+  ],
+  "poster_brutalism": [
+    "/images/poster_brutalism.webp",
+    "/images/poster_brutalism.jpg",
+    "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1400&auto=format&fit=crop"
+  ],
+  "poster_nordic": [
+    "/images/poster_nordic.webp",
+    "/images/poster_nordic.jpg",
+    "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?q=80&w=1400&auto=format&fit=crop"
+  ],
+  "poster_onyx": [
+    "/images/poster_onyx.webp",
+    "/images/poster_onyx.jpg",
+    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1400&auto=format&fit=crop"
+  ],
+  "poster_oslo": [
+    "/images/poster_oslo.webp",
+    "/images/poster_oslo.jpg",
+    "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1400&auto=format&fit=crop"
   ]
 };
 
@@ -135,8 +165,8 @@ export default function OptimizedImage({
 
     // 1. If local existing src or primary src is provided, prioritize it
     addIfValid(src);
-    addIfValid(fallbackSrc);
     addIfValid(webpSrc);
+    addIfValid(fallbackSrc);
 
     // 2. Look up dictionary fallbacks by key in the filename
     const allPaths = [src, webpSrc, fallbackSrc].filter(Boolean).join(" ");
@@ -155,28 +185,20 @@ export default function OptimizedImage({
   }, [src, fallbackSrc, webpSrc]);
 
   const [candidateIndex, setCandidateIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [hasAllFailed, setHasAllFailed] = useState(false);
 
-  // Reset state when sources change
+  // Reset state when candidate list changes
   useEffect(() => {
     setCandidateIndex(0);
-    setIsLoaded(false);
     setHasAllFailed(false);
   }, [candidateList]);
 
   const activeSrc = candidateList[candidateIndex] || src;
 
-  // Check if image is already cached / completed on mount or src change
-  useEffect(() => {
-    if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
-      setIsLoaded(true);
-    }
-  }, [candidateIndex, activeSrc]);
-
   const handleImageError = () => {
     if (candidateIndex < candidateList.length - 1) {
-      // Try next candidate
+      // Step to next available source candidate
       setCandidateIndex((prev) => prev + 1);
     } else {
       setHasAllFailed(true);
@@ -190,14 +212,7 @@ export default function OptimizedImage({
 
   return (
     <div className={`relative overflow-hidden ${containerClassName}`}>
-      {/* Sleek Skeleton Placeholder while loading */}
-      {!isLoaded && !hasAllFailed && (
-        <div className="absolute inset-0 bg-neutral-900/60 animate-pulse backdrop-blur-xs flex items-center justify-center pointer-events-none z-0">
-          <div className="w-6 h-6 rounded-full border border-white/20 border-t-[#f9b934] animate-spin opacity-60" />
-        </div>
-      )}
-
-      {/* Primary Image Element */}
+      {/* Primary Image Element with instant visibility */}
       {!hasAllFailed ? (
         <img
           ref={imgRef}
@@ -205,12 +220,9 @@ export default function OptimizedImage({
           alt={alt}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
-          referrerPolicy="no-referrer"
           onLoad={handleImageLoad}
           onError={handleImageError}
-          className={`transition-opacity duration-300 ease-out ${
-            isLoaded ? "opacity-100" : "opacity-0"
-          } ${className}`}
+          className={`w-full h-full object-cover transition-opacity duration-300 ${className}`}
           {...props}
         />
       ) : (

@@ -95,13 +95,21 @@ export default function StudioCollaborationRegistry() {
         body: JSON.stringify({ accessKey: accessKeyInput.trim() })
       });
 
-      const data = await res.json();
-      if (res.ok && data.success && data.token) {
+      let data: any = null;
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const txt = await res.text();
+        try { data = JSON.parse(txt); } catch { data = null; }
+      }
+
+      if (res.ok && data?.success && data?.token) {
         sessionStorage.setItem("avw_studio_token", data.token);
         setAuthToken(data.token);
         setAccessKeyInput("");
       } else {
-        setAuthError(data.message || "Invalid studio access credentials. Access denied.");
+        setAuthError(data?.message || "Invalid studio access credentials. Access denied.");
       }
     } catch (err) {
       console.error("Login error:", err);
@@ -150,8 +158,16 @@ export default function StudioCollaborationRegistry() {
         return;
       }
 
-      const data = await res.json();
-      if (res.ok && data.success) {
+      let data: any = null;
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const txt = await res.text();
+        try { data = JSON.parse(txt); } catch { data = null; }
+      }
+
+      if (res.ok && data?.success) {
         setRecords(data.records || []);
         if (data.stats) setStats(data.stats);
       }
@@ -192,15 +208,23 @@ export default function StudioCollaborationRegistry() {
         })
       });
 
-      const data = await res.json();
-      if (res.ok && data.success && data.record) {
+      let data: any = null;
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const txt = await res.text();
+        try { data = JSON.parse(txt); } catch { data = null; }
+      }
+
+      if (res.ok && data?.success && data?.record) {
         setSelectedRecord(data.record);
         setSaveSuccessMessage("Studio changes saved to secure archive.");
         // Refresh table records
         fetchRecords();
         setTimeout(() => setSaveSuccessMessage(""), 3000);
       } else {
-        alert(data.message || "Failed to update record.");
+        alert(data?.message || "Failed to update record.");
       }
     } catch (err) {
       console.error("Update record error:", err);

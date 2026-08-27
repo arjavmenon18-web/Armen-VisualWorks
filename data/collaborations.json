@@ -1,1 +1,55 @@
-[]
+[
+  {
+    "id": "collab_54b2f99856cd277b",
+    "referenceKey": "AVW-COLL-PCYG-26",
+    "createdAt": "2026-08-27T10:19:39.279Z",
+    "updatedAt": "2026-08-27T10:19:39.279Z",
+    "registeredAt": "Aug 27, 2026, 10:19 AM",
+    "recordCreatedAt": "2026-08-27T10:19:39.279Z",
+    "signatureCapturedAt": "2026-08-27T10:19:39.279Z",
+    "referenceGeneratedAt": "2026-08-27T10:19:39.279Z",
+    "projectName": "The Grand Horizon Test",
+    "collaborationTypes": [
+      "Screenplay / Scriptwriting",
+      "Executive Co-Production / Commissioning"
+    ],
+    "organisation": "Nordic Studios Inc.",
+    "representativeName": "Arjav Menon",
+    "representativeRole": "Lead Producer",
+    "email": "arjavmenon18@gmail.com",
+    "phone": "+971 50 000 0000",
+    "termsVersion": "v2026.1",
+    "termsAccepted": true,
+    "termsAcceptedAt": "2026-08-27T10:19:39.279Z",
+    "signature": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+    "status": "active",
+    "internalNotes": "",
+    "assignedTo": "Armen VisualWorks",
+    "internalStatus": "Newly Registered Collaboration"
+  },
+  {
+    "id": "collab_1c6bbe5779fa5787",
+    "referenceKey": "AVW-COLL-PX9N-26",
+    "createdAt": "2026-08-27T10:16:32.586Z",
+    "updatedAt": "2026-08-27T10:16:32.586Z",
+    "registeredAt": "Aug 27, 2026, 10:16 AM",
+    "recordCreatedAt": "2026-08-27T10:16:32.586Z",
+    "signatureCapturedAt": "2026-08-27T10:16:32.586Z",
+    "referenceGeneratedAt": "2026-08-27T10:16:32.586Z",
+    "projectName": "Test Project",
+    "collaborationTypes": [
+      "Screenplay / Scriptwriting"
+    ],
+    "representativeName": "Arjav Menon",
+    "representativeRole": "Lead Director",
+    "email": "test@example.com",
+    "termsVersion": "v2026.1",
+    "termsAccepted": true,
+    "termsAcceptedAt": "2026-08-27T10:16:32.586Z",
+    "signature": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+    "status": "active",
+    "internalNotes": "",
+    "assignedTo": "Armen VisualWorks",
+    "internalStatus": "Newly Registered Collaboration"
+  }
+]

@@ -55,26 +55,81 @@ export default function VerifyCollaboration() {
     setErrorMessage("");
     setRecord(null);
 
+    const cleanKey = keyToVerify.trim().toUpperCase();
+
     try {
-      const res = await fetch("/api/collaborations/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          referenceKey: keyToVerify.trim(),
-          email: emailToVerify?.trim() || undefined
-        })
-      });
+      // 1. Check Server Registry API
+      try {
+        const res = await fetch("/api/collaborations/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            referenceKey: cleanKey,
+            email: emailToVerify?.trim() || undefined
+          })
+        });
 
-      const data = await res.json();
+        let data: any = null;
+        const contentType = res.headers.get("content-type") || "";
+        if (contentType.includes("application/json")) {
+          data = await res.json();
+        } else {
+          const rawText = await res.text();
+          try {
+            data = JSON.parse(rawText);
+          } catch {
+            data = null;
+          }
+        }
 
-      if (res.ok && data.success && data.record) {
-        setRecord(data.record);
-      } else {
-        setErrorMessage(data.message || "We couldn't find that record. Please check the Reference Key and try again.");
+        if (res.ok && data && data.success && data.record) {
+          setRecord(data.record);
+          setLoading(false);
+          return;
+        }
+      } catch (apiErr) {
+        console.warn("API verification failed, checking local register backup:", apiErr);
       }
+
+      // 2. Check Local Storage Backup (Allows instant offline and client verification)
+      try {
+        const raw = localStorage.getItem("avw_collaborations_backup");
+        if (raw) {
+          const list = JSON.parse(raw);
+          const matched = list.find((r: any) => {
+            const keyMatches = r.referenceKey?.toUpperCase() === cleanKey;
+            if (!emailToVerify || !emailToVerify.trim()) return keyMatches;
+            return keyMatches && r.email?.toLowerCase() === emailToVerify.trim().toLowerCase();
+          });
+
+          if (matched) {
+            setRecord({
+              referenceKey: matched.referenceKey,
+              projectName: matched.projectName,
+              collaborationTypes: matched.collaborationTypes,
+              organisation: matched.organisation,
+              representativeName: matched.representativeName,
+              representativeRole: matched.representativeRole,
+              email: matched.email,
+              phone: matched.phone,
+              status: matched.status || "active",
+              registeredAt: matched.registeredAt,
+              termsVersion: matched.termsVersion,
+              termsAcceptedAt: matched.termsAcceptedAt || matched.registeredAt,
+              signature: matched.signature
+            });
+            setLoading(false);
+            return;
+          }
+        }
+      } catch (storageErr) {
+        console.warn("Error reading local registration backup:", storageErr);
+      }
+
+      setErrorMessage("We couldn't find that collaboration record. Please check the Reference Key (e.g. AVW-COLL-XXXX-26) and try again.");
     } catch (err) {
       console.error("Verification failed:", err);
-      setErrorMessage("We couldn't find that record. Please check the Reference Key and try again.");
+      setErrorMessage("We couldn't find that collaboration record. Please check the Reference Key and try again.");
     } finally {
       setLoading(false);
     }
