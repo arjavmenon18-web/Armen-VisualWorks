@@ -22,6 +22,7 @@ import {
   Download,
   AlertCircle,
   Eye,
+  EyeOff,
   Edit3,
   Layers,
   Sparkles,
@@ -39,6 +40,7 @@ export default function StudioCollaborationRegistry() {
     sessionStorage.getItem("avw_studio_token")
   );
   const [accessKeyInput, setAccessKeyInput] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState("");
 
@@ -320,14 +322,27 @@ Armen VisualWorks Studio Registry • Confidential Internal Document
               <label className="block font-mono text-[9px] uppercase tracking-widest text-white/70 font-bold">
                 Studio Access Passcode
               </label>
-              <input
-                type="password"
-                required
-                value={accessKeyInput}
-                onChange={(e) => setAccessKeyInput(e.target.value)}
-                placeholder="Enter studio key..."
-                className="w-full bg-[#181818] border border-white/15 rounded-xl px-4 py-3 text-sm font-mono text-white focus:outline-none focus:border-accent transition-colors placeholder:text-white/20"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  value={accessKeyInput}
+                  onChange={(e) => {
+                    setAccessKeyInput(e.target.value);
+                    if (authError) setAuthError("");
+                  }}
+                  placeholder="Enter studio access passcode..."
+                  className="w-full bg-[#181818] border border-white/15 rounded-xl pl-4 pr-11 py-3 text-sm font-mono text-white focus:outline-none focus:border-accent transition-colors placeholder:text-white/20"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors cursor-pointer p-1"
+                  aria-label={showPassword ? "Hide passcode" : "Show passcode"}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
             {authError && (

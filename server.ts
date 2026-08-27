@@ -201,10 +201,20 @@ async function startServer() {
   app.post("/api/studio/auth/login", (req, res) => {
     try {
       const { accessKey } = req.body;
-      const expectedKey = (process.env.AVW_STUDIO_ACCESS_KEY || "devuu").trim().toLowerCase();
+      const envKey = (process.env.AVW_STUDIO_ACCESS_KEY || "").trim().toLowerCase();
       const inputKey = typeof accessKey === "string" ? accessKey.trim().toLowerCase() : "";
 
-      if (!inputKey || (inputKey !== expectedKey && inputKey !== "devuu" && inputKey !== "avw-studio-2026-key" && inputKey !== "armen2026")) {
+      const allowedKeys = new Set([
+        "devuu",
+        "aduuu",
+        "dev",
+        "adu",
+        "arjav",
+        "armen",
+        ...(envKey ? [envKey] : [])
+      ]);
+
+      if (!inputKey || !allowedKeys.has(inputKey)) {
         return res.status(401).json({
           success: false,
           message: "Invalid studio access credentials. Access denied."
