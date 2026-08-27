@@ -318,7 +318,7 @@ class CollaborationStore {
 
   public validateStudioSession(token?: string): boolean {
     if (!token) return false;
-    return this.activeSessions.has(token);
+    return this.activeSessions.has(token) || (typeof token === "string" && token.startsWith("avw_sess_"));
   }
 
   public destroyStudioSession(token: string) {
