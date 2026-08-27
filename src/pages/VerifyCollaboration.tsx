@@ -364,20 +364,6 @@ Direct Studio Inquiries: armenvisualworks@gmail.com
                     {copiedKey ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3 text-accent" />}
                     <span>{copiedKey ? "COPIED" : "COPY KEY"}</span>
                   </button>
-                  <button
-                    onClick={handleDownloadSummary}
-                    className="px-3.5 py-2 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 font-mono text-[9px] uppercase tracking-wider text-white flex items-center justify-center gap-1.5 transition-colors cursor-pointer flex-1 sm:flex-none"
-                  >
-                    <Download className="w-3 h-3 text-accent" />
-                    <span>DOWNLOAD</span>
-                  </button>
-                  <button
-                    onClick={handlePrint}
-                    className="px-3.5 py-2 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 font-mono text-[9px] uppercase tracking-wider text-white flex items-center justify-center gap-1.5 transition-colors cursor-pointer hidden md:flex"
-                  >
-                    <Printer className="w-3 h-3 text-accent" />
-                    <span>PRINT</span>
-                  </button>
                 </div>
               </div>
 

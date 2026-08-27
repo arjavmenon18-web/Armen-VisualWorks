@@ -353,15 +353,8 @@ Armen VisualWorks Studio Registry • Confidential Internal Document
             </button>
           </form>
 
-          {/* Quick Passcode Preset for Authorized Team */}
-          <div className="pt-2 border-t border-white/10 text-center space-y-2">
-            <button
-              type="button"
-              onClick={() => setAccessKeyInput("devuu")}
-              className="text-[10px] font-mono uppercase tracking-wider text-accent/80 hover:text-accent hover:underline cursor-pointer"
-            >
-              Autofill Studio Key (devuu)
-            </button>
+          {/* Return to Home link */}
+          <div className="pt-2 border-t border-white/10 text-center">
             <div className="text-[9px] font-mono text-white/30 uppercase tracking-widest">
               <Link to="/#contact" className="hover:text-white transition-colors">
                 ← Return to Home Station

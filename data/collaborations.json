@@ -1,5 +1,33 @@
 [
   {
+    "id": "collab_a11ba56d490d23cb",
+    "referenceKey": "AVW-COLL-2A6W-26",
+    "createdAt": "2026-08-27T10:24:26.686Z",
+    "updatedAt": "2026-08-27T10:24:26.686Z",
+    "registeredAt": "Aug 27, 2026, 10:24 AM",
+    "recordCreatedAt": "2026-08-27T10:24:26.686Z",
+    "signatureCapturedAt": "2026-08-27T10:24:26.686Z",
+    "referenceGeneratedAt": "2026-08-27T10:24:26.686Z",
+    "projectName": "SWRG",
+    "collaborationTypes": [
+      "Film Promotion",
+      "Film Campaign",
+      "Film Key Art"
+    ],
+    "organisation": "Independent",
+    "representativeName": "Arjav Menon",
+    "representativeRole": "Producer",
+    "email": "arjavmenon18@gmail.com",
+    "termsVersion": "v2026.1",
+    "termsAccepted": true,
+    "termsAcceptedAt": "2026-08-27T10:24:26.686Z",
+    "signature": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+    "status": "active",
+    "internalNotes": "",
+    "assignedTo": "Armen VisualWorks",
+    "internalStatus": "Newly Registered Collaboration"
+  },
+  {
     "id": "collab_54b2f99856cd277b",
     "referenceKey": "AVW-COLL-PCYG-26",
     "createdAt": "2026-08-27T10:19:39.279Z",

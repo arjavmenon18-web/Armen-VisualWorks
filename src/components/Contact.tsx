@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { ArrowUpRight, Check, Lock, ShieldCheck, ArrowRight } from "lucide-react";
+import { Check, Lock, ShieldCheck, ArrowRight } from "lucide-react";
 
 export default function Contact() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -107,49 +107,6 @@ export default function Contact() {
               <p className="font-sans text-xs md:text-sm text-black/60 leading-relaxed max-w-md font-light">
                 We are currently accepting visual, motion, and music scoring commissions. Share your concept or design specifications, and our team will get in touch within 24 hours.
               </p>
-            </div>
-
-            {/* Stark social links block */}
-            <div className="space-y-4 pt-8 border-t border-black/10 font-mono">
-              <span className="text-[10px] font-mono tracking-[0.25em] font-bold text-black/40 uppercase block">
-                DIRECT CONTACT
-              </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a 
-                  href="mailto:armenvisualworks@gmail.com" 
-                  className="flex items-center justify-between py-3 border-b border-black/10 text-xs font-bold uppercase tracking-widest hover:text-[#f9b934] transition-colors group"
-                >
-                  <span>EMAIL ARJ</span>
-                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform text-black/40 group-hover:text-[#f9b934]" />
-                </a>
-                <a 
-                  href="https://github.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="flex items-center justify-between py-3 border-b border-black/10 text-xs font-bold uppercase tracking-widest hover:text-[#f9b934] transition-colors group"
-                >
-                  <span>GITHUB REPO</span>
-                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform text-black/40 group-hover:text-[#f9b934]" />
-                </a>
-                <a 
-                  href="https://instagram.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="flex items-center justify-between py-3 border-b border-black/10 text-xs font-bold uppercase tracking-widest hover:text-[#f9b934] transition-colors group"
-                >
-                  <span>INSTAGRAM FEED</span>
-                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform text-black/40 group-hover:text-[#f9b934]" />
-                </a>
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="flex items-center justify-between py-3 border-b border-black/10 text-xs font-bold uppercase tracking-widest hover:text-[#f9b934] transition-colors group"
-                >
-                  <span>TWITTER FEED</span>
-                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform text-black/40 group-hover:text-[#f9b934]" />
-                </a>
-              </div>
             </div>
 
             {/* AVW Internal Team Access Station */}
